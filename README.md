@@ -1,14 +1,14 @@
 # Investigative Journalism Skills
 
-A collection of AI Agent **SKILLs** for investigative journalism — rigorous, framework-driven methodologies for auditing claims, analysing texts, and investigating events.
+A collection of AI Agent **SKILLs** for investigative journalism — rigorous, framework-driven methodologies for auditing claims, analysing texts, gathering open-source intelligence, and investigating events.
 
-These SKILLs are designed for use with AI agents that support the SKILL pattern (e.g. [Claude Code](https://claude.com/claude-code), the Anthropic Agent SDK, and compatible runtimes). Each SKILL is a self-contained Markdown file (`SKILL.md`) with a structured frontmatter header that the agent loads on demand.
+These SKILLs are designed for use with AI agents that support the SKILL pattern (e.g. [Claude Code](https://claude.com/claude-code), the Anthropic Agent SDK, and compatible runtimes). Each SKILL is a self-contained Markdown file with a structured frontmatter header that the agent loads on demand.
 
 ---
 
 ## What is a SKILL?
 
-A SKILL is a reusable, on-demand instruction module that an AI agent can invoke when its trigger conditions are met. Each `SKILL.md` file follows the same structure:
+A SKILL is a reusable, on-demand instruction module that an AI agent can invoke when its trigger conditions are met. Each skill file follows the same structure:
 
 ```yaml
 ---
@@ -24,6 +24,7 @@ The `description` field tells the agent *when* to load the skill; the body tells
 - **Triggered explicitly** — the user asks "analyse this for fallacies" and the agent loads the relevant SKILL.
 - **Self-contained** — no hidden dependencies on the surrounding project.
 - **Outcome-shaped** — they specify a structured output format so results are auditable.
+- **Composable** — some skills explicitly hand off to others (e.g. `osint-research` collects and verifies, then hands the structured findings to `investigative-reasoning` for hypothesis work).
 
 ---
 
@@ -52,13 +53,20 @@ git clone https://github.com/patricksavalle/investigate-journalism-skills.git
 cp -r investigate-journalism-skills/fallacy-bias-manipulation-analysis-framework ~/.claude/skills/
 cp -r investigate-journalism-skills/investigative-reasoning ~/.claude/skills/
 cp -r investigate-journalism-skills/scientific-fact-classification ~/.claude/skills/
+cp -r investigate-journalism-skills/osint-research ~/.claude/skills/
 ```
+
+> **Note:** the `osint-research` skill ships as a file named `SKILL` (no extension). If your runtime only auto-discovers `SKILL.md`, rename it after copying:
+>
+> ```bash
+> mv ~/.claude/skills/osint-research/SKILL ~/.claude/skills/osint-research/SKILL.md
+> ```
 
 Restart Claude Code (or run `/skills` in-session) so the new skills are picked up.
 
 ### For other AI runtimes
 
-Any runtime that supports the SKILL pattern (frontmatter + Markdown body) can use these files directly. Point your skill loader at the folder containing the `SKILL.md` file.
+Any runtime that supports the SKILL pattern (frontmatter + Markdown body) can use these files directly. Point your skill loader at the folder containing the skill file.
 
 ---
 
@@ -74,8 +82,11 @@ Each SKILL activates on **explicit request only** — none of them spontaneously
 | Develop alternative hypotheses | *"Apply critical thinking to this narrative"* |
 | Classify a claim's epistemic status | *"Is X a fact?"* / *"Weigh the evidence for Y"* |
 | Distinguish fact from assumption | *"Classify these claims"* |
+| Build a profile or trace an identifier | *"Find out about X"* / *"Trace this username/email/domain"* |
+| Verify an image or video | *"Verify this image"* / *"Where/when was this taken?"* |
+| Map a digital footprint | *"What's the digital footprint of X?"* / *"Build a profile on X"* |
 
-Each framework produces a **structured report** (severity-rated findings, per-claim audits, source-quality verdicts) — not free-form prose. The output is designed to be auditable and re-checkable.
+Each framework produces a **structured report** (severity-rated findings, per-claim audits, source-quality verdicts, Admiralty-graded intelligence briefs) — not free-form prose. The output is designed to be auditable and re-checkable.
 
 ---
 
@@ -111,15 +122,28 @@ Replaces the binary fact / not-fact verdict with a calibrated spectrum. Classifi
 
 ---
 
+### 4. [`osint-research`](./osint-research)
+
+> A structured framework for AI agents to plan, execute, and verify open-source intelligence (OSINT) investigations using only publicly available information (PAI).
+
+A full OSINT cycle — Planning → Collection → Processing → Analysis → Dissemination — calibrated to what an AI agent can actually do without shell access or paid databases. Layers search across engines, archives, public records, social platforms, geospatial sources, and specialist registries. Grades every finding with the **Admiralty Code** (NATO STANAG 2511) on independent reliability and credibility axes. Covers reverse image search, geolocation, chronolocation, account-authenticity checks, and systematic identifier pivoting (name → email → domain → infrastructure → entity). Hard constraints (PAI only, no active engagement, no facial recognition on private individuals, harm minimisation) define the boundary between OSINT and conduct that is unethical, unlawful, or operationally compromising.
+
+**Triggers:** *"Find out about X"*, *"Investigate / build a profile on X"*, *"Who is behind this account?"*, *"Verify this image/video"*, *"Where/when was this taken?"*, *"Trace this username/email/domain"*, *"What's the digital footprint of X?"*, *"Is this account real?"*.
+
+**Pairs with:** `investigative-reasoning` — `osint-research` does the gathering and verification mechanics; hand the structured brief to `investigative-reasoning` when the task extends to hypothesis construction or narrative challenge.
+
+---
+
 ## Design Principles
 
-All three SKILLs share a common philosophy:
+All SKILLs in this repo share a common philosophy:
 
 - **Trigger-gated** — never spontaneous; always explicit invocation.
 - **Charity first** — steelman the target before challenging it.
 - **Self-audit** — apply the same standard regardless of which side the conclusion lands on.
 - **Calibration over verdict** — graded confidence labels, not binary judgements.
 - **Traceability** — distinguish what has been followed to primary evidence from what is being taken on authority.
+- **Honest tooling boundaries** — frameworks state what an AI agent can and cannot do natively, so the user is never sold fabricated tradecraft.
 - **Structured output** — every framework specifies its report format so findings are auditable.
 
 ---
@@ -135,7 +159,8 @@ See [LICENSE](./LICENSE).
 Issues and pull requests welcome. New SKILLs should follow the existing structure:
 
 1. Frontmatter with `name` and `description`.
-2. Explicit **Activation** section listing valid trigger phrases.
+2. Explicit **Activation** section listing valid trigger phrases (and explicit non-triggers where useful).
 3. Phase-numbered methodology (Phase 0 — pre-analysis discipline; Phase 1+ — execution).
 4. A defined **Output Format** block.
 5. A **Quick-Reference Matrix** and **Golden Rules** summary at the end.
+6. Where relevant, an explicit **Pairing rule** stating which other skill should pick up where this one stops.
