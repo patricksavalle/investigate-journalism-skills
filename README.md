@@ -1,4 +1,4 @@
-# Investigative Journalism Skills
+# Investigative AI Journalism
 
 A collection of AI Agent **SKILLs** for investigative journalism — rigorous, framework-driven methodologies for auditing claims, analysing texts, gathering open-source intelligence, and investigating events.
 
