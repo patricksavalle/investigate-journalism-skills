@@ -57,12 +57,6 @@ cp -r investigate-journalism-skills/osint-research ~/.claude/skills/
 cp -r investigate-journalism-skills/peer-review ~/.claude/skills/
 ```
 
-> **Note:** the `osint-research` skill ships as a file named `SKILL` (no extension). If your runtime only auto-discovers `SKILL.md`, rename it after copying:
->
-> ```bash
-> mv ~/.claude/skills/osint-research/SKILL ~/.claude/skills/osint-research/SKILL.md
-> ```
-
 Restart Claude Code (or run `/skills` in-session) so the new skills are picked up.
 
 ### For other AI runtimes
