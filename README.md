@@ -54,6 +54,7 @@ cp -r investigate-journalism-skills/fallacy-bias-manipulation-analysis-framework
 cp -r investigate-journalism-skills/investigative-reasoning ~/.claude/skills/
 cp -r investigate-journalism-skills/scientific-fact-classification ~/.claude/skills/
 cp -r investigate-journalism-skills/osint-research ~/.claude/skills/
+cp -r investigate-journalism-skills/peer-review ~/.claude/skills/
 ```
 
 > **Note:** the `osint-research` skill ships as a file named `SKILL` (no extension). If your runtime only auto-discovers `SKILL.md`, rename it after copying:
@@ -85,6 +86,9 @@ Each SKILL activates on **explicit request only** — none of them spontaneously
 | Build a profile or trace an identifier | *"Find out about X"* / *"Trace this username/email/domain"* |
 | Verify an image or video | *"Verify this image"* / *"Where/when was this taken?"* |
 | Map a digital footprint | *"What's the digital footprint of X?"* / *"Build a profile on X"* |
+| Peer-review a scientific paper | *"Review this paper"* / *"Is this study sound?"* / *"Audit the methodology"* |
+| Verify a paper's citations | *"Do the citations support the claims?"* / *"Verify this paper's references"* |
+| Check whether results support the conclusion | *"Do the results support the conclusion?"* / *"Is the inferential gap honest?"* |
 
 Each framework produces a **structured report** (severity-rated findings, per-claim audits, source-quality verdicts, Admiralty-graded intelligence briefs) — not free-form prose. The output is designed to be auditable and re-checkable.
 
@@ -131,6 +135,18 @@ A full OSINT cycle — Planning → Collection → Processing → Analysis → D
 **Triggers:** *"Find out about X"*, *"Investigate / build a profile on X"*, *"Who is behind this account?"*, *"Verify this image/video"*, *"Where/when was this taken?"*, *"Trace this username/email/domain"*, *"What's the digital footprint of X?"*, *"Is this account real?"*.
 
 **Pairs with:** `investigative-reasoning` — `osint-research` does the gathering and verification mechanics; hand the structured brief to `investigative-reasoning` when the task extends to hypothesis construction or narrative challenge.
+
+---
+
+### 5. [`peer-review`](./peer-review)
+
+> A structured framework for rigorous, citation-verified peer review of scientific papers — auditing methodology, statistics, causal claims, citations, reproducibility, and literature context, then issuing a severity-graded report with explicit recommendation.
+
+Reviews a paper as a competent, sceptical, fair-minded reviewer would. Calibrates standards to the paper's genre and field (preprint vs. journal article; RCT vs. observational; ML vs. lab biology), audits the **inferential gap** between what was measured and what is claimed, scrutinises statistics for p-hacking / HARKing / forking-paths / multiple-testing inflation, and **verifies load-bearing citations** by fetching the cited source and comparing it to the paper's claim (Supports / Partial / Contradicts / Unrelated / Unverifiable). Outputs severity-graded findings (**Fatal / Major / Minor / Optional / Praise**), an explicit recommendation (Accept / Minor / Major / Reject-resubmit / Reject), and — crucially — *what would change the recommendation upward or downward*. Enforces symmetry under conclusion-flip: same paper, opposite conclusion → same review.
+
+**Triggers:** *"Review this paper"*, *"Is this study any good?"*, *"Audit this manuscript"*, *"Is the methodology sound?"*, *"Do the results support the conclusion?"*, *"Verify this paper's citations"*, *"Is this reproducible?"*, *"Produce a referee report"*.
+
+**Pairs with:** `scientific-fact-classification` (claim typing, evidence grading, causal-claim audit), `fallacy-bias-manipulation-analysis-framework` (fallacy / rhetoric scrutiny on theoretical or position papers), and `investigative-reasoning` (when motive, deception, or undisclosed-interest analysis is in scope). `peer-review` orchestrates these where useful and adds the methodology, statistical, citation-verification, reproducibility, and literature-context layers itself.
 
 ---
 
