@@ -5,438 +5,337 @@ description: A structured framework for rigorous, citation-verified peer review 
 
 # Peer Review Framework
 
-A methodology for auditing scientific papers in the manner of a competent, sceptical, fair-minded peer reviewer. The output is a severity-graded report: which problems are fatal, which need fixing, which are nits, and what the paper does well — together with an explicit recommendation and the reasons it could be reversed.
+Audit a scientific paper as a competent, sceptical, fair-minded reviewer. Output: severity-graded findings (Fatal / Major / Minor / Optional / Praise), recommendation, and what would change it.
 
-This skill **orchestrates** rather than replaces existing skills. When the user has them installed, hand off claim-typing to `scientific-fact-classification`, fallacy hunting to `fallacy-bias-and-manipulation-analysis`, and deception or motive analysis to `investigative-reasoning`. This skill adds what those don't cover: methodology audit, statistical scrutiny, citation verification, reproducibility audit, and literature contextualisation.
+**Orchestrate, don't duplicate.** Hand claim-typing to `scientific-fact-classification`, fallacy hunting to `fallacy-bias-and-manipulation-analysis`, deception or motive analysis to `investigative-reasoning`. This skill adds: methodology audit, statistical scrutiny, citation verification, reproducibility audit, literature contextualisation.
 
 ---
 
 ## Activation
 
-Trigger on any request to evaluate a scientific paper, manuscript, preprint, or study against the standards of its field. Examples: "review this paper", "is this study sound?", "audit the methodology", "do the results support the conclusion?", "check whether the cited sources say what the paper claims", "is this reproducible?", "produce a referee report".
+Trigger on requests to evaluate a scientific paper against its field's standards: "review this paper", "is this study sound?", "audit the methodology", "do the results support the conclusion?", "verify the citations", "is this reproducible?", "produce a referee report".
 
-Do **not** trigger on:
-- Casual reading-comprehension questions ("what does this paper say?")
-- Requests to *summarise* a paper without critique
-- Requests for *the paper's own claims* uncritically restated
-- Pop-science articles or press releases — those go to `fallacy-bias-and-manipulation-analysis` (this skill is for primary research)
-
-If the input is a press release or news write-up *about* a paper, ask whether the user wants the press release audited (different skill) or the underlying paper reviewed (this skill, but you need the actual paper).
+Do **not** trigger on: comprehension questions, summary-only requests, or pop-science write-ups (those go to `fallacy-bias-and-manipulation-analysis`). If given a press release, ask whether the user wants the release audited or the underlying paper reviewed.
 
 ---
 
 ## Phase 0 — Pre-Review Discipline
 
-Five mandatory checks. Failure here contaminates every later phase.
+### 0a. Genre & venue
 
-### 0a. Genre & venue awareness
-
-A preprint is not a published paper. A workshop paper is not a journal article. A theoretical note is not an empirical study. Hold the paper to the standards of **its own genre**, not of formal mathematical proof or a phase-3 RCT when those are not the genre.
+Hold the paper to its own genre's standards. A preprint is not a published paper; a workshop paper is not a journal article; a theoretical note is not an empirical study.
 
 ```
-GENRE TAGS (pick one or more before reviewing):
-□ Empirical primary research — full methodological audit applies
-□ Theoretical / conceptual — audit derivations, assumptions, scope claims
-□ Methods paper — audit the method itself; the application is illustrative
-□ Systematic review / meta-analysis — audit search strategy, inclusion criteria, heterogeneity
-□ Narrative review — lower bar on completeness; audit balance and citation accuracy
-□ Position paper / perspective — audit argument quality, not data
-□ Preprint — flag pre-peer-review status; hold to same scientific standards but expect more rough edges
-□ Workshop / short paper — calibrate scope expectations
-□ Replication study — different success criterion (did it replicate?), not novelty
-□ Registered report — pre-registration shifts what to audit (deviations, not p-hacking)
+GENRE TAGS:
+□ Empirical primary research      □ Theoretical / conceptual
+□ Methods paper                   □ Systematic review / meta-analysis
+□ Narrative review                □ Position / perspective
+□ Preprint (flag pre-PR status)   □ Workshop / short paper
+□ Replication study               □ Registered report
 ```
 
 ### 0b. Domain calibration
 
-Different fields have different defensible standards. Holding history to physics's bar, economics to chemistry's bar, or social psychology to clinical-trials standards is a category error. See `references/domain-checklists.md` for field-specific standards before reviewing.
+Different fields have different defensible standards. See `references/domain-checklists.md` before reviewing.
 
 ### 0c. Charity first
 
-Before flagging anything, restate the paper's central claim and main methodological choice in their **strongest plausible form**. Many seeming faults dissolve under charitable reading; many that survive charity are real. A flag survives only if the fault persists when the paper is read as generously as the text permits.
+Restate the central claim and main methodological choice in their strongest plausible form. A flag survives only if the fault persists under charitable reading.
 
 ### 0d. Position neutrality
 
-Do not penalise a paper because its conclusion is unfashionable, politically uncomfortable, or against current consensus. Evaluate the reasoning and the methods, not whether the answer is the one you wanted. Conversely: do not soften critique because you agree with the conclusion.
+Do not penalise a paper because its conclusion is unfashionable, nor soften critique because you agree.
 
 ```
-PROHIBITED REVIEWER MOVES:
-✗ "This conclusion is obviously wrong, therefore the methods must be flawed"
-✗ "I would not have done it this way, therefore it is wrong"
-✗ "This contradicts the consensus, therefore the bar is higher"
-✗ "This confirms the consensus, therefore the bar is lower"
-✗ "The authors are at a prestigious institution, therefore lighter scrutiny"
-✗ "This is a preprint by unknowns, therefore harsher scrutiny"
+PROHIBITED:
+✗ "Conclusion is wrong, therefore methods must be flawed"
+✗ "I'd have done it differently, therefore it's wrong"
+✗ "Against consensus → higher bar"   "With consensus → lower bar"
+✗ "Prestigious institution → lighter scrutiny"   "Unknowns → harsher"
 ```
 
 ### 0e. Self-audit commitment
 
-Commit, in writing, before reviewing:
-
-> "I will apply the same standards regardless of which way the conclusion runs. At the end I will state explicitly whether the verdict would have been the same if the conclusion had gone the other way. I will distinguish things actually wrong with the paper from things I would have done differently. When I claim a fault I will quote the passage, name the specific fault, and state what a non-faulty version would look like."
+Commit, in writing, before reviewing: *"I will apply the same standards regardless of which way the conclusion runs. I will state explicitly whether the verdict would have been the same if it ran the other way. I will distinguish 'wrong' from 'different'. When I flag a fault I will quote the passage, name it, and state what a non-faulty version would look like."*
 
 ---
 
 ## Phase 1 — Structural Pass
 
-Before auditing anything, map the paper.
-
-### 1a. Identify the type, field, and stated contribution
-
-- **Type:** from Phase 0a tags
-- **Field & subfield:** as precisely as possible; this drives the standards applied
-- **Stated contribution:** quote the abstract's central claim verbatim. One sentence.
+### 1a. Identify
+- **Type / venue / status** (from 0a)
+- **Field & subfield** (drives standards applied)
+- **Stated contribution** — quote verbatim, one sentence
 - **Type of contribution:** new finding / new method / new theory / replication / synthesis / negative result
 
-### 1b. Build the claim → method → result → conclusion map
-
-For an empirical paper, extract:
-- The **research question** (sometimes implicit — make it explicit)
-- The **hypotheses** (pre-specified? exploratory?)
-- The **methods** (design, population, intervention, measure, analysis)
-- The **results** (primary, secondary, exploratory)
-- The **conclusions** (what the authors say the paper shows)
-
-Then flag the **inferential gap** — the distance between what was actually measured and what is being claimed. Most peer-review faults live in this gap.
+### 1b. Map claim → method → result → conclusion
+For empirical papers: research question, hypotheses (pre-specified vs. exploratory), methods, results (primary/secondary/exploratory), conclusions. Then flag the **inferential gap** — the distance between what was measured and what is claimed. Most faults live here.
 
 ### 1c. Identify load-bearing elements
-
-- Which claims, if false, collapse the paper's contribution?
-- Which methodological choices, if wrong, collapse the results?
-- Which citations, if misrepresented, collapse the framing?
-
-These get the most scrutiny in later phases. A paper with one load-bearing experiment whose contamination would invalidate everything is more fragile than one with three independent lines converging.
+Which claims, methodological choices, or citations would, if wrong, collapse the contribution? These get the most scrutiny later.
 
 ---
 
 ## Phase 2 — Claim Extraction & Typing
 
-Hand each load-bearing claim to `scientific-fact-classification` (Phases 1, 2, 3, 6, 7) if available. Otherwise: enumerate claims, type each (descriptive / causal / mechanistic / predictive / normative), and identify the unstated assumptions each requires.
+Hand load-bearing claims to `scientific-fact-classification` (Phases 1, 2, 3, 6, 7) if available. Otherwise enumerate, type each (descriptive / causal / mechanistic / predictive / normative), and identify unstated assumptions.
 
-Note especially:
-- **Modal smuggling:** "could", "may", "is consistent with" in results becoming "shows", "demonstrates", "proves" in the abstract or conclusion. Match conclusion language to evidence strength.
-- **Quantifier creep:** "some patients" in results becoming "patients" in the abstract.
-- **Population drift:** the population studied vs. the population the conclusion is about. WEIRD samples, single-site samples, single-species samples, single-sex samples — all common.
+Watch for:
+- **Modal smuggling:** "may", "is consistent with" in results → "shows", "demonstrates" in abstract.
+- **Quantifier creep:** "some patients" → "patients".
+- **Population drift:** sample population vs. conclusion population (WEIRD, single-site, single-sex, single-species).
 
 ---
 
 ## Phase 3 — Methodology Audit
 
-The largest phase. See `references/methodology-audit.md` for the full domain-keyed checklist. The minimum questions for any empirical paper:
+See `references/methodology-audit.md` for full domain-keyed checklist. Minimum for any empirical paper:
 
 ```
 DESIGN
-□ Is the design appropriate to the research question?
-   (RCT for causal effect? Cross-sectional won't carry causal weight.)
-□ Is the comparator appropriate? (Placebo? Active control? No-treatment?)
-□ Is randomisation present, described, and verified by baseline balance?
-□ Is blinding present where it could be? Of whom? At what stages?
-□ Is the unit of analysis the unit of randomisation? (Cluster-randomisation
-   analysed at individual level is a classic error.)
+□ Design appropriate to the question? (RCT for causal; cross-sectional won't carry causal weight)
+□ Comparator appropriate? (Placebo, active control, no-treatment)
+□ Randomisation described, baseline balance verified?
+□ Blinding present where it could be? Of whom? At what stages?
+□ Unit of analysis = unit of randomisation?
 
-POPULATION / SAMPLE / CORPUS
+SAMPLE / DATA
 □ Inclusion / exclusion criteria specified and defensible?
-□ Sample size justified by an a priori power calculation?
-□ Sample representative of the population the conclusion claims?
-□ Attrition reported, magnitude acceptable, differential by arm?
-□ For ML / corpus: is the test set genuinely held out? Contamination check?
+□ Sample size justified by a priori power calculation?
+□ Sample representative of the conclusion's population?
+□ Attrition reported, magnitude acceptable, non-differential?
+□ ML / corpus: test set held out from the start? Contamination check?
 
 MEASUREMENT
-□ Outcomes pre-specified? Primary outcome distinguished from secondary?
-□ Measures validated for the population and construct?
-□ Outcome assessor blinded to condition?
-□ Composite outcomes — does the composite hide effects on individual components?
+□ Outcomes pre-specified? Primary distinguished from secondary?
+□ Measures validated for population and construct?
+□ Outcome assessor blinded?
+□ Composite outcomes — do components individually carry the effect?
 
 ANALYSIS
-□ Pre-registered analysis plan? Followed? Deviations explained?
-□ Test appropriate for distribution, design, and dependence structure?
+□ Pre-registered? Followed? Deviations explained?
+□ Test appropriate for distribution, design, dependence structure?
 □ Multiple comparisons addressed? How many tests were actually run?
-□ Missing data handled (and not silently dropped)?
-□ Robustness checks present? Do they support or undermine the headline?
-□ Effect sizes reported with uncertainty, not just p-values?
-□ Negative / null results reported as primary, not buried?
+□ Missing data handled (not silently dropped)?
+□ Robustness checks support or undermine the headline?
+□ Effect sizes with uncertainty, not just p-values?
+□ Null / negative results reported as primary, not buried?
 ```
 
-For each item that fails, classify the severity (Phase 11) and write the specific fix.
-
-For methods papers, replication studies, theoretical papers, and meta-analyses, see the dedicated sections in `references/methodology-audit.md`.
+For methods papers, replications, theoretical work, and meta-analyses, see the dedicated sections in the reference file.
 
 ---
 
 ## Phase 4 — Statistical Scrutiny
 
-Statistical pathology has its own catalogue. See `references/statistical-red-flags.md`. Headline checks:
+See `references/statistical-red-flags.md`. Headline checks:
 
 ```
-□ p-hacking signatures: p-values clustered just below 0.05; analytical degrees of
-  freedom not pre-registered; many specifications run, only the significant
-  one reported.
-□ HARKing: hypotheses appear to have been written after seeing the data.
-  Diagnostic: do all sub-hypotheses confirm? Were any "predictions" predicted?
-□ Garden of forking paths: many defensible analytical choices, only one
-  reported. Multiverse / specification curve absent.
-□ Cherry-picked subgroups: heterogeneous treatment effect on the one subgroup
-  where the headline holds.
-□ Base-rate neglect: relative-risk-only reporting (RR doubles!) without
-  absolute risk (1 in 100,000 → 2 in 100,000).
-□ Power failure: small-N study with significant result and large effect — likely
-  Type-M error (effect-size inflation) even if real.
-□ Survivorship / selection bias: who was excluded from the analysis and why?
-□ Regression to the mean masquerading as treatment effect (esp. when selection
-  was on extreme baseline values).
-□ Pseudoreplication: multiple measurements on the same unit treated as
-  independent observations.
-□ Multiple-testing inflation: dozens of hypotheses run, no correction, headline
-  is one of them.
-□ Stopping rules: was the study stopped early when the result became "significant"?
-□ Outlier handling: were exclusions pre-specified or post-hoc?
-□ Statistical vs. practical significance: a tiny effect with N=100,000 will be
-  highly significant and clinically irrelevant. Report effect size.
-□ Wrong test for the data: parametric on small skewed samples, independence
-  assumed when clustered, etc.
+□ p-hacking: p-values clustered just below 0.05; degrees of freedom not pre-registered
+□ HARKing: every hypothesis confirms; "predictions" oddly specific to the result
+□ Garden of forking paths: many defensible specifications, only one shown
+□ Cherry-picked subgroups: heterogeneous effect on the one subgroup where headline holds
+□ Base-rate neglect: relative-risk-only ("doubles!") without absolute risk
+□ Power failure: small-N + significant + large effect → likely Type-M inflation
+□ Survivorship / selection: who was excluded, and why?
+□ Regression to the mean masquerading as treatment effect
+□ Pseudoreplication: repeated measurements treated as independent
+□ Multiple-testing inflation: many tests, no correction, headline is one of them
+□ Stopping rules: stopped early when "significant"?
+□ Outliers: pre-specified rule, or post-hoc?
+□ Statistical vs. practical significance: tiny effect, huge N, p<.001 — who cares?
+□ Wrong test for the data: parametric on small skewed samples; independence assumed for clustered data
 ```
 
-For ML / NLP papers see the additional checklist in `references/statistical-red-flags.md` covering benchmark contamination, chance-level baselines missing, single-seed reporting, and selective hyperparameter tuning.
+ML / NLP papers: see additional checklist covering benchmark contamination, single-seed reporting, hyperparameter asymmetry, and compute confounds.
 
 ---
 
 ## Phase 5 — Causal Claim Audit
 
-If any conclusion uses causal language ("causes", "leads to", "drives", "because of", "the effect of"), audit it explicitly. Hand to `scientific-fact-classification` Phase 4 (Bradford Hill / DAG analysis) if available; otherwise:
+If any conclusion uses causal language ("causes", "leads to", "drives", "the effect of"), audit explicitly. Hand to `scientific-fact-classification` Phase 4 if available; otherwise:
 
 ```
-□ Is the design causally identifying? (RCT, instrumental variable, regression
-  discontinuity, difference-in-differences with parallel-trends evidence,
-  natural experiment with credible exogeneity.)
-□ If observational: are confounders enumerated? Adjusted? Was the strongest
-  plausible unmeasured confounder considered (e.g., E-value)?
-□ Is reverse causation plausible? Has it been ruled out (temporality)?
-□ Is selection into treatment plausibly exogenous?
-□ For mediation claims: was the mediator measured before the outcome? Was the
-  full mediation pathway tested, not just A→M and A→Y?
-□ Is the language calibrated? "Associated with", "predicts", "correlates with"
-  for non-causal designs; "causes", "leads to" only when the design supports it.
+□ Design causally identifying? (RCT, IV, RD, DiD with parallel trends, natural experiment)
+□ Observational: confounders enumerated (DAG)? Adjusted? Strongest unmeasured considered (E-value)?
+□ Reverse causation ruled out (temporality)?
+□ Selection into treatment plausibly exogenous?
+□ Mediation: mediator measured before outcome? Full pathway tested, not just A→M and A→Y?
+□ Language calibrated to design? ("Associated with" for non-causal; "causes" only when warranted)
 ```
 
-Common pathology: causal language in abstract / conclusion when results section uses correlational language. Quote both, flag the gap.
+Common pathology: causal language in abstract, correlational language in results. Quote both, flag the gap.
 
 ---
 
 ## Phase 6 — Citation Verification
 
-This is the phase reviewers most often skip and where many real problems live. **Misrepresented citations are common.** Common patterns:
+The phase reviewers most often skip. **Misrepresented citations are common.**
 
-- Citation supports a weaker claim than the one being made
-- Citation is to a review that itself misrepresents the primary source
-- Citation is to a paper that found the *opposite* of what is claimed
-- Citation is to the authors' own prior work, recursively
-- Citation is to a preprint that was later withdrawn or contradicted
-- Citation chain (A cites B cites C cites D) where D doesn't say what A claims
-
-### 6a. Identify the load-bearing citations
-
-Not every citation needs verification. The ones that do:
+### 6a. Triage — which citations need verification
 - Citations supporting the central claim
-- Citations supporting the methodological choice ("we used X because [cite]")
-- Citations establishing the gap the paper claims to fill ("no prior work has [cite, cite]")
-- Citations to authoritative claims ("X is well-established [cite]")
+- Citations supporting methodological choices
+- Citations establishing the gap the paper claims to fill
+- Citations to authoritative or contradicting prior work
+- Citations supplying effect-size estimates used in power calculations
 
-### 6b. For each load-bearing citation
+Aim for 5–15 in a typical paper. More for reviews and synthetic claims.
 
-```
-□ Fetch the cited source (web_search → web_fetch; if paywalled, note the
-  limitation and try open access version, preprint, or accessible review).
-□ Locate the specific claim in the cited source.
-□ Compare: does the cited source actually say what the paper claims it says?
-□ If a chain (paper A cites review B which cites primary C), follow to the
-  primary at least once.
-□ Check the date — is the citation current, or has it been superseded?
-□ Check if the cited paper has been retracted, corrected, or failed to replicate.
-```
+### 6b. For each: fetch → locate → compare
+1. Fetch (DOI → PMC → preprint → Scholar). Paywalled: try preprint, alt review, or note as unverifiable.
+2. Locate the specific claim in the cited source.
+3. Compare. Verdict: **Supports / Partial / Contradicts / Unrelated / Unverifiable.**
 
-See `references/citation-verification.md` for protocols including paywalled-source workarounds, retraction-database checks, and how to write up a citation discrepancy.
+For chains (paper A cites review B cites primary C), follow to C at least once for load-bearing claims.
 
 ### 6c. Special cases
+- Self-citations: flag missing independent replication.
+- "Data not shown", personal communications, "in preparation": inadmissible — flag.
+- Retraction check: PubMed for biomedical, Retraction Watch Database for general.
+- Citations under post-publication scrutiny (PubPeer, expressions of concern): note the caveat.
 
-- **Self-citations:** acceptable when load-bearing claim is from the authors' own prior work, but flag that independent replication is missing.
-- **"Data not shown"** citations: scientifically inadmissible; flag.
-- **Personal communications:** flag as un-checkable.
-- **Citations to grey literature, blogs, preprints:** acceptable for some claims; note the provenance tier (`scientific-fact-classification` Phase 6d).
+See `references/citation-verification.md` for the full protocol and the discrepancy write-up template.
 
 ---
 
 ## Phase 7 — Logical & Argumentative Consistency
 
-Hand to `fallacy-bias-and-manipulation-analysis` if the paper makes substantial argumentative claims (theoretical papers, position pieces, narrative reviews). For empirical papers, the focused checks are:
+Hand to `fallacy-bias-and-manipulation-analysis` for theoretical / position / review papers. For empirical papers:
 
 ```
-□ Do conclusions follow from results, not exceed them?
-□ Are the conclusions consistent with the abstract, the body, and the figures?
-   (Abstracts often overclaim relative to the body — quote both.)
-□ Is the paper internally consistent? Do numbers in the abstract match the
-   tables? Do tables match the text? Do figures match the captions?
-□ Are limitations stated honestly, or rhetorically (one-sentence performative
-   limitations followed by a sweeping conclusion)?
-□ Generalisation: is the conclusion's scope warranted by the sample's scope?
-□ Are competing explanations addressed, or merely waved past?
+□ Conclusions follow from results, not exceed them?
+□ Abstract, body, and figures internally consistent? (Numbers match across sections?)
+□ Limitations concrete (constrain conclusion) or performative (one paragraph then sweeping claim)?
+□ Generalisation scope warranted by sample scope?
+□ Competing explanations engaged, not waved past?
 ```
 
 ---
 
 ## Phase 8 — Literature Context
 
-A paper does not stand alone. Find where it sits.
-
 ```
-□ Web search: is there a recent meta-analysis or systematic review on this
-  question? What does it conclude? Is the paper consistent or an outlier?
-□ Have replications been attempted? With what result? (Particularly important
-  for fields with replication crises — psychology, social science, biomed,
-  some ML benchmarks.)
-□ Is there a strong prior contradicting finding the authors have not addressed?
-□ Is the cited "novelty" actually novel? (Many papers claim novelty for results
-  that have been shown before; a quick search often catches this.)
-□ For methods papers: is there a known stronger method that goes uncited?
-□ For ML papers: what is the SOTA on the relevant benchmark? Is the comparison
-  honest (same data splits, same compute regime)?
+□ Recent meta-analysis or systematic review? Paper consistent or outlier?
+□ Replications attempted? Result?
+□ Strong contradicting prior literature engaged?
+□ "Novelty" actually novel? (Quick search often catches over-claims)
+□ Methods papers: stronger known method uncited?
+□ ML papers: SOTA cited correctly, comparison honest (same splits, matched compute)?
 ```
 
-If the paper's headline contradicts a strong prior literature, the bar for the paper's evidence rises (in proportion to the strength of the prior). If it confirms a contested literature, the marginal contribution is smaller than it would otherwise be.
+Headline against strong prior literature → bar rises in proportion to prior strength. Headline confirming contested literature → marginal contribution smaller than claimed.
 
 ---
 
 ## Phase 9 — Reproducibility & Transparency
 
 ```
-□ Is the data publicly available? If not, is the reason given defensible
-  (privacy, IP) or merely "available on request" (often code for "no")?
-□ Is the analysis code available? Versioned?
-□ Are the methods specified in enough detail to reproduce?
-   - For lab work: reagents, suppliers, catalogue numbers, protocols
-   - For ML: hyperparameters, seeds, hardware, training compute, library versions
-   - For surveys: full instrument
-   - For statistics: software, version, exact specifications
-□ Pre-registration: is there one? Was it followed? Are deviations declared?
-□ Are conflicts of interest disclosed (financial, institutional, ideological)?
-□ Are funders disclosed? Did funders have a role in design / analysis / publication?
-□ Author-contribution statement present? Plausible?
+□ Data publicly available, or "available on request" (often = no)?
+□ Analysis code available and versioned?
+□ Methods replicable from text?
+   — Lab: reagents, suppliers, catalogue numbers, protocols
+   — ML: hyperparameters, seeds, hardware, compute, library versions
+   — Surveys: full instrument
+   — Statistics: software version, exact specifications
+□ Pre-registration: present? Followed? Deviations declared?
+□ Conflicts of interest disclosed (financial, institutional, ideological)?
+□ Funder role in design / analysis / publication declared?
+□ Author-contribution statement plausible?
 ```
 
-A paper that fails the reproducibility audit isn't necessarily wrong, but the burden of trust falls heavily on the authors' reputation rather than on verifiable craft. Note this explicitly in the verdict.
+A paper that fails reproducibility isn't necessarily wrong, but trust falls heavily on reputation rather than verifiable craft. Note explicitly.
 
 ---
 
 ## Phase 10 — Reviewer Self-Audit
 
-Before writing the verdict, run the symmetry test.
-
 ```
-□ Would the verdict have been the same if the conclusion ran the other way?
-□ Did I hold the paper to its genre's standards, not standards from another genre?
-□ Have I separated "things actually wrong" from "things I'd have done differently"?
-□ For each fault flagged: did I quote the passage, name the fault, and describe
-  the non-faulty version?
-□ Have I noted what the paper does well, not only what it does badly?
-□ Have I been calibrated on the limits of my own expertise — flagging where
-  domain experts should look, rather than overclaiming?
-□ If load-bearing citations could not be verified (paywall, broken link), have
-  I said so rather than glossing?
-□ Did I check the figures and tables, or only the text?
+□ Same verdict if conclusion ran the other way?
+□ Held to its genre's standards, not another's?
+□ "Wrong" separated from "I'd have done differently"?
+□ Each flag: quoted passage + named fault + non-faulty version?
+□ Strengths named, not only faults?
+□ Limits of own expertise flagged for domain experts?
+□ Unverifiable citations stated, not glossed?
+□ Figures and tables checked, not only text?
 ```
 
-If the symmetry test fails, the review needs revision before delivery.
+If symmetry fails, revise before delivery.
 
 ---
 
 ## Phase 11 — Severity Grading & Recommendation
 
-Each finding gets a severity tag.
-
-| Tag | Definition | Effect on recommendation |
+| Tag | Definition | Effect |
 |---|---|---|
-| **Fatal** | Falsifies the central claim, or makes it un-evaluable. The paper as written cannot stand. | Reject, or require fundamental redesign |
-| **Major** | A core finding is unsupported as currently presented. Fixable with substantial new analysis or data. | Major revisions |
-| **Minor** | A specific claim is overstated, a check is missing, a limitation is undeclared. Fixable in revision. | Minor revisions |
-| **Optional** | A useful improvement that is not strictly required. | Suggested |
-| **Praise** | A genuine strength worth naming explicitly. | Stated for fairness |
+| **Fatal** | Falsifies central claim or makes it un-evaluable | Reject / fundamental redesign |
+| **Major** | Core finding unsupported as presented; fixable with substantial work | Major revisions |
+| **Minor** | Specific claim overstated, check missing, limitation undeclared | Minor revisions |
+| **Optional** | Useful but not required | Suggested |
+| **Praise** | Genuine strength worth naming | Stated for fairness |
 
-### Recommendation
+**Recommendation:** Accept / Minor revisions / Major revisions / Reject and resubmit / Reject.
 
-Choose one, with reasons:
-
-- **Accept** — no Major or Fatal findings; Minor findings either absent or trivially fixable.
-- **Minor revisions** — only Minor findings; the core contribution holds.
-- **Major revisions** — Major findings present but addressable without redesign.
-- **Reject and resubmit** — Fatal findings present, but a different paper from the same project might succeed.
-- **Reject** — Fatal findings present and not fixable within the project.
-
-State explicitly: *what would change the recommendation upward?* and *what would change it downward?* — this is the difference between a useful review and a verdict.
+State explicitly: *what would change the recommendation upward? Downward?* That is the difference between a verdict and a review.
 
 ---
 
 ## Output Format
 
-Always produce the report in this structure. Adjust depth to the paper's length and your access (e.g., partial review if behind a paywall — say so).
-
 ```markdown
-# Peer Review: [paper title or short identifier]
+# Peer Review: [paper title]
 
 ## Summary
-- **Type / venue / status:** [empirical / preprint / etc., from Phase 1a]
+- **Type / venue / status:**
 - **Stated contribution:** [one-sentence quote or paraphrase]
 - **Recommendation:** [Accept / Minor / Major / Reject-resubmit / Reject]
-- **One-line verdict:** [the headline of this review]
+- **One-line verdict:**
 
 ## What the paper does well
-[2–5 bullets — Phase 11 "Praise" items. Genuine strengths, not throat-clearing.]
+[2–5 bullets — genuine strengths, not throat-clearing]
 
 ## Fatal findings
-[If any. Each: quoted passage → named fault → why it is fatal → what would
-fix it (if anything could).]
+[Each: quoted passage → named fault → why fatal → what would fix it (if anything)]
 
 ## Major findings
-[Each: quoted passage → named fault → severity rationale → required action.]
+[Each: quoted passage → named fault → severity rationale → required action]
 
 ## Minor findings
-[As above, more compactly.]
+[More compactly]
 
 ## Optional suggestions
-[Improvements that are not required for the paper to stand.]
 
 ## Methodology audit
-[Phase 3 — itemised against the relevant checklist.]
+[Phase 3 — itemised against the relevant checklist]
 
 ## Statistical audit
-[Phase 4 — itemised. Quote specific numbers; do not gesture.]
+[Phase 4 — quote specific numbers, do not gesture]
 
 ## Causal claim audit
-[Phase 5 — only if causal language is used.]
+[Phase 5 — only if causal language is used]
 
 ## Citation verification
-[Phase 6 — for each load-bearing citation: cited source / what the paper
-claims it says / what it actually says / verdict (supports / partially supports /
-contradicts / unverifiable). Note any unverifiable citations.]
+[Phase 6 — for each load-bearing citation: cited source / paper's claim / actual content / verdict. Note unverifiable citations.]
 
 ## Literature context
-[Phase 8 — relevant meta-analyses, replications, contradicting findings.]
+[Phase 8]
 
 ## Reproducibility & transparency
-[Phase 9 — checklist results.]
+[Phase 9]
 
 ## Limits of this review
-- Domain expertise required for: [specific items the reviewer flagged but
-  could not adjudicate]
+- Domain expertise required for: [items flagged but not adjudicated]
 - Sources not accessible: [paywalled, retracted, unfindable]
 - Confidence in this review: [calibrated statement]
 
 ## Reviewer self-audit
-- Would the verdict be the same if the conclusion ran the other way? [Yes / No / explain]
+- Same verdict if conclusion ran the other way? [Yes / No / explain]
 - Standards applied: [genre and field]
-- Things flagged that are "differences in approach" rather than faults: [list]
+- "Differences in approach" flagged separately from faults: [list]
 
 ## What would change the recommendation
 - Upward to [next level]: [specific evidence or revisions]
-- Downward to [lower level]: [specific findings that would, if confirmed, worsen the verdict]
+- Downward to [lower level]: [specific findings that would worsen the verdict]
 ```
 
 ---
@@ -445,53 +344,50 @@ contradicts / unverifiable). Note any unverifiable citations.]
 
 | Pattern | Suspect | Default move |
 |---|---|---|
-| Causal language in abstract, correlational design in methods | Inferential overreach | Flag as Major; require language calibration |
-| "p < 0.05" with no effect size or CI | Statistical opacity | Require effect sizes |
+| Causal language in abstract, correlational design in methods | Inferential overreach | Major; require language calibration |
+| p<.05 with no effect size or CI | Statistical opacity | Require effect sizes |
 | Many tests, no correction, headline is the smallest p | Multiple-testing inflation | Apply correction; often kills headline |
-| "Available on request" for data | Untestable claim of openness | Note limitation |
-| Citation "shows X" — primary source shows weaker version of X | Misrepresented citation | Quote both; flag as Major |
-| Population studied ≠ population in conclusion | Generalisation overreach | Restrict conclusion to population studied |
-| One subgroup positive, others null, headline is the subgroup | Cherry-picking | Require pre-registration check |
-| Pre-registration absent in a confirmatory-framed study | Garden-of-forking-paths risk | Treat as exploratory; downgrade strength |
-| Limitations section is one performative paragraph followed by a sweeping conclusion | Rhetorical limitation | Require concrete limitation that constrains the conclusion |
-| Conflict-of-interest absent, topic is industry-funded | Disclosure gap | Require statement |
-| Methods cite a method paper from 2003; better methods exist | Method staleness | Note; not always Major |
-| Single-site, single-population study generalised to "humans" | Sample-scope overreach | Restrict scope |
-| ML benchmark improvement of 0.3% with no significance test or seed variance | Overclaim of improvement | Require seed-level statistics |
-| Replication failed in cited literature, paper does not engage | Selective citation | Require engagement |
-| Mathematical claim with sketch of proof, no formal statement | Underspecification | Require formalisation or removal |
+| "Available on request" for data | Untestable openness | Note limitation |
+| Citation "shows X" — primary shows weaker version | Misrepresented citation | Quote both; Major |
+| Population studied ≠ population in conclusion | Generalisation overreach | Restrict scope |
+| One subgroup positive, others null, headline = subgroup | Cherry-picking | Require pre-registration check |
+| Pre-registration absent in confirmatory-framed study | Forking-paths risk | Treat as exploratory; downgrade |
+| Limitations = one performative paragraph then sweeping conclusion | Rhetorical limitation | Require concrete limitation |
+| COI disclosure absent on industry-relevant topic | Disclosure gap | Require statement |
+| Single-site sample → "humans" claim | Sample-scope overreach | Restrict scope |
+| ML 0.3% improvement, no significance test, single seed | Overclaim | Require seed-level statistics |
+| Cited replication failure not engaged | Selective citation | Require engagement |
+| Mathematical claim with sketch, no formal statement | Underspecification | Formalise or remove |
 
 ---
 
 ## Golden Rules
 
-**Calibrate, don't condemn.** Most papers have real strengths and real weaknesses. A review that is all praise or all attack is almost always badly calibrated. Severity tags exist to keep this honest.
+**Calibrate, don't condemn.** All-praise or all-attack reviews are almost always badly calibrated. Severity tags exist to prevent this.
 
-**The inferential gap is where most faults live.** What was actually measured, on whom, in what conditions — versus what the conclusion says about the world. Quote both ends and measure the gap.
+**The inferential gap is where most faults live.** What was measured vs. what is claimed. Quote both ends and measure the gap.
 
-**Verify the citations that matter.** Not all of them — the load-bearing ones. Misrepresented citations are far more common than fabricated data and far easier to catch.
+**Verify the citations that matter.** Not all — the load-bearing. Misrepresented citations are far more common, and far easier to catch, than fabricated data.
 
-**Hold to the paper's genre.** A workshop paper is not a Cell paper. A philosophy paper is not a phase-3 trial. Standards are field-relative; rigour about applying field-relative standards is universal.
+**Hold to the paper's genre.** Standards are field-relative; rigour about applying field-relative standards is universal.
 
-**Distinguish "wrong" from "different".** If you would have done it differently but the authors' choice is defensible within the field, that goes in *optional suggestions*, not *findings*. Hijacking peer review to remake a paper in your own image is a known pathology.
+**Distinguish "wrong" from "different".** Defensible-but-different choices go in *optional suggestions*, not *findings*.
 
-**Symmetry under conclusion-flip.** The same paper with the opposite conclusion should receive the same review. If it would not, the review is advocacy, not assessment.
+**Symmetry under conclusion-flip.** Same paper, opposite conclusion → same review. Otherwise it is advocacy.
 
-**Acknowledge what you cannot adjudicate.** Domain-specific judgements that are outside the reviewer's competence should be flagged for expert attention, not faked. A clearly-bounded review is more useful than a confidently-wrong one.
+**Acknowledge what you cannot adjudicate.** Bound the review honestly. A clearly-bounded review beats a confidently-wrong one.
 
-**Praise what is good.** A review that does not name the paper's genuine strengths is less useful — both as feedback to authors and as a signal of reviewer calibration. Praise costs nothing when earned.
+**Praise what is good.** Costs nothing when earned; signals reviewer calibration.
 
-**The verdict is what would change it.** A recommendation without "this is what would move it" is a verdict; a recommendation with that is a review.
+**The verdict is what would change it.** Without that, it is a verdict; with it, a review.
 
 ---
 
 ## Reference files
 
-When the paper triggers domain-specific or technique-specific scrutiny, read the relevant reference file:
+- `references/methodology-audit.md` — domain-keyed checklists: RCTs, observational epi, lab biology, psychology, surveys, econ, ML/NLP, theoretical, systematic reviews, replications, qualitative.
+- `references/statistical-red-flags.md` — pathology catalogue with diagnostics; ML/NLP and Bayesian sections.
+- `references/citation-verification.md` — fetch / locate / compare protocol; chain-tracing; retraction checks; discrepancy write-up template.
+- `references/domain-checklists.md` — field-specific standards for Phase 0b calibration.
 
-- `references/methodology-audit.md` — full methodology checklist, with sub-sections for clinical trials, observational epidemiology, lab biology, psychology, social science / economics, ML / NLP, theoretical / mathematical work, systematic reviews and meta-analyses.
-- `references/statistical-red-flags.md` — extended pathology catalogue with diagnostics and ML-specific section.
-- `references/citation-verification.md` — protocols for fetching, comparing, and writing up citation discrepancies; retraction databases; paywall workarounds.
-- `references/domain-checklists.md` — field-specific standards summaries used in Phase 0b.
-
-Read these on demand, not pre-emptively. The SKILL.md alone is sufficient for a competent generic review; the references add depth where the paper's domain warrants it.
+Read on demand, not pre-emptively.
