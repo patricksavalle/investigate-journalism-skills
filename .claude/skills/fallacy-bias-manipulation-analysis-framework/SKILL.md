@@ -1,0 +1,306 @@
+---
+name: fallacy-bias-and-manipulation-analysis
+description: A structured framework for AI agents to analyse text for logical fallacies, cognitive biases, rhetorical manipulation, and other forms of untruthful reasoning.
+---
+
+# Fallacy, Bias & Manipulation Analysis
+
+Audit natural-language text — articles, speeches, op-eds, ads, scientific claims, political rhetoric — for flawed reasoning, exploited biases, rhetorical manipulation, and statistical deception.
+
+## Activation
+
+Trigger only when explicitly requested: *"analyse for fallacies"*, *"find the cognitive biases"*, *"audit this reasoning"*, *"is this propaganda?"*, *"what rhetorical tricks"*, *"stress-test this argument"*, *"find the manipulation"*.
+
+---
+
+## Phase 0 — Pre-Analysis Discipline
+
+**0a. Charity (steelman first).** Reconstruct the argument in its strongest form using the author's own best phrasing. A fallacy flag survives only if the error persists under charitable reading.
+
+**0b. Genre.** Hold the text to its own genre's standards, not formal logic's:
+formal argument · journalistic/opinion · political/campaign · marketing · scientific popularisation · social-media · educational · interpersonal-manipulative.
+
+**0c. Position-neutrality.** A valid argument for a false conclusion is still valid; an invalid argument for a true conclusion is still invalid. Never:
+- "Conclusion is wrong → must contain fallacy"
+- "This author is known for bad arguments → this one is too"
+- "Aligns with my priors → reasoning sound"
+- "Taboo topic → any defence is fallacious"
+
+**0d. Burden.** For each flag: (1) quote, (2) name the fault, (3) explain *under charitable reading*, (4) state the non-fallacious version. Labelling without demonstration is itself a fallacy.
+
+---
+
+## Phase 1 — Argument Map
+
+```
+Thesis:              [one-sentence central claim]
+Load-bearing claims: C1 [evidence/reasoning] · C2 [...] · ...
+Implicit premises:   [unstated assumptions required]
+Rhetorical frame:    [emotional/moral framing invited]
+Intended audience:   [who and of what]
+```
+
+Only load-bearing claims warrant deep scrutiny.
+
+---
+
+## Phase 2 — Formal Fallacies
+
+Detected from structure alone. If the argument has this form, it is invalid regardless of conclusion.
+
+| Fallacy | Schema / Quick Test |
+|---|---|
+| Affirming the Consequent | If P then Q; Q; ∴ P. Q could be true for other reasons. |
+| Denying the Antecedent | If P then Q; ¬P; ∴ ¬Q. Q could still hold. |
+| Undistributed Middle | Shared term not universal in any premise. |
+| Illicit Major/Minor | Term distributed in conclusion but not premise. |
+| Affirming a Disjunct | Only valid for *exclusive* or. |
+| Denying a Conjunct | ¬(A∧B); ¬A; ∴ B — does not follow. |
+| Four Terms | Syllogism with 4 terms (often via equivocation). |
+| Existential Fallacy | Universal premises → particular existence claim. |
+| Base Rate Neglect | Conditional probability without prior. |
+| Conjunction Fallacy | P(A∧B) > P(A). |
+| Masked-Man | Substituting co-referring terms in opaque contexts. |
+| Non Sequitur | Catch-all when no specific formal fault applies. |
+
+Discipline: write the argument in standard form (premises above line, conclusion below). Inability to do so is itself a finding.
+
+---
+
+## Phase 3 — Informal Fallacies
+
+### 3a. Relevance
+
+| Fallacy | Signal |
+|---|---|
+| Ad Hominem (abusive / circumstantial / tu quoque) | Attack person, not argument |
+| Guilt by Association | "This is what [unpopular group] also believes" |
+| Poisoning the Well | Pre-emptively discredit arguer |
+| Genetic Fallacy | Judge claim by origin, not content |
+| Appeal to Authority (inappropriate) | Outside-domain or unnamed "experts say" |
+| Ad Populum | "Many believe → true" |
+| Appeal to Tradition / Novelty / Nature | "Always done", "new = better", "natural = good" |
+| Appeal to Emotion (fear/pity/flattery/ridicule/spite) | Feeling substituted for reason |
+| Appeal to Consequences | "If P were true, bad things follow → ¬P" |
+| Appeal to Ignorance | "Not proven false → true" (or reverse) |
+| Red Herring / Whataboutism | Irrelevant distraction; "but what about…" |
+| Straw Man / Steelman Failure | Attack a weaker version |
+| Two Wrongs Make a Right | "They did it first" |
+
+### 3b. Presumption
+
+| Fallacy | Signal |
+|---|---|
+| Begging the Question | Conclusion smuggled into premises |
+| Circular Reasoning | A → B → C → A |
+| Complex / Loaded Question | Question presupposes disputed claim |
+| False Dilemma / Trilemma | Limited options when more exist |
+| Suppressed Evidence / Cherry-Picking | Omit disconfirming data |
+| No True Scotsman | Redefine category to exclude counterexample |
+| Moving the Goalposts | Raise the bar each time it is met |
+| Special Pleading | Universal rule, exception for own case |
+| Sunk Cost | Continue because of past investment |
+| Gambler's / Hot-Hand | Treat independent events as dependent |
+
+### 3c. Ambiguity
+
+Equivocation · Amphiboly · Accent · Composition · Division · Reification · Scope Ambiguity. The key term's meaning shifts between premise and conclusion.
+
+### 3d. Causation
+
+Post hoc · Cum hoc · Reverse causation · Common cause ignored · Single-cause oversimplification · Regression fallacy · Texas sharpshooter · Slippery slope (without mechanism).
+
+### 3e. Defective Induction
+
+Hasty generalisation · Faulty/biased sample · Anecdotal evidence · Accident · Converse accident · Argument from incredulity · Argument from ignorance.
+
+### 3f. Meta / Discourse
+
+Fallacy Fallacy (bad argument for P ≠ ¬P) · Ad nauseam (repetition as proof) · Proof by verbosity · Gish Gallop · Kettle Logic · False Balance · Continuum · Nirvana · Moralistic · Naturalistic (is-ought) · Ad Baculum · Ipse Dixit.
+
+---
+
+## Phase 4 — Cognitive Biases
+
+Flag biases the text **exploits or exhibits**, not every bias in the literature.
+
+**4a. Belief-formation.** Confirmation · disconfirmation · motivated reasoning · belief perseverance · backfire · Semmelweis reflex · illusory truth · bandwagon · authority · halo/horn · Dunning-Kruger · anchoring · availability · representativeness.
+
+**4b. Self-perception.** Self-serving · actor-observer · fundamental attribution · naive realism · false consensus · third-person · illusion of control · overconfidence · bias blind spot.
+
+**4c. Memory (when text cites testimony).** Hindsight · rosy retrospection · misinformation effect · source confusion · consistency · suggestibility.
+
+**4d. Social/group.** In-group favouritism · out-group homogeneity · group attribution · groupthink · system justification · just-world · hostile attribution · stereotype reliance.
+
+**4e. Decision/framing.** Loss aversion · endowment · status quo · framing · default · optimism/pessimism · planning · projection · hyperbolic discounting.
+
+**4f. Pattern-recognition.** Apophenia/pareidolia · clustering illusion · illusory correlation · selection/survivorship · publication/reporting · observer-expectancy.
+
+---
+
+## Phase 5 — Rhetoric & Propaganda
+
+**5a. IPA classical (1937).** Name-calling · glittering generalities · transfer · testimonial · plain folks · card stacking · bandwagon.
+
+**5b. Contemporary.**
+
+| Technique | Description |
+|---|---|
+| Firehose of falsehood | High-volume, multi-channel, inconsistent, rapid, repetitive — exhausts verification |
+| Big Lie | Falsehood so large its scale becomes its credential |
+| Gaslighting | Deny reader's perception of reality |
+| DARVO | Deny, Attack, Reverse Victim & Offender |
+| Whataboutism | Deflect via others' alleged faults |
+| Sealioning | Endless polite questioning to exhaust |
+| JAQing off | Smuggle accusation in interrogative form |
+| Concern trolling | Faux-sympathetic undermining |
+| FUD | Raise doubt to stall decisions |
+| Motte-and-Bailey | Defend narrow (motte), advance broad (bailey) |
+| Kafkatrap | Denial = proof of accusation |
+| Galaxy-brained | Clever-looking chain to absurd conclusion |
+| Dog Whistle | Innocuous surface, in-group signal |
+| Framing / Agenda Setting | Pre-load conclusions via category/metaphor; control which questions are asked |
+| Overton Window shift | Introduce extreme to normalise prior-extreme |
+| Manufactured controversy | Settled question framed as open |
+| False-humility ("reluctant conclusion") | "I didn't want to believe it, but…" |
+
+**5c. Schopenhauer (recurring in live text).** Extension (=straw man) · homonymy (=equivocation) · conceal your game · postulate what must be proved (=question-begging) · ad hominem when losing on substance · provoke anger · push opponent to overstate · claim victory regardless · last word.
+
+---
+
+## Phase 6 — Statistical Manipulation
+
+**6a. Data.** Cherry-picking · p-hacking · Texas sharpshooter · suppressed correlative · survivorship bias · selection bias · publication bias.
+
+**6b. Framing.** Misleading averages · missing baseline/denominator · absolute-vs-relative-risk confusion · percent-of-percent · truncated axes · arbitrary time windows · rate-vs-count substitution · false precision · composite indices with hidden weights · Goodhart's Law exploitation.
+
+**6c. Inference.** Base-rate neglect · Simpson's Paradox (exploited) · ecological fallacy · atomistic fallacy · McNamara fallacy · ignored confounding · ignored reverse causation · statistical-vs-practical significance · sampling-vs-systematic-error confusion.
+
+**6d. Source manipulation.** Unnamed authority · single source amplified across many outlets (echo) · missing/buried COI · retracted studies cited as current · ellipsis quotes changing meaning.
+
+---
+
+## Phase 7 — Linguistic Manipulation
+
+**7a. Weasel words.** Numerically vague ("many", "up to", "leading") · agentless passive ("mistakes were made") · anonymous authority ("experts say") · hedging adverbs ("arguably", "reportedly") · first-person plural ("we all know"). Flag only when precision is available but avoided, or weasel is load-bearing.
+
+**7b. Loaded language.** Positive/negative loaded terms · euphemism ("collateral damage") · dysphemism ("death tax") · emotive verbs ("slammed", "admitted") · scare quotes.
+
+**7c. Structural.** Nominalisation (verb→noun hides agency) · agentless passive · presupposition smuggling ("when did you stop…") · leading/rhetorical questions · definitional rigging · jargon-as-smokescreen · false precision · appeal to "common sense".
+
+**7d. Framing test.** Rewrite the same factual content with opposite framing. If the conclusion flips, the original frame is doing hidden argumentative work.
+
+---
+
+## Phase 8 — Discourse-Structural
+
+Gish Gallop · Motte-and-Bailey · Moving Goalposts · Sealioning · Bait-and-Switch (open reasonable, swap to stronger in conclusion) · Burying the Lede · Asymmetric Scrutiny · Isolated Demand for Rigour · Manufactured Urgency · False Balance · Preemptive Framing · Context Collapse · Narrative Lock-in.
+
+---
+
+## Phase 9 — Severity
+
+For each flag tag:
+- **Load-bearing** (argument fails without it) / **Supporting** / **Rhetorical flourish**. Only load-bearing faults sink the argument.
+- **Severe** / **Moderate** / **Mild**.
+- **Intentionality:** *consistent with* / *inconsistent with* deliberate manipulation — never asserted. Signals: faults all pointing one direction; precision available but avoided; professional obligation to know better.
+- **Reader-impact:** higher stakes of belief → lower tolerance for faults.
+
+---
+
+## Phase 10 — Steelman & Repair
+
+For each load-bearing flaw:
+```
+Original move:    [quote]
+Fault:            [name + category]
+Why fallacious:   [one-sentence explanation]
+Steelman:         [strongest non-fallacious form of the same point]
+Residual status:  [argument now succeeds / partly succeeds / collapses]
+```
+
+An argument that collapses under repair was being carried by the faults.
+
+---
+
+## Phase 11 — Verification Checklist
+
+- [ ] Every flag survives charitable reading
+- [ ] Standards match the text's genre, not mismatched
+- [ ] Every flag quotes a specific passage
+- [ ] Named taxonomic category, not "bad reasoning"
+- [ ] Explained why, not just labelled
+- [ ] Load-bearingness assessed
+- [ ] Steelman offered for each load-bearing flaw
+- [ ] **Self-audit:** would I flag this as aggressively if conclusion ran the other way?
+- [ ] Fallacy-fallacy avoided (argument unsound ≠ conclusion false)
+- [ ] No double-counting
+
+---
+
+## Output
+
+```markdown
+## Argument Analysis: [title / opening]
+
+### Genre & Register
+### Thesis
+### Load-Bearing Sub-Claims
+| # | Claim | Evidence offered |
+### Implicit Premises
+### Rhetorical Frame
+
+### Findings
+#### Formal Fallacies          | Passage | Fault | Explanation | Load-bearing? |
+#### Informal Fallacies        | Passage | Family | Specific | Explanation | Load-bearing? |
+#### Cognitive Biases          | Passage | Bias | Mechanism | Load-bearing? |
+#### Rhetorical Techniques     | Passage | Technique | Effect |
+#### Statistical Manipulation  | Passage | Pattern | Correct interpretation |
+#### Linguistic Manipulation   | Passage | Pattern | Neutralised paraphrase |
+#### Discourse-Structural      | Passage/section | Pattern | Effect |
+
+### Severity Summary
+- Load-bearing: [count + list]
+- Supporting / Rhetorical: [counts]
+- Overall severity: Severe / Moderate / Mild
+- Consistency with deliberate manipulation: + reasoning
+
+### Steelman Repair
+[For each load-bearing flaw — non-fallacious version + whether argument survives]
+
+### Residual Assessment
+[Which sub-claims stand, which fall, which remain undecidable]
+
+### Analyst Self-Audit
+[Acknowledged direction of analyst's own priors]
+
+### What Would Change This
+```
+
+---
+
+## Quick Reference
+
+| When you see… | Suspect… |
+|---|---|
+| "Everyone knows", "obvious that" | Ad populum, bare assertion |
+| Unnamed "studies show", "experts say" | Anonymous authority, weasel |
+| "If we allow X, next Y, then Z" (no mechanism) | Slippery slope |
+| "You would say that, you're a [label]" | Ad hominem circumstantial |
+| "My opponent thinks [absurd version]" | Straw man |
+| "The real issue is…" mid-argument | Red herring |
+| "But what about [other side]?" | Whataboutism |
+| "Just asking questions" | JAQing off |
+| Vivid anecdote → sweeping conclusion | Hasty generalisation / availability |
+| "Since X, Y" (no mechanism) | Post hoc |
+| "Natural" / "unnatural" load-bearing | Appeal to nature |
+| Term seems to shift meaning | Equivocation |
+| Only favourable examples | Cherry-picking |
+| Percentage without denominator | Missing baseline |
+| Truncated y-axis | Graphical deception |
+| "No true X would…" | No true Scotsman |
+| Criterion changes after met | Moving goalposts |
+| Claim → retreat → claim | Motte-and-Bailey |
+| High-volume rapid claims | Gish gallop / firehose |
+| "I didn't want to believe it, but…" | False-humility manipulation |
+| Agentless passive carrying moral weight | Agency-hiding |

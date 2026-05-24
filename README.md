@@ -1,14 +1,51 @@
 # Investigative AI Journalism
 
-A collection of AI Agent **SKILLs** for investigative journalism — rigorous, framework-driven methodologies for auditing claims, analysing texts, gathering open-source intelligence, and investigating events.
+AI Agent **SKILLs** for investigative journalism — rigorous, framework-driven methodologies for auditing claims, analysing texts, gathering open-source intelligence, investigating events, and peer-reviewing science.
 
-These SKILLs are designed for use with AI agents that support the SKILL pattern (e.g. [Claude Code](https://claude.com/claude-code), the Anthropic Agent SDK, and compatible runtimes). Each SKILL is a self-contained Markdown file with a structured frontmatter header that the agent loads on demand.
+Designed for [Claude Code](https://claude.com/claude-code), the Anthropic Agent SDK, and any runtime supporting the SKILL pattern (frontmatter + Markdown body). Each skill is self-contained and **trigger-gated** — never fires spontaneously.
+
+---
+
+## Pick a Skill
+
+| If your input is… | Use | Output |
+|---|---|---|
+| Any claim, belief, or decision that feels "inherited" | [`first-principles-thinking`](./.claude/skills/first-principles-thinking) | Bedrock decomposition · verdict: Confirmed / Refined / Overturned |
+| A text whose reasoning or rhetoric you doubt | [`fallacy-bias-manipulation-analysis-framework`](./.claude/skills/fallacy-bias-manipulation-analysis-framework) | Severity-rated fault report (fallacies, biases, propaganda, stats, language) |
+| A claim whose epistemic warrant you need to assess | [`scientific-fact-classification`](./.claude/skills/scientific-fact-classification) | Calibrated label (Established / Provisional / Contested / …) × warrant type (traced vs. deferred) |
+| A target — person, account, image, domain, event | [`osint-research`](./.claude/skills/osint-research) | Admiralty-graded brief + archive manifest |
+| A contested event or dominant narrative | [`investigative-reasoning`](./.claude/skills/investigative-reasoning) | Dual hypothesis (official vs. alternative) + cui bono + MMO matrix |
+| A scientific paper, manuscript, or preprint | [`peer-review`](./.claude/skills/peer-review) | Severity-graded referee report (Fatal / Major / Minor) + recommendation |
+
+Every skill outputs a **structured, auditable report** — not free-form prose.
+
+---
+
+## How They Fit Together
+
+```
+                  ┌────────────────────────────────────┐
+                  │     first-principles-thinking      │  ← orthogonal sanity check
+                  └────────────────────────────────────┘
+
+   osint-research  ─────────►  investigative-reasoning
+       (gather)                  (theorise about events)
+                                          ▲
+   fallacy-bias  +  scientific-fact-classification
+       (text)            (claim warrant)
+                                          ▲
+                                   peer-review
+                            (integrative — on scientific papers)
+```
+
+Hand-offs declared inside the skills:
+- `osint-research` → `investigative-reasoning` once gathering is done and hypothesis work begins.
+- `peer-review` delegates claim-typing to `scientific-fact-classification`, rhetoric to `fallacy-bias-…`, motive/deception to `investigative-reasoning`.
+- `first-principles-thinking` is orthogonal — invokable inside any other skill whenever a load-bearing claim feels inherited rather than derived.
 
 ---
 
 ## What is a SKILL?
-
-A SKILL is a reusable, on-demand instruction module that an AI agent can invoke when its trigger conditions are met. Each skill file follows the same structure:
 
 ```yaml
 ---
@@ -16,161 +53,115 @@ name: skill-name
 description: When and why to invoke this skill
 ---
 
-# Skill body — phases, checklists, output format
+# Phases, checklists, output format
 ```
 
-The `description` field tells the agent *when* to load the skill; the body tells it *how* to execute. Skills in this repo are:
-
-- **Triggered explicitly** — the user asks "analyse this for fallacies" and the agent loads the relevant SKILL.
-- **Self-contained** — no hidden dependencies on the surrounding project.
-- **Outcome-shaped** — they specify a structured output format so results are auditable.
-- **Composable** — some skills explicitly hand off to others (e.g. `osint-research` collects and verifies, then hands the structured findings to `investigative-reasoning` for hypothesis work).
-
----
-
-## Installation
-
-### For Claude Code
-
-Place the skill folders in your Claude Code skills directory.
-
-**User-level (available across all projects):**
-
-```
-~/.claude/skills/
-```
-
-**Project-level (scoped to one repo):**
-
-```
-<your-project>/.claude/skills/
-```
-
-Quick install:
-
-```bash
-git clone https://github.com/patricksavalle/investigate-journalism-skills.git
-cp -r investigate-journalism-skills/fallacy-bias-manipulation-analysis-framework ~/.claude/skills/
-cp -r investigate-journalism-skills/investigative-reasoning ~/.claude/skills/
-cp -r investigate-journalism-skills/scientific-fact-classification ~/.claude/skills/
-cp -r investigate-journalism-skills/osint-research ~/.claude/skills/
-cp -r investigate-journalism-skills/peer-review ~/.claude/skills/
-```
-
-Restart Claude Code (or run `/skills` in-session) so the new skills are picked up.
-
-### For other AI runtimes
-
-Any runtime that supports the SKILL pattern (frontmatter + Markdown body) can use these files directly. Point your skill loader at the folder containing the skill file.
-
----
-
-## How to Use
-
-Each SKILL activates on **explicit request only** — none of them spontaneously fire. Use a trigger phrase in your prompt and the agent will load and apply the framework.
-
-| To do this... | Say something like... |
-|---|---|
-| Audit reasoning in an article | *"Analyse this text for fallacies"* |
-| Stress-test an argument | *"Find the manipulation in this"* / *"Is this propaganda?"* |
-| Investigate an event | *"Investigate this incident"* / *"Who benefits from X?"* |
-| Develop alternative hypotheses | *"Apply critical thinking to this narrative"* |
-| Classify a claim's epistemic status | *"Is X a fact?"* / *"Weigh the evidence for Y"* |
-| Distinguish fact from assumption | *"Classify these claims"* |
-| Build a profile or trace an identifier | *"Find out about X"* / *"Trace this username/email/domain"* |
-| Verify an image or video | *"Verify this image"* / *"Where/when was this taken?"* |
-| Map a digital footprint | *"What's the digital footprint of X?"* / *"Build a profile on X"* |
-| Peer-review a scientific paper | *"Review this paper"* / *"Is this study sound?"* / *"Audit the methodology"* |
-| Verify a paper's citations | *"Do the citations support the claims?"* / *"Verify this paper's references"* |
-| Check whether results support the conclusion | *"Do the results support the conclusion?"* / *"Is the inferential gap honest?"* |
-
-Each framework produces a **structured report** (severity-rated findings, per-claim audits, source-quality verdicts, Admiralty-graded intelligence briefs) — not free-form prose. The output is designed to be auditable and re-checkable.
+`description` tells the agent *when* to load the skill; the body tells it *how* to execute.
 
 ---
 
 ## The Skills
 
-### 1. [`fallacy-bias-manipulation-analysis-framework`](./fallacy-bias-manipulation-analysis-framework)
+### [`first-principles-thinking`](./.claude/skills/first-principles-thinking)
+> Decompose a claim or proposal to bedrock truths and rebuild reasoning from there.
 
-> A structured framework for AI agents to analyse text for logical fallacies, cognitive biases, rhetorical manipulation, and other forms of untruthful reasoning.
+Four moves: state · decompose · excavate to Bedrock / Assumption / Unknown · rebuild. Compact engine for stress-testing conventional wisdom or stuck arguments.
 
-Audits articles, speeches, op-eds, scientific claims, marketing copy, and political rhetoric for flawed reasoning. Begins with mandatory pre-analysis discipline (steelman first, genre awareness) before flagging fallacies, biases, manipulation tactics, and statistical deception. Outputs severity-rated findings with direct quotations and structural diagnosis.
-
-**Triggers:** *"Analyse this for fallacies"*, *"Find the cognitive biases"*, *"Audit this article's reasoning"*, *"Is this propaganda?"*, *"What rhetorical tricks is this using?"*, *"Stress-test this argument"*.
-
----
-
-### 2. [`investigative-reasoning`](./investigative-reasoning)
-
-> A structured framework for AI agents to critically analyze events, detect deception, and develop well-reasoned alternative hypotheses.
-
-A detective-method playbook for investigating events and challenging dominant narratives. **Mandates web search at every phase** to break free of training-data biases that skew toward official narratives. Traces every claim to origin, applies cui bono / means–motive–opportunity analysis, surfaces what official accounts leave out, and constructs ranked alternative hypotheses with explicit confidence levels.
-
-**Triggers:** *"Investigate this event"*, *"Develop a conspiracy theory about X"*, *"Who benefits from Y?"*, *"Apply critical thinking to this narrative"*, *"Find red flags in this explanation"*.
+**Triggers:** *"break this down from first principles"*, *"is this actually true?"*, *"why is it done this way?"*, *"what are we assuming?"*, *"rethink this"*, *"challenge my thinking"*.
 
 ---
 
-### 3. [`scientific-fact-classification`](./scientific-fact-classification)
+### [`fallacy-bias-manipulation-analysis-framework`](./.claude/skills/fallacy-bias-manipulation-analysis-framework)
+> Audit a text for logical fallacies, cognitive biases, rhetorical manipulation, and statistical deception.
 
-> A structured framework for AI agents to weigh, recognise, and classify claims along the spectrum from objective fact to assumption, opinion, conjecture, and unfalsifiable belief.
+Steelman first, then systematic scan: formal → informal fallacies → cognitive biases → rhetoric/propaganda (firehose, motte-and-bailey, DARVO, gaslighting, …) → statistical manipulation → linguistic and discourse-level. Severity-tagged with steelman repair for every load-bearing flaw.
 
-Replaces the binary fact / not-fact verdict with a calibrated spectrum. Classifies each load-bearing claim by type (analytic, empirical, causal, theoretical, normative…), tests for falsifiability, GRADEs evidence quality, applies Bradford Hill for causal claims, and labels the result on two axes — **evidence strength** *and* **warrant type** (traced vs. deferred to consensus). Forces explicit calibration; flags consensus failure modes (funder capture, prestige cascades, replication-crisis fields).
-
-**Triggers:** *"Is X a fact?"*, *"Weigh the evidence for Y"*, *"Classify these claims"*, *"Distinguish fact from assumption"*, *"Has this been proven?"*, *"How well-supported is this?"*, *"Is this objective?"*.
-
----
-
-### 4. [`osint-research`](./osint-research)
-
-> A structured framework for AI agents to plan, execute, and verify open-source intelligence (OSINT) investigations using only publicly available information (PAI).
-
-A full OSINT cycle — Planning → Collection → Processing → Analysis → Dissemination — calibrated to what an AI agent can actually do without shell access or paid databases. Layers search across engines, archives, public records, social platforms, geospatial sources, and specialist registries. Grades every finding with the **Admiralty Code** (NATO STANAG 2511) on independent reliability and credibility axes. Covers reverse image search, geolocation, chronolocation, account-authenticity checks, and systematic identifier pivoting (name → email → domain → infrastructure → entity). Hard constraints (PAI only, no active engagement, no facial recognition on private individuals, harm minimisation) define the boundary between OSINT and conduct that is unethical, unlawful, or operationally compromising.
-
-**Triggers:** *"Find out about X"*, *"Investigate / build a profile on X"*, *"Who is behind this account?"*, *"Verify this image/video"*, *"Where/when was this taken?"*, *"Trace this username/email/domain"*, *"What's the digital footprint of X?"*, *"Is this account real?"*.
-
-**Pairs with:** `investigative-reasoning` — `osint-research` does the gathering and verification mechanics; hand the structured brief to `investigative-reasoning` when the task extends to hypothesis construction or narrative challenge.
+**Triggers:** *"analyse this for fallacies"*, *"find the cognitive biases"*, *"audit this reasoning"*, *"is this propaganda?"*, *"what rhetorical tricks"*, *"stress-test this argument"*, *"find the manipulation"*.
 
 ---
 
-### 5. [`peer-review`](./peer-review)
+### [`scientific-fact-classification`](./.claude/skills/scientific-fact-classification)
+> Classify each claim along a spectrum from established fact to unfalsifiable belief.
 
-> A structured framework for rigorous, citation-verified peer review of scientific papers — auditing methodology, statistics, causal claims, citations, reproducibility, and literature context, then issuing a severity-graded report with explicit recommendation.
+Replaces the binary fact / not-fact verdict. Per claim: type → falsifiability → evidence tier + GRADE → Bradford Hill (causal claims) → Bayesian weighing → confidence label × warrant type (**traced** vs. **deferred to consensus** — explicitly flags consensus failure modes: funder capture, prestige cascades, replication-crisis fields).
 
-Reviews a paper as a competent, sceptical, fair-minded reviewer would. Calibrates standards to the paper's genre and field (preprint vs. journal article; RCT vs. observational; ML vs. lab biology), audits the **inferential gap** between what was measured and what is claimed, scrutinises statistics for p-hacking / HARKing / forking-paths / multiple-testing inflation, and **verifies load-bearing citations** by fetching the cited source and comparing it to the paper's claim (Supports / Partial / Contradicts / Unrelated / Unverifiable). Outputs severity-graded findings (**Fatal / Major / Minor / Optional / Praise**), an explicit recommendation (Accept / Minor / Major / Reject-resubmit / Reject), and — crucially — *what would change the recommendation upward or downward*. Enforces symmetry under conclusion-flip: same paper, opposite conclusion → same review.
+**Triggers:** *"is X a fact?"*, *"weigh the evidence for Y"*, *"classify these claims"*, *"distinguish fact from assumption"*, *"has this been proven?"*, *"how well-supported is this?"*, *"is this objective?"*.
 
-**Triggers:** *"Review this paper"*, *"Is this study any good?"*, *"Audit this manuscript"*, *"Is the methodology sound?"*, *"Do the results support the conclusion?"*, *"Verify this paper's citations"*, *"Is this reproducible?"*, *"Produce a referee report"*.
+---
 
-**Pairs with:** `scientific-fact-classification` (claim typing, evidence grading, causal-claim audit), `fallacy-bias-manipulation-analysis-framework` (fallacy / rhetoric scrutiny on theoretical or position papers), and `investigative-reasoning` (when motive, deception, or undisclosed-interest analysis is in scope). `peer-review` orchestrates these where useful and adds the methodology, statistical, citation-verification, reproducibility, and literature-context layers itself.
+### [`osint-research`](./.claude/skills/osint-research)
+> Plan, execute, and verify open-source intelligence using only publicly available information (PAI).
+
+Five-phase cycle (Planning → Collection → Processing → Analysis → Dissemination), calibrated to what an AI agent can actually do without shell access or paid databases. **Admiralty Code** (NATO STANAG 2511) grading on independent reliability/credibility axes. Pivoting chains for name / username / email / domain / phone / image / entity. Hard constraints — PAI only, no active engagement, no facial recognition on private individuals, harm minimisation — define the boundary between OSINT and conduct that is unethical, unlawful, or operationally compromising.
+
+**Triggers:** *"find out about X"*, *"build a profile on X"*, *"who is behind this account?"*, *"verify this image/video"*, *"where/when was this taken?"*, *"trace this username/email/domain"*, *"digital footprint of X"*.
+
+**Pairs with:** `investigative-reasoning` (gathering → hypothesis construction).
+
+---
+
+### [`investigative-reasoning`](./.claude/skills/investigative-reasoning)
+> Critically analyse events, detect deception, develop ranked alternative hypotheses.
+
+Detective-method playbook. **Mandates web search at every phase** to break free of training-data bias toward official narratives. Source tiers (Tier 0 = contemporary primary), CoI demotion, geopolitical-alignment checks, evidence ladder. **18 influence-operation patterns** (false flag, problem–reaction–solution, limited hangout, controlled opposition, astroturfing, …). **Dual-hypothesis mandate:** every investigation produces a steelmanned official narrative AND a steelmanned alternative, compared head-to-head.
+
+**Triggers:** *"investigate this event"*, *"develop a conspiracy theory about X"*, *"who benefits from Y?"*, *"apply critical thinking to this narrative"*, *"find red flags in this explanation"*.
+
+---
+
+### [`peer-review`](./.claude/skills/peer-review)
+> Rigorous, citation-verified peer review of scientific papers.
+
+Audits methodology, statistics, causal claims, citations, reproducibility, and literature context. Calibrates standards to the paper's genre and field (preprint vs. journal; RCT vs. observational; ML vs. lab biology). Audits the **inferential gap** between what was measured and what is claimed. **Verifies load-bearing citations** by fetching the cited source and comparing it to the paper's claim (Supports / Partial / Contradicts / Unrelated / Unverifiable). Outputs severity tags (**Fatal / Major / Minor / Optional / Praise**), an explicit recommendation, and *what would change it upward or downward*. Enforces symmetry under conclusion-flip.
+
+**Triggers:** *"review this paper"*, *"is this study sound?"*, *"audit the methodology"*, *"do the results support the conclusion?"*, *"verify the citations"*, *"is this reproducible?"*, *"produce a referee report"*.
+
+**Pairs with:** `scientific-fact-classification` (claim typing, evidence grading), `fallacy-bias-…` (rhetoric on position papers), `investigative-reasoning` (motive/deception analysis). `peer-review` orchestrates these and adds methodology, statistical, citation-verification, reproducibility, and literature-context layers itself.
+
+---
+
+## Installation
+
+The skills live under `.claude/skills/` in this repository — Claude Code's standard skills location — so an AI agent can copy them in place without any path rewriting.
+
+Paste this to Claude Code (or any AI coding agent with shell access):
+
+> Install the SKILLs from `https://github.com/patricksavalle/investigate-journalism-skills`.
+> Clone the repository to a temporary location, then copy every folder inside its `.claude/skills/`
+> directory into my `~/.claude/skills/` directory (for user-level, available across all projects).
+> If I'd prefer a project-scoped install, copy them into this project's `.claude/skills/` instead —
+> ask me which one I want. After copying, remind me to restart Claude Code or run `/skills` so
+> the new skills are loaded.
+
+**Other AI runtimes:** any runtime supporting the SKILL pattern can use these files directly. Point your skill loader at `.claude/skills/`.
 
 ---
 
 ## Design Principles
 
-All SKILLs in this repo share a common philosophy:
-
 - **Trigger-gated** — never spontaneous; always explicit invocation.
 - **Charity first** — steelman the target before challenging it.
-- **Self-audit** — apply the same standard regardless of which side the conclusion lands on.
+- **Self-audit** — same standards regardless of which side the conclusion lands on.
 - **Calibration over verdict** — graded confidence labels, not binary judgements.
-- **Traceability** — distinguish what has been followed to primary evidence from what is being taken on authority.
-- **Honest tooling boundaries** — frameworks state what an AI agent can and cannot do natively, so the user is never sold fabricated tradecraft.
+- **Traceability** — distinguish what has been followed to primary evidence from what is taken on authority.
+- **Honest tooling boundaries** — frameworks state what an AI agent can and cannot do natively; no fabricated tradecraft.
 - **Structured output** — every framework specifies its report format so findings are auditable.
+
+---
+
+## Contributing
+
+Issues and PRs welcome. New SKILLs should follow the existing structure:
+
+1. Frontmatter with `name` and `description`
+2. Explicit **Activation** section listing trigger phrases (and explicit non-triggers where useful)
+3. Phase-numbered methodology (Phase 0 = pre-analysis discipline)
+4. Defined **Output Format** block
+5. **Quick-Reference Matrix** at end
+6. Where relevant, an explicit **Pairs with** rule
 
 ---
 
 ## License
 
 See [LICENSE](./LICENSE).
-
----
-
-## Contributing
-
-Issues and pull requests welcome. New SKILLs should follow the existing structure:
-
-1. Frontmatter with `name` and `description`.
-2. Explicit **Activation** section listing valid trigger phrases (and explicit non-triggers where useful).
-3. Phase-numbered methodology (Phase 0 — pre-analysis discipline; Phase 1+ — execution).
-4. A defined **Output Format** block.
-5. A **Quick-Reference Matrix** and **Golden Rules** summary at the end.
-6. Where relevant, an explicit **Pairing rule** stating which other skill should pick up where this one stops.
