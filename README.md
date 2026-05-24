@@ -1,5 +1,9 @@
 # Investigative AI Journalism
 
+<p align="center">
+  <img src="./overview.png" alt="Investigative AI Journalism — overview of the SKILLs" width="520">
+</p>
+
 AI Agent **SKILLs** for investigative journalism — rigorous, framework-driven methodologies for auditing claims, analysing texts, gathering open-source intelligence, investigating events, and peer-reviewing science.
 
 Designed for [Claude Code](https://claude.com/claude-code), the Anthropic Agent SDK, and any runtime supporting the SKILL pattern (frontmatter + Markdown body). Each skill is self-contained and **trigger-gated** — never fires spontaneously.
