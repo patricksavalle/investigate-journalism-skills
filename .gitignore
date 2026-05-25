@@ -1,0 +1,5 @@
+# Local (per-developer) Claude Code settings — never committed.
+.claude/settings.local.json
+
+# Investigation scratch / working drafts kept locally.
+*.scratch.md
