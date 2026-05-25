@@ -79,6 +79,7 @@ A few rules that keep the method honest:
 - **Authority is not bedrock.** "Expert X says so" is an Assumption — possibly a well-supported one, but inherited. Bedrock is the underlying evidence the expert relied on, not the expert's status.
 - **Convention is not bedrock.** "This is the industry standard" explains adoption, not truth.
 - **Analogy is not bedrock.** "It's like X, so it should behave like X" is a hypothesis, not a foundation. Useful for generating ideas; invalid as proof.
+- **Named frameworks are claims, not credentials.** If the source invokes a named criterion ("fulfils Koch's postulates", "meets CONSORT", "satisfies the precautionary principle", "passes the Turing test"), do not pass through the invocation. Decompose the framework's actual requirements as load-bearing components and excavate each. Invocation is evidence of intent, not of fulfilment. The deepest failures hide one level up from the surface claim — when a claim cites a framework, decompose the framework too.
 - **Don't pretend everything reduces to physics.** Useful bedrock is the *most fundamental level relevant to the question*. For "should we restructure this team?", bedrock is facts about humans, incentives, and the work — not quantum mechanics. Stop reducing when further reduction stops changing the answer.
 - **One pass is usually enough.** First principles thinking has diminishing returns. If a second pass finds nothing new, stop.
 
