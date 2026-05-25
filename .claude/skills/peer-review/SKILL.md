@@ -44,6 +44,8 @@ empirical primary · theoretical/conceptual · methods · systematic review / me
 
 **1c. Load-bearing elements.** Which claims, methodological choices, or citations would, if wrong, collapse the contribution? Maximum scrutiny.
 
+**1d. Named-framework audit.** If the paper invokes a named criterion ("fulfils Koch's / Rivers' postulates", "meets Bradford Hill", "satisfies CONSORT / ARRIVE / STROBE / ICH-GCP / PRISMA"), pull the verbatim sentence and **enumerate the framework's actual requirements**. Check each against what *this paper* did vs. what is delegated to citations. Invocation is not fulfilment. Delegated requirements move to mandatory Phase 6 verification. A framework-vs-execution gap is **Fatal** when the headline claim depends on the invocation. The deepest failures hide one level up from the surface claim — audit the framework, not just the conclusion.
+
 ---
 
 ## Phase 2 — Claim Extraction & Typing
@@ -68,6 +70,12 @@ DESIGN
 □ Randomisation described, baseline balance verified
 □ Blinding present where possible — of whom, at what stages
 □ Unit of analysis = unit of randomisation
+
+INPUT / MATERIAL  (mandatory first methods question: "what, in concrete physical terms, was actually used?")
+□ Compound terms unpacked ("purified X" → purified how, to what spec; "isolated Y" → from what, by what method; "cultured Z" → passaged in what cells, harvested how; "treated W" → with what, at what dose)
+□ "The X" in the conclusion = the X that was actually input? Or a richer mixture (cell supernatant, crude extract, co-passaged material) being labelled by its intended component?
+□ Inoculum / sample / reagent characterised (purity, concentration, filtration, contamination checks documented in this paper, not delegated)
+□ If the active agent's identity is under-determined by the input, causal attribution to that agent is Major or Fatal
 
 SAMPLE / DATA
 □ Inclusion/exclusion specified and defensible
@@ -143,6 +151,7 @@ Common pathology: causal language in abstract, correlational in results. Quote b
 The phase most reviewers skip. **Misrepresented citations are common.**
 
 **6a. Triage — which to verify:**
+- **MANDATORY**: citations the paper relies on to claim a named framework is satisfied (Phase 1d). Unverifiable here ("in press", "in preparation", paywalled with no preprint) = framework claim is unverified — Fatal/Major depending on load.
 - Citations supporting the central claim
 - Citations supporting methodological choices
 - Citations establishing the gap the paper claims to fill
@@ -216,7 +225,8 @@ Reproducibility failure isn't necessarily wrongness, but trust falls on reputati
 ## Phase 10 — Reviewer Self-Audit
 
 ```
-□ Same verdict if conclusion ran the other way
+□ Same verdict if conclusion ran the other way (EXECUTE the flip: draft the verdict assuming the opposite conclusion, check whether findings survive — do not just assert "yes". If you cannot do this honestly, the critique is calibrated to the answer, not the evidence)
+□ Verbatim text pulled from methods / results / framework-invocation sentences — not paraphrased from summaries or model digests (summaries smooth away framework-vs-execution gaps)
 □ Held to its genre's standards
 □ "Wrong" separated from "I'd have done differently"
 □ Each flag — quoted passage + named fault + non-faulty version
@@ -298,6 +308,9 @@ State explicitly: *what would change the recommendation upward? downward?* That 
 | Pattern | Suspect | Default move |
 |---|---|---|
 | Causal language in abstract, correlational design in methods | Inferential overreach | Major; require language calibration |
+| Named framework invoked ("Koch's postulates fulfilled", "meets CONSORT", etc.) — execution not audited against actual requirements | Framework-vs-execution gap | Decompose framework; check each requirement against this paper; **Fatal** if headline depends on invocation |
+| Foundational requirement delegated to citations "in press" / "in preparation" / unpublished | Unverifiable delegation | Treat as outstanding criterion, not met |
+| Input described by compound term ("cultured X", "purified Y") with no characterisation of what was actually used | Active-agent under-determination | Major; require specification of physical material |
 | p<.05, no effect size or CI | Statistical opacity | Require effect sizes |
 | Many tests, no correction, headline is smallest p | Multiple-testing inflation | Apply correction; often kills headline |
 | "Available on request" for data | Untestable openness | Note limitation |
