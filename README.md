@@ -37,6 +37,18 @@ If you can't show your work, you can't be trusted. If you can, you can be checke
 
 ---
 
+## How to use these tools
+
+> **You don't have to learn the toolbox. You describe what you want, and the right tool loads itself.**
+
+1. **Install once.** Paste the prompt under [*Install*](#install) (below) into Claude Code or your AI agent of choice. The seven skills land in a standard location and stay there.
+2. **Just ask, in plain language.** *"Check whether this claim is solid."* *"Investigate this story."* *"Audit this paper."* The agent picks the right tool from your phrasing — you never need to remember tool names.
+3. **Read the report.** Every output follows the same shape: a verdict, the findings with each claim labelled by source type, what would change the conclusion, and a self-audit. The labels show you which parts were fetched fresh and which lean on the AI's memory.
+4. **Talk back. Push back. Argue with it.** Discussing the result is **encouraged, not risky** — the discipline survives the conversation. Your corrections get verified like any other source; un-sourced pushback gets flagged rather than silently absorbed. You **cannot accidentally corrupt the audit chain by chatting about it**. See [*Discussing the result*](#discussing-the-result) below for the mechanics.
+5. **Hand it new evidence whenever it arrives.** Give the AI the new source and ask *"does this change anything?"* — belief-revision kicks in and produces a calibrated update, with the old verdict explicitly compared to the new one.
+
+---
+
 ## Pick a tool
 
 | You want to… | Use |
