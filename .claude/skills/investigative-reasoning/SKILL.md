@@ -313,10 +313,10 @@ Cui Bono gives a starting point, never proof. Multiple actors can benefit simult
 
 ## Phase 5 — MMO Matrix
 
-| Suspect | Motive | Means | Opportunity | Score |
+| Suspect | Motive (source) | Means (source) | Opportunity (source) | Score |
 |---|---|---|---|---|
 
-Rank by score; develop theory on highest-scoring actors.
+Each cell must cite the source-traced finding(s) determining the score. When sources conflict on a suspect's Means or Opportunity (e.g. one named naval expert says capability is sufficient, another says marginal), the cell must (a) list both sources and (b) state which prevailed and why; an unstated weighting is prior-leak. A "Low" without a named source claiming the absence of capability or access is also prior-leak. Rank by score; develop theory on highest-scoring actors.
 
 ---
 
@@ -374,7 +374,11 @@ Motive:      [Why]
 Mechanism:   [How]
 
 Positive evidence (FOR this hypothesis — direct evidence supporting its claim):
-  [Each: claim → source → source tier → CoI → evidence tier → date → warrant]
+  (i) MOTIVE / INTENT evidence — pre-event statements of intent, cui-bono, patterns of incentive:
+    [Each: claim → source → source tier → CoI → evidence tier → date → warrant]
+  (ii) EXECUTION evidence — direct evidence that this actor *did* the act
+       (forensic, eyewitness, intercepted comms, named-source confession, physical-trace chain):
+    [Each: claim → source → source tier → CoI → evidence tier → date → warrant]
 
 Doubt cast on the alternative (AGAINST the rival — evidence that weakens the other hypothesis):
   [Each: claim → source → source tier → CoI → evidence tier → date → warrant]
@@ -390,13 +394,19 @@ Confidence:       [Low / Medium / High + rationale]
 >
 > This is the most common failure mode in dual-hypothesis work: the official narrative is steelmanned with positive evidence, and the alternative is built only from anomalies and motive (doubt cast on the official) — or vice versa. The skill exists to catch this asymmetry.
 
+> **Motive vs. execution sub-asymmetry (mandatory).** Within the Positive-evidence column, motive/intent items and execution items are not interchangeable. A hypothesis with rich motive evidence and zero execution evidence is not supported — it is at "the suspect had a reason" but not "the suspect did it." An execution sub-column with zero entries is a finding, and the hypothesis's Confidence must reflect that. Adversarial-calibration runs surface this divergence sharply: two analysts on the same evidence can produce radically different verdicts by counting the same motive-items as positive evidence in one direction and as motive-only in the other. The split is what prevents that drift.
+
 > **Steelman sourcing (mandatory).** Hypothesis B must be built from its own primary literature — best-case arguments by its actual proponents. Not from mainstream rebuttals. Check: "Did I read the best primary source by Hypothesis B advocates, or reconstruct from critics?"
+>
+> **Independent-corroborator slot (mandatory).** For *each* hypothesis, name the single strongest source that is *not* one of its named primary advocates — an independent OSINT investigator, a dissenting in-network official, or a non-aligned state intelligence product that survives the geopolitical-witness rule. If no such source can be named, that absence is itself a finding (the hypothesis lacks independent corroboration), not a reason to omit the search. The corroborator (or its explicit absence) must appear in the Phase 9 output.
 
 **Comparison.**
 ```
                           A (Official)     B (Alternative)
-Positive-evidence count:                                   ← direct support
+Motive-evidence count:                                     ← intent / cui-bono / pattern
+Execution-evidence count:                                  ← direct evidence actor did the act
 Doubt-only-evidence count:                                 ← only weakens rival
+Independent corroborator:                                  ← non-advocate source per Steelman check
 Explains all red flags?
 Supported by Tier 0?
 Free of CoI-conflicted
@@ -439,6 +449,7 @@ Prefer fewest unsupported assumptions. But: sophisticated actors embed complexit
 - [ ] Each load-bearing evidence item evaluated for collector independence, chain of custody, geopolitical alignment
 - [ ] Evidence at L4–5, not L1–2 masquerading as established
 - [ ] Inaccessible evidence flagged, not silently omitted
+- [ ] Verdict floor stated separately from verdict leaning — floor = the conclusion that holds under either prior; leaning = the additional weight the analyst's framing produces. Both must be statable; if the leaning carries the verdict and the floor is empty, the verdict is interpretive, not source-traced
 
 ---
 
@@ -495,7 +506,7 @@ Prefer fewest unsupported assumptions. But: sophisticated actors embed complexit
 [Specific evidence — declassified document, primary witness, forensic re-examination, foreign-archive access — that would shift the verdict]
 
 ## Self-Audit
-- **Symmetry test:** Would I have reached the same verdict if the politically/socially expected answer ran the other way? If no — explain. If you can't tell — say so.
+- **Symmetry test:** Would I have reached the same verdict if the politically/socially expected answer ran the other way? Answer must name the specific phases (Phase 9 positive-evidence column, Phase 5 MMO scoring, Phase 3 CoI demotion thresholds, the confidence rubric) where the verdict-leaning is most sensitive to the prior. Asserting "I would have reached the same verdict, full stop" without phase-level identification is itself a red flag — it claims symmetry without proving it. If no — explain. If you can't tell — say so.
 - **Bias & fallacy check** (applied to *both* hypotheses): [Phases 7–8 outputs]
 - **Steelman sourcing check:** Was Hypothesis B built from its advocates' primary literature, or reconstructed from critics' summaries?
 - **Institutional-network check:** Were sources counted as independent only after the funding / mandate / national-alignment map was drawn?
