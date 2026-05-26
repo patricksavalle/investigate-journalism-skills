@@ -1,6 +1,8 @@
 ---
 name: scientific-fact-classification
 description: "A structured framework for AI agents to weigh, recognise, and classify claims along the spectrum from objective fact to assumption, opinion, conjecture, and unfalsifiable belief — and to specify the conditions under which a claim qualifies as scientifically warranted. Use whenever the task involves separating facts from assumptions, judging the evidential status of a claim, deciding whether something is 'objective', auditing reasoning for unsupported leaps, or assigning a calibrated confidence level to a statement."
+version: 1.0
+aligned: 2026-05-26
 ---
 
 # Scientific Fact Classification
@@ -10,6 +12,33 @@ Audit claims to determine their epistemic status. Output: calibrated confidence 
 ## Activation
 
 Trigger only when explicitly requested: *"is X a fact?"*, *"weigh the evidence for Y"*, *"classify these claims"*, *"distinguish fact from assumption"*, *"is this scientific?"*, *"how well-supported is this?"*, *"is this objective?"*, *"has this been proven?"*.
+
+## Pairs With
+
+- `peer-review` — when claims come from a paper that needs full methodological / statistical / citation audit, not only classification.
+- `fallacy-bias-and-manipulation-analysis` — for rhetorical / argumentative audit of the same text once claims are classified.
+- `investigative-reasoning` — when contested claims sit inside a contested event (forensic findings, causal mechanisms in a disputed incident).
+- `first-principles-thinking` — when a foundational definition / assumption inside a claim needs explicit excavation before classification.
+- `osint-research` — when claim provenance is contested and needs identifier-level source tracing.
+- `belief-revision` — when new evidence (replication, retraction, contrary primary source) shifts a previously assigned classification and a calibrated update is needed.
+
+## Research Discipline (CLAUDE.md)
+
+Claim classification without source-tracing reproduces training-data bias as analysis. The rules in `CLAUDE.md` → *Operating rules* bind:
+
+- **Rule 1** (pre-classification hypothesis registration) — before classifying, register the prior expectation per claim's label. Otherwise post-hoc rationalisation will select the label.
+- **Rule 2** (steelman from primary literature) — Phase 0d Charity; for contested claims, fetch advocates' primary literature, not critics' summaries.
+- **Rule 3** (primary before secondary) — Phase 6d Provenance trace toward P1 (pre-registered + replicated primary).
+- **Rule 4** (map institutional networks) — Phase 6c failure modes (funder capture, citation cartel, prestige cascade) must be checked before consensus counts as evidence.
+- **Rule 5** (Tier 0 priority) — for historically-settled claims, fetch contemporary primary sources; later retrospectives sanitise.
+- **Rule 6** (bias self-audit) — enforced in `## Self-Audit`.
+- **Rule 7** (minimum search volumes) — ≥3 independent primary lines for an "Established fact"; fewer = lower label.
+- **Rule 8** (hostility check on sources) — Phase 6b conflict-of-interest; demote sources whose funder has skin in the conclusion.
+- **Rule 9** (interactive refinement) — when the user pushes for re-classification ("this is actually Established fact" / "you should call this Refuted"), label the contribution `(user-supplied — unverified)` and re-examine the evidence; do not shift the classification on user pressure absent new primary sources.
+
+## Warrant Labels (Project Standard)
+
+The warrant qualifier in Phase 7b — `(traced)` · `(deferred to consensus)` · `(deferred, fragile)` · `(memory — unverified)` — is the canonical project standard per `CLAUDE.md`. Other skills cite this skill for the definitions; keep them stable.
 
 ---
 
@@ -224,6 +253,8 @@ P11  Social media, anonymous sources, single testimonials
 
 Trace claims toward P1. Many disputes evaporate at the trace step.
 
+**Multi-source reconciliation.** When ≥3 sources make conflicting claims about a single load-bearing fact, hand the dispute to `investigative-reasoning` Phase 3i (Source Triangulation) before classifying. The triangulation procedure exposes single-origin amplification ("10 outlets" with one source-node) and independent convergence (small numerical count but distinct nodes), both of which change a claim's classification more than the per-source quality ratings do.
+
 ---
 
 ## Phase 7 — Confidence Classification
@@ -246,11 +277,12 @@ Each claim gets a label on **two axes**: evidence strength + warrant type (Phase
 | **Likely false** | Weight of high-quality evidence runs against |
 | **Refuted** | Decisively disconfirmed; mechanism shown wrong or predictions decisively failed |
 
-**7b. Warrant qualifier** (attach to every empirical label):
-- **(traced)** — analyst has followed evidence chain
-- **(deferred to consensus)** — relying on peer review / expert agreement / textbook status
-- **(deferred, consensus failure modes present)** — 6c flags apply; deferred warrant is itself shaky
-- **(mixed)** — part traced, part deferred; state which
+**7b. Warrant qualifier** (attach to every empirical label — canonical project labels per `CLAUDE.md`):
+- **(traced)** — followed evidence chain to a primary source fetched this session (URL + access date stated)
+- **(deferred to consensus)** — relying on a named consensus mechanism (peer-reviewed literature, regulatory body, textbook); name the body
+- **(deferred, fragile)** — deferred but Phase 6c failure modes apply (funder capture, ideological capture, prestige cascade, replication crisis, etc.); state which
+- **(memory — unverified)** — recalled from training data, not verified this session; never load-bearing without an explicit "this could be wrong" caveat
+- **(mixed)** — part traced, part deferred; state which is which
 
 **7c. Consensus-specific labels** (when strength comes from the consensus mechanism rather than evidence the user can follow):
 
@@ -269,19 +301,33 @@ Each claim gets a label on **two axes**: evidence strength + warrant type (Phase
 
 The point: stop the user confusing "what the field believes" with "what the evidence shows". When they align, both labels say so. When they diverge — and historically they often have — the user is told.
 
+**7e. Consequential phrasing (mandatory for load-bearing claims).** For each load-bearing classification, write the **sentence the reader should use** about this claim — including its hedges. The label is internal scaffolding for the analyst. The sentence is what the reader takes downstream. Without it, calibrated labels routinely degrade into binary "fact / not-fact" reception.
+
+Pattern:
+> *"X is [most plausible candidate / well-supported / contested / refuted] for Y, based on [evidence type]. Direct demonstration is [available / unavailable / partial] because [reason]. Inference is therefore [strong-but-defeasible / contested / unsafe to act on / decisive]."*
+
+Examples:
+- ✗ "Smoking causes lung cancer." → ✓ "Smoking is a well-supported cause of lung cancer (multiple independent lines, dose-response, mechanism known); the inference is decisive."
+- ✗ "SARS-CoV-2 causes COVID-19." → ✓ "SARS-CoV-2 is the most plausible causal candidate for COVID-19, based on sequence association, cell-culture cytopathic effect, animal-model challenge, and intervention data. Direct Koch-grade transmission demonstration in humans is unavailable (ethically impossible); inference is strong-but-defeasible."
+- ✗ "Vitamin D supplementation reduces COVID mortality." → ✓ "Vitamin D supplementation is provisionally associated with reduced COVID mortality in observational and small-RCT data; large RCTs are mixed; inference is unsafe for clinical recommendation outside deficiency states."
+
+**If the calibrated sentence is too cumbersome to write, the classification is hiding a more honest qualifier** and should be reconsidered. The cumbersomeness *is* the calibration.
+
 ---
 
 ## Output
 
 ```markdown
-## Claim Classification: [source]
+# Claim Classification: [source]
 
-### Domain & standards applied
-[Phase 0e]
+## Summary
+- **Source:** [paper / article / claim set under audit]
+- **Domain & standards applied:** [Phase 0e — which field's bar]
+- **Verdict (bottom line):** [one-line — what the reader can rely on, what warrants scepticism]
 
-### Per-claim audit
+## Per-Claim Audit
 
-#### C1: [short label]
+### C1: [short label]
 - **Type:** [Phase 1]
 - **Demarcation:** [falsifiable? pseudoscience signatures?]
 - **Evidence:** tier + GRADE adjustments + replication + statistical flags
@@ -290,24 +336,32 @@ The point: stop the user confusing "what the field believes" with "what the evid
 - **Source quality:** provenance tier, transparency, COIs
 - **Warrant type:** traced / deferred / deferred with failure modes / mixed
 - **Classification:** [Phase 7 strength + warrant qualifier]
+- **Consequential sentence (Phase 7e):** [the calibrated sentence the reader should use — including hedges]
 - **What would change this:**
 
 [repeat per claim]
 
-### Cross-claim issues
-Contradictions; dependencies; shared load-bearing assumptions.
+## Cross-Claim Issues
+[Contradictions; dependencies; shared load-bearing assumptions]
 
-### Severity summary
-Counts by classification label.
+## Source's Epistemic Profile
+[Does the source distinguish facts from opinions, calibrate confidence, engage the strongest counter-evidence?]
 
-### Source's epistemic profile
-Does the source distinguish facts from opinions, calibrate confidence, engage strongest counter-evidence?
+## Confidence & Severity
+- **Counts by classification label:** Established / Well-supported / Provisional / Contested / Weak / Conjecture / Assumption / Opinion / Unfalsifiable / Likely-false / Refuted
+- **Warrant mix:** traced vs deferred vs deferred-fragile
+- **Overall epistemic status of the source:**
 
-### Analyst self-audit
-Would verdicts be the same if conclusions ran the other way?
+## What Would Change This
+[Per-claim falsification criteria collated; specific consensus-failure-mode evidence that would shift deferred classifications]
 
-### Bottom line
-What the reader can rely on, what warrants scepticism, what needs further investigation.
+## Self-Audit
+- **Symmetry test:** Would I have reached the same verdict if the politically/socially expected answer ran the other way? If no — explain. If you can't tell — say so. State explicitly per contested claim.
+- **Cross-domain consistency:** Same standards applied across domains (Phase 0e), not mismatched (e.g. holding history to physics's bar or vice versa).
+- **Consensus-mechanism audit:** Where warrant is `(deferred to consensus)`, were the Phase 6c failure modes actually checked, or assumed absent?
+
+## Limits of This Analysis
+[Claims left unchecked; primary sources not fetched; domain-expertise gaps; consensus mechanisms relied on but not audited]
 ```
 
 ---

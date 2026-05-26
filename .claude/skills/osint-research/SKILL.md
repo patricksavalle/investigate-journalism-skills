@@ -1,6 +1,8 @@
 ---
 name: osint-research
 description: A structured framework for AI agents to plan, execute, and verify open-source intelligence (OSINT) investigations using only publicly available information (PAI). Use whenever the user wants to investigate or build a profile on a person, organisation, account, domain, IP, image, video, location, vehicle, vessel, aircraft, or event using public web data — including phrases like "find out about", "investigate", "who is behind", "verify this image/video", "where/when was this taken", "what's the digital footprint of", "trace this username/email/domain", "is this account real", "build a profile on", or any request to systematically gather and corroborate online information about a target. Pair with the investigative-reasoning skill when the goal extends to hypothesis construction or narrative challenge — this skill handles gathering and verification mechanics; investigative-reasoning handles analytical reasoning on top.
+version: 1.0
+aligned: 2026-05-26
 ---
 
 # OSINT Research
@@ -13,7 +15,34 @@ Trigger when the task is **systematic information gathering** on a target: profi
 
 **Do not trigger** for simple factual lookups, opinion questions, summaries of well-known public figures, or anything not requiring pivoting and verification.
 
-**Pairing.** If the user wants to *interpret* findings (challenge narrative, build hypothesis, audit bias), hand the structured brief to `investigative-reasoning`.
+## Pairs With
+
+- `investigative-reasoning` — once findings need hypothesis construction, narrative challenge, or Cui Bono / MMO analysis. Hand over the structured brief as Fact File input.
+- `fallacy-bias-and-manipulation-analysis` — when the target's own claims (posts, interviews, manifestos) need rhetorical / fallacy audit.
+- `scientific-fact-classification` — when the target asserts scientific claims that need evidence-strength classification.
+- `peer-review` — when the target has published papers or studies that need methodological audit.
+- `first-principles-thinking` — when an account's self-description ("we are a charity", "this is open-source") needs decomposition before downstream investigation.
+- `belief-revision` — when new identifiers, archive captures, or attribution evidence emerge after a brief is delivered and a calibrated update is needed.
+
+## Research Discipline (CLAUDE.md)
+
+OSINT collection without truth-seeking discipline produces dossiers, not intelligence. The rules in `CLAUDE.md` → *Operating rules* bind here:
+
+- **Rule 1** (pre-search hypothesis registration) — at Phase 1 Planning, register the hypotheses about the target before pivoting; otherwise discovered selectors will select which question gets answered.
+- **Rule 2** (steelman from primary literature) — when the target has primary writings (manifesto, filings, interviews), fetch them directly; never rely solely on critics' summaries.
+- **Rule 3** (primary before secondary) — when a finding traces back to another report, fetch the underlying source before treating the secondary as independent.
+- **Rule 4** (map institutional networks) — before counting multiple outlets / accounts as independent corroboration, map shared ownership / funding / coordination (Phase 4 inauthenticity checks help).
+- **Rule 5** (Tier 0 priority) — for time-sensitive media (live events, account behaviour), contemporaneous archive captures outrank later screenshots; preserve via web.archive.org at collection time.
+- **Rule 6** (bias self-audit) — enforced in `## Self-Audit`.
+- **Rule 7** (minimum search volumes) — Phase 2 specifies Quick 5–15 / Standard 15–40 / Deep 40–100+.
+- **Rule 8** (hostility check on sources) — Phase 4 Admiralty rates source reliability; supplement with explicit funding / alignment / mandate where load-bearing.
+- **Rule 9** (interactive refinement) — when the user volunteers identifiers, attribution claims, or context about the target ("this account is actually run by X"), label `(user-supplied — unverified)` and treat as a hypothesis to verify via Admiralty-graded findings, never as established attribution.
+
+## Warrant Labels (Project Standard)
+
+Every load-bearing finding carries a warrant per `CLAUDE.md`:
+`(traced)` · `(deferred to consensus)` · `(deferred, fragile)` · `(memory — unverified)`.
+Admiralty grading (Phase 4) rates *source reliability* and *claim credibility*; warrant labels rate *what the analyst did this session* (followed evidence to a primary, or recalled). Both travel with the finding — they are orthogonal.
 
 ---
 
@@ -171,43 +200,55 @@ Deliver in the form requested. Ask what was missing.
 ## Output
 
 ```markdown
-## OSINT Brief: [Target / Question]
+# OSINT Brief: [Target / Question]
 
-### Intelligence Requirement
-[One sentence]
+## Summary
+- **Intelligence Requirement:** [one sentence]
+- **Target type:** person | entity | account | asset | event | media
+- **Verdict:** [one-line — what the evidence supports / does not support]
 
-### Scope & Constraints
-- Target type: person | entity | account | asset | event | media
+## Scope & Constraints
 - Time period:
 - Out of scope:
 - Harm-minimisation choices:
 - AI-agent limits relevant here: [e.g. no EXIF; reverse image search delegated]
 
-### Starting Selectors
-### Discovered Selectors
-[Pivot chain that produced each]
+## Starting Selectors
+[Every identifier provided by the user]
 
-### Findings (graded)
-| # | Finding | Source(s) | Admiralty | Notes |
-|---|---|---|---|---|
-| 1 | … | [URL + archive URL] | B2 | [why rating] |
+## Discovered Selectors
+[New identifiers + pivot chain that produced each]
 
-### Verification Status (media / contested)
+## Findings (graded)
+| # | Finding | Source(s) | Admiralty | Warrant | Notes |
+|---|---|---|---|---|---|
+| 1 | … | [URL + archive URL] | B2 | (traced) | [why Admiralty rating + verification done] |
+
+## Verification Status (media / contested)
 | Item | Geolocation | Chronolocation | Reverse image | Other |
 
-### Negative Findings
-[Searched for and did not find — absence of evidence is itself evidence when search was thorough]
+## Negative Findings
+[Searched for and did not find — absence is evidence when search was thorough]
 
-### Confidence Assessment
-[Low / Medium / High + reasoning tied to Admiralty grades]
+## Confidence & Severity
+[Low / Medium / High overall + reasoning tied to Admiralty grades; counts of A1–B2 vs F6 findings]
 
-### What Would Change This
-[Falsification criteria]
+## What Would Change This
+[Falsification criteria — what evidence, if surfaced, would shift the verdict]
 
-### Recommended Next Steps
-[Unexhausted pivots, user-side access needs, hand-off to investigative-reasoning]
+## Self-Audit
+- **Symmetry test:** Would I have reached the same verdict if the politically/socially expected answer ran the other way? If no — explain. If you can't tell — say so.
+- **Diagonal-failure check:** Did source reliability bleed into credibility scoring?
+- **Coverage check:** Were foreign-language / regional engines used where appropriate?
+- **Harm check:** Were minor-protection and vulnerable-target rules honoured?
 
-### Archive Manifest
+## Limits of This Analysis
+[Unexhausted pivots; access not attempted; tooling constraints — note where user-side action (EXIF read, reverse image, paid DBs) unlocks more]
+
+## Recommended Next Steps
+[Hand-offs (e.g. to investigative-reasoning); user-side access needs]
+
+## Archive Manifest
 [web.archive.org snapshots created — so findings remain re-verifiable]
 ```
 

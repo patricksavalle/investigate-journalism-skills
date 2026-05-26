@@ -1,6 +1,8 @@
 ---
 name: fallacy-bias-and-manipulation-analysis
 description: A structured framework for AI agents to analyse text for logical fallacies, cognitive biases, rhetorical manipulation, and other forms of untruthful reasoning.
+version: 1.0
+aligned: 2026-05-26
 ---
 
 # Fallacy, Bias & Manipulation Analysis
@@ -10,6 +12,36 @@ Audit natural-language text — articles, speeches, op-eds, ads, scientific clai
 ## Activation
 
 Trigger only when explicitly requested: *"analyse for fallacies"*, *"find the cognitive biases"*, *"audit this reasoning"*, *"is this propaganda?"*, *"what rhetorical tricks"*, *"stress-test this argument"*, *"find the manipulation"*.
+
+## Pairs With
+
+This skill is one tool in the truth-seeking toolbox. Compose it with:
+
+- `scientific-fact-classification` — when a flagged passage cites scientific findings, classify the underlying claim's evidence strength rather than only naming the rhetorical move.
+- `investigative-reasoning` — when the rhetoric belongs to a contested event, hand the residual claim-set to dual-hypothesis construction.
+- `first-principles-thinking` — when a load-bearing premise needs to be decomposed to its bedrock before a fallacy flag is defensible.
+- `peer-review` — when the rhetoric is wrapped around a scientific paper, route the paper to full review.
+- `belief-revision` — when new evidence emerges about a previously analysed text and a calibrated update is needed.
+
+## Research Discipline (CLAUDE.md)
+
+This skill audits text the user supplies; it does not normally fetch sources. But the rules in `CLAUDE.md` → *Operating rules* still bind whenever an analytical finding invokes empirical evidence:
+
+- **Rule 2** (steelman from primary literature) — when the text characterises another's position to attack it, fetch that position's own primary statement before judging the move "straw man" or "fair".
+- **Rule 3** (primary before secondary) — when the text cites a study or source, fetch the primary before accepting or refuting the text's characterisation of it.
+- **Rule 4** (map institutional networks) — when the text claims independent corroboration ("studies show", "multiple outlets report"), check whether the sources share funder / owner / mandate before treating them as independent.
+- **Rule 6** (bias self-audit) — enforced in `## Self-Audit` of the output template.
+- **Rule 8** (hostility check on sources) — when the text recruits an authority, name that authority's funding / alignment / mandate alongside the citation.
+
+Rules 1, 5, 7 apply only when the analyst undertakes outside investigation; otherwise inactive here.
+
+**Rule 9** (interactive refinement) applies the moment the user pushes back on a flag, offers a counter-argument, or supplies "actually, this is what the author meant" framing. User contributions are labelled `(user-supplied — unverified)` and treated as hypotheses to test against the text, never as authority that overrides a flag.
+
+## Warrant Labels (Project Standard)
+
+Every load-bearing factual claim this skill *invokes* (e.g. "this technique is documented", "this statistic is established") carries a warrant per `CLAUDE.md`:
+`(traced)` · `(deferred to consensus)` · `(deferred, fragile)` · `(memory — unverified)`.
+The fallacy labels themselves are analytical (definitional), not empirical — they do not require a warrant, but any empirical claim recruited to defend them does.
 
 ---
 
@@ -241,40 +273,68 @@ An argument that collapses under repair was being carried by the faults.
 ## Output
 
 ```markdown
-## Argument Analysis: [title / opening]
+# Fallacy & Bias Audit: [title / opening]
 
-### Genre & Register
-### Thesis
-### Load-Bearing Sub-Claims
-| # | Claim | Evidence offered |
-### Implicit Premises
-### Rhetorical Frame
+## Summary
+- **Genre & register:** [formal / journalistic / political / marketing / scientific-pop / social / interpersonal]
+- **Thesis:** [one-sentence central claim]
+- **Verdict:** [one-line — argument stands / partly stands / collapses under repair]
 
-### Findings
-#### Formal Fallacies          | Passage | Fault | Explanation | Load-bearing? |
-#### Informal Fallacies        | Passage | Family | Specific | Explanation | Load-bearing? |
-#### Cognitive Biases          | Passage | Bias | Mechanism | Load-bearing? |
-#### Rhetorical Techniques     | Passage | Technique | Effect |
-#### Statistical Manipulation  | Passage | Pattern | Correct interpretation |
-#### Linguistic Manipulation   | Passage | Pattern | Neutralised paraphrase |
-#### Discourse-Structural      | Passage/section | Pattern | Effect |
+## Argument Map
+- **Load-bearing sub-claims:**
 
-### Severity Summary
-- Load-bearing: [count + list]
-- Supporting / Rhetorical: [counts]
-- Overall severity: Severe / Moderate / Mild
-- Consistency with deliberate manipulation: + reasoning
+  | # | Claim | Evidence offered |
+  |---|---|---|
 
-### Steelman Repair
+- **Implicit premises:**
+- **Rhetorical frame:**
+- **Intended audience:**
+
+## Findings
+
+### Formal Fallacies
+| Passage | Fault | Explanation | Load-bearing? |
+
+### Informal Fallacies
+| Passage | Family | Specific | Explanation | Load-bearing? |
+
+### Cognitive Biases
+| Passage | Bias | Mechanism | Load-bearing? |
+
+### Rhetorical Techniques
+| Passage | Technique | Effect |
+
+### Statistical Manipulation
+| Passage | Pattern | Correct interpretation |
+
+### Linguistic Manipulation
+| Passage | Pattern | Neutralised paraphrase |
+
+### Discourse-Structural
+| Passage/section | Pattern | Effect |
+
+## Steelman Repair
 [For each load-bearing flaw — non-fallacious version + whether argument survives]
 
-### Residual Assessment
+## Residual Assessment
 [Which sub-claims stand, which fall, which remain undecidable]
 
-### Analyst Self-Audit
-[Acknowledged direction of analyst's own priors]
+## Confidence & Severity
+- **Load-bearing flaws:** [count + list]
+- **Supporting / rhetorical flaws:** [counts]
+- **Overall severity:** Severe / Moderate / Mild
+- **Consistency with deliberate manipulation:** [+ reasoning — never asserted]
 
-### What Would Change This
+## What Would Change This
+[Specific evidence, repair, or argument move that would flip the residual assessment]
+
+## Self-Audit
+- **Symmetry test:** Would I have reached the same verdict if the politically/socially expected answer ran the other way? If no — explain. If you can't tell — say so.
+- **Fallacy-fallacy guard:** the argument being unsound does not make the conclusion false.
+- **Priors named:** direction of analyst's own priors on the topic, stated.
+
+## Limits of This Analysis
+[Scope of text examined; passages or claims left unchecked; expertise / context limits]
 ```
 
 ---

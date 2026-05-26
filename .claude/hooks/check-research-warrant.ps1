@@ -66,13 +66,17 @@ try {
     if ($toolNames.Contains('WebFetch') -or $toolNames.Contains('WebSearch')) { exit 0 }
     if ($text -match '\(memory\s*[-—]\s*unverified\)') { exit 0 }
 
+    # Marker categories must stay in sync with the skill output templates in
+    # .claude/skills/*/SKILL.md. The regexes match both old (colon-label) and
+    # new (## heading) styles so the hook survives heading-format changes.
     $categories = [ordered]@{
         'Hypothesis A/B'   = 'Hypothesis\s+[AB]\b'
-        'Investigation'    = 'Cui\s+Bono|MMO\s+Matrix|MMO\s+Suspect|Red\s+Flag\s+Analysis'
+        'Investigation'    = 'Cui\s+Bono|MMO\s+(Matrix|Suspect)|Red\s+Flags?(\s+Analysis)?'
         'Classification'   = 'Established\s+fact|\bRefuted\b|Provisionally\s+accepted|Well-supported\s+finding|Authority-warranted\s+only|\bOrphaned\b'
-        'First-principles' = '\bBedrock\b|Decomposition:|Excavation:|Verdict:|\bOverturned\b'
+        'First-principles' = '\bBedrock\b|\bDecomposition\b|\bExcavation\b|\bRebuild\b|\bOverturned\b'
         'Peer/Tier'        = '\bSteelman\b|Tier\s*0|Tier\s*1|Bradford\s+Hill|\bGRADE\b'
-        'Warrant labels'   = '\(traced\)|\(deferred to consensus\)|\(deferred, fragile\)'
+        'Warrant labels'   = '\(traced\)|\(deferred to consensus\)|\(deferred,\s+fragile\)'
+        'Revision'         = 'Anchor Declaration|Predicted Update|Calibration Audit|Asymmetric-warrant|Pressure-Direction Check'
     }
 
     $matched = @()

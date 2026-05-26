@@ -1,6 +1,8 @@
 ---
 name: first-principles-thinking
 description: A compact framework for analyzing problems, claims, proposals, or beliefs by decomposing them to their irreducible truths and rebuilding reasoning from the ground up. Use whenever the user wants to dissect a claim, audit an argument, challenge conventional wisdom, redesign a solution from scratch, debug a decision, or asks any variant of "is this actually true?", "why is it done this way?", "what are we assuming?", "break this down from first principles", "is the reasoning sound?", or "what would this look like if we started from zero?". Trigger even when the user doesn't say "first principles" — phrases like "rethink this", "challenge my thinking", "stress-test this idea", or "is this conventional wisdom correct?" should activate it.
+version: 1.0
+aligned: 2026-05-26
 ---
 
 # First Principles Thinking
@@ -8,6 +10,34 @@ description: A compact framework for analyzing problems, claims, proposals, or b
 A method for stripping a problem, claim, or proposal down to what is actually known to be true, then rebuilding reasoning from that bedrock — so conclusions rest on foundations rather than inheritance.
 
 The goal isn't to be contrarian. It's to separate **what is** from **what is assumed, inherited, or analogized**.
+
+## Pairs With
+
+- `scientific-fact-classification` — when a Bedrock candidate is an empirical claim, hand it over for evidence-tier and warrant labelling. "Bedrock" requires more than the analyst's belief that something is foundational.
+- `fallacy-bias-and-manipulation-analysis` — when the claim sits inside a rhetorical text; this skill audits structure, that skill audits delivery.
+- `investigative-reasoning` — when the Unknowns surfaced by Excavation hide a contested event with primary-source trails to follow.
+- `peer-review` — when the claim cites a scientific paper as its bedrock; the paper itself needs auditing.
+- `osint-research` — when a foundational fact ("X owns Y", "Z said this") needs identifier-level verification.
+- `belief-revision` — when new evidence reveals that a prior Bedrock entry was actually an Assumption (or vice versa) and the rebuild needs re-running.
+
+## Research Discipline (CLAUDE.md)
+
+First-principles is a conceptual tool — it does not normally fetch sources. But when an Excavation reaches `Bedrock` via an empirical claim, the rules in `CLAUDE.md` → *Operating rules* bind the verification of that Bedrock:
+
+- **Rule 1** (pre-search hypothesis registration) — before excavating, register the prior expectation of the verdict (Confirmed / Refined / Overturned). Otherwise the decomposition selects the answer.
+- **Rule 2** (steelman from primary literature) — built into Phase 1 ("State the claim" in its strongest form).
+- **Rule 3** (primary before secondary) — when Bedrock cites a study or authority, fetch the primary; `(memory — unverified)` Bedrock is downgraded to Assumption.
+- **Rule 6** (bias self-audit) — enforced in `## Self-Audit`.
+
+Rules 4, 5, 7, 8 apply only when the empirical sub-claim is itself contested; in that case hand it to `scientific-fact-classification` or `investigative-reasoning`.
+
+**Rule 9** (interactive refinement) applies the moment the user pushes back on an Excavation label ("no, that's actually Bedrock, not Assumption"). User contributions are labelled `(user-supplied — unverified)` and treated as a stipulation candidate — useful for surfacing where the user's definition differs from the surface claim, never as authority to relabel an Assumption as Bedrock without external verification.
+
+## Warrant Labels (Project Standard)
+
+When an Excavation reaches `Bedrock` via an empirical claim — not via definition, formal logic, or direct observation in this conversation — attach a warrant per `CLAUDE.md`:
+`(traced)` · `(deferred to consensus)` · `(deferred, fragile)` · `(memory — unverified)`.
+A "Bedrock" that is only `(memory — unverified)` should be downgraded to `Assumption` unless verified.
 
 ---
 
@@ -17,6 +47,8 @@ Four moves, applied in order. Each move has a single question that defines it.
 
 ### 1. State the claim
 Write the user's claim, problem, or proposal as a single sentence. If it has multiple parts, list them. This forces precision before analysis — vague claims dissolve under scrutiny without leaving anything to examine.
+
+When the claim circulates in multiple variants (official, popular, adversarial), name the speaker and timestamp of the variant being decomposed. If multiple variants matter, decompose each — averaging them obscures which version actually fails the rebuild.
 
 > Question: **What exactly is being asserted or asked?**
 
@@ -45,29 +77,41 @@ Using only the bedrock items, reconstruct the answer to the original question fr
 
 ---
 
-## Output format
+## Output
 
-Use this structure. Keep each section tight — verbosity defeats the purpose.
+Use this structure. Keep each section tight — verbosity defeats the purpose. Closing sections (What Would Change This / Self-Audit / Limits) may be omitted when they add no signal; include them when an Unknown is load-bearing, when the verdict could be politically charged, or when scope was constrained.
 
-```
-**Claim:** [one sentence]
+```markdown
+# First Principles Analysis: [claim, abbreviated]
 
-**Decomposition:**
+## Summary
+- **Claim:** [one sentence]
+- **Verdict:** Confirmed | Refined | Overturned — [one sentence why]
+
+## Decomposition
 - C1: [component]
 - C2: [component]
-- ...
+- …
 
-**Excavation:**
-- C1 → [Bedrock | Assumption | Unknown]: [one-line reasoning]
-- C2 → [Bedrock | Assumption | Unknown]: [one-line reasoning]
-- ...
+## Excavation
+- C1 → Bedrock | Assumption | Unknown — [one-line reasoning]
+- C2 → Bedrock | Assumption | Unknown — [one-line reasoning]
+- …
 
-**Rebuild:** [the conclusion that follows from bedrock alone, 1–3 sentences]
+## Rebuild
+[1–3 sentences — the conclusion that follows from bedrock alone]
 
-**Verdict:** Confirmed | Refined | Overturned — [one sentence why]
+## What Would Change This
+[Which Unknown, if answered, or which Assumption, if revised, would flip the verdict. Omit if none.]
+
+## Self-Audit
+- **Symmetry test:** Would I have reached the same verdict if the politically/socially expected answer ran the other way? If no — explain. If you can't tell — say so.
+- **Counter-test:** Would the verdict differ if the claim were rephrased with all definitions stipulated? If yes, the verdict turns on definitional drift, not on substantive Bedrock disagreement.
+- **Bedrock discipline:** Did I treat authority, convention, or analogy as bedrock anywhere? Did any empirical Bedrock entry lack a `(traced)` warrant?
+
+## Limits of This Analysis
+[Bedrock items left unverified; domain expertise gaps. Omit if not applicable.]
 ```
-
-If the analysis surfaces something the user should investigate further (an Unknown that pivots the answer), add a short **Next** line naming it.
 
 ---
 
@@ -75,11 +119,11 @@ If the analysis surfaces something the user should investigate further (an Unkno
 
 A few rules that keep the method honest:
 
-- **Definitions are bedrock only when stipulated.** "Success" or "good" or "efficient" mean nothing until pinned down. If a component depends on an undefined term, the term itself is an Assumption until defined.
+- **Definitions are bedrock only when stipulated.** "Success" or "good" or "efficient" mean nothing until pinned down. If a component depends on an undefined term, the term itself is an Assumption until defined. A stipulation counts as Bedrock only if it (i) preceded or accompanied the claim and (ii) was reasonably available to the audience at the time. Retroactive narrowing ("we never said X, we said Y") does not retro-promote an Assumption to Bedrock.
 - **Authority is not bedrock.** "Expert X says so" is an Assumption — possibly a well-supported one, but inherited. Bedrock is the underlying evidence the expert relied on, not the expert's status.
 - **Convention is not bedrock.** "This is the industry standard" explains adoption, not truth.
 - **Analogy is not bedrock.** "It's like X, so it should behave like X" is a hypothesis, not a foundation. Useful for generating ideas; invalid as proof.
-- **Named frameworks are claims, not credentials.** If the source invokes a named criterion ("fulfils Koch's postulates", "meets CONSORT", "satisfies the precautionary principle", "passes the Turing test"), do not pass through the invocation. Decompose the framework's actual requirements as load-bearing components and excavate each. Invocation is evidence of intent, not of fulfilment. The deepest failures hide one level up from the surface claim — when a claim cites a framework, decompose the framework too.
+- **Named frameworks are claims, not credentials.** If the source invokes a named criterion ("fulfils Koch's postulates", "meets CONSORT", "satisfies the precautionary principle", "passes the Turing test"), do not pass through the invocation. Decompose the framework's actual requirements as load-bearing components and excavate each. Invocation is evidence of intent, not of fulfilment. The deepest failures hide one level up from the surface claim — when a claim cites a framework, decompose the framework too. A claim that *requires* a framework the speaker did not supply (e.g. "stopped transmission" implicitly requires definitions of "stopped", "transmission", and a transmission-blocking framework) sits on an *implicit* framework — decompose it even when nothing was invoked by name.
 - **Don't pretend everything reduces to physics.** Useful bedrock is the *most fundamental level relevant to the question*. For "should we restructure this team?", bedrock is facts about humans, incentives, and the work — not quantum mechanics. Stop reducing when further reduction stops changing the answer.
 - **One pass is usually enough.** First principles thinking has diminishing returns. If a second pass finds nothing new, stop.
 
@@ -89,25 +133,29 @@ A few rules that keep the method honest:
 
 **User:** "We should ship our new feature behind a paywall because that's how premium SaaS products monetize."
 
-**Claim:** The new feature should be paywalled because premium SaaS products monetize this way.
+# First Principles Analysis: paywall the new feature
 
-**Decomposition:**
+## Summary
+- **Claim:** The new feature should be paywalled because premium SaaS products monetize this way.
+- **Verdict:** Overturned — the recommendation rests entirely on inherited assumptions.
+
+## Decomposition
 - C1: Premium SaaS products monetize by paywalling new features.
 - C2: Our product is (or should be) a premium SaaS product.
 - C3: What works for premium SaaS will work for us.
 - C4: The goal of shipping this feature is to monetize it.
 
-**Excavation:**
-- C1 → Assumption: Some do; many monetize via tiering, usage, seats, or bundling. "Paywall new features" is one pattern among several.
-- C2 → Unknown: Depends on positioning, which hasn't been stated.
-- C3 → Assumption (analogy): Inherited from comparison to other companies, not from our user data.
-- C4 → Assumption: Could equally be adoption, retention, or competitive defense — none stated.
+## Excavation
+- C1 → Assumption — some do; many monetize via tiering, usage, seats, or bundling. "Paywall new features" is one pattern among several.
+- C2 → Unknown — depends on positioning, which hasn't been stated.
+- C3 → Assumption (analogy) — inherited from comparison to other companies, not from our user data.
+- C4 → Assumption — could equally be adoption, retention, or competitive defense; none stated.
 
-**Rebuild:** No bedrock supports the original claim. The decision to paywall depends on (a) what this feature is *for* in the product strategy, and (b) how our users actually respond to pricing changes — neither of which has been established. Defaulting to a paywall because peers do it is reasoning by analogy.
+## Rebuild
+No bedrock supports the original claim. The paywall decision depends on (a) what this feature is *for* in the product strategy, and (b) how our users actually respond to pricing changes — neither established. Defaulting to a paywall because peers do it is reasoning by analogy.
 
-**Verdict:** Overturned — the recommendation rests entirely on inherited assumptions. The real question is what role this feature plays in the product strategy.
-
-**Next:** Define the goal of shipping the feature (monetization vs. adoption vs. retention) before choosing a distribution model.
+## What Would Change This
+Defining the feature's role in product strategy (monetization vs. adoption vs. retention) would resolve C4 and pivot the answer. Evidence from our own users' price-response would replace C3's analogy with data.
 
 ---
 

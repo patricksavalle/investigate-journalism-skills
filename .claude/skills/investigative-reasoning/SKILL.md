@@ -1,6 +1,8 @@
 ---
 name: investigative-reasoning
 description: A structured framework for AI agents to critically analyze events, detect deception, and develop well-reasoned alternative hypotheses.
+version: 1.0
+aligned: 2026-05-26
 ---
 
 # Investigative Reasoning
@@ -10,6 +12,35 @@ Investigate events, challenge narratives, and construct alternative hypotheses. 
 ## Activation
 
 Trigger only when explicitly requested: *"investigate this event"*, *"develop a conspiracy theory about X"*, *"who benefits from Y?"*, *"apply critical thinking to this narrative"*, *"find red flags in this explanation"*.
+
+## Pairs With
+
+- `osint-research` — for systematic information gathering, identifier pivoting, and image / video verification *before* hypothesis construction. Hand its brief in as Fact File input.
+- `fallacy-bias-and-manipulation-analysis` — for rhetorical / fallacy audit of both Hypothesis A and Hypothesis B, in lieu of Phase 8's compressed checklist.
+- `scientific-fact-classification` — for evidence-strength classification of any contested empirical claim inside either hypothesis (e.g. forensic finding, causal mechanism).
+- `peer-review` — when a contested event has underlying scientific papers (autopsy, environmental sampling, modelling study), route those to full peer review.
+- `first-principles-thinking` — when the official narrative invokes a named framework (Koch's, intelligence-community assessment, treaty trigger) and the framework itself needs decomposition.
+- `belief-revision` — when new evidence emerges about a previously investigated event (declassified document, new whistleblower, forensic re-examination) and a calibrated update of the dual-hypothesis verdict is needed.
+
+## Research Discipline (CLAUDE.md)
+
+This skill is the most rule-saturated application of the project's research discipline. All eight rules in `CLAUDE.md` → *Operating rules* bind:
+
+- **Rule 1** (pre-search hypothesis registration) — Phase 0c mandates registering hypotheses before the first search.
+- **Rule 2** (steelman from primary literature) — Phase 0c mandates Hypothesis B built from its advocates' primary writing, not critics' summaries.
+- **Rule 3** (primary before secondary) — Phase 3b source tiers prioritise primaries; Phase 3h evidence ladder demands L4+ before any claim is "established".
+- **Rule 4** (map institutional networks) — Phase 0b mandates network mapping before independence is claimed for any set of sources.
+- **Rule 5** (Tier 0 priority) — Phase 3b Tier 0 = contemporary primary sources; outrank later retrospectives for time-sensitive claims.
+- **Rule 6** (bias self-audit) — enforced in `## Self-Audit` of the output template.
+- **Rule 7** (minimum search volumes) — `Web Search — Mandatory` block specifies 5–10 / 10–20 / 20–40+ by complexity.
+- **Rule 8** (hostility check on sources) — Phase 3b CoI demotion + geopolitical-witness rule.
+- **Rule 9** (interactive refinement) — applies the moment the user pushes back on a hypothesis, supplies counter-evidence verbally, or asks for the verdict to be re-weighted. User contributions are labelled `(user-supplied — unverified)`, never load-bearing on the Hypothesis A vs B comparison without independent verification — the user has skin in the revision direction the same way every other source does.
+
+## Warrant Labels (Project Standard)
+
+Every load-bearing factual claim — sources, evidence items, hypothesis-supporting facts — carries a warrant per `CLAUDE.md`:
+`(traced)` · `(deferred to consensus)` · `(deferred, fragile)` · `(memory — unverified)`.
+The Fact File rows, Hypothesis A/B supporting-evidence lines, and Evidence Integrity table all carry warrant labels alongside source-tier and CoI tags.
 
 ---
 
@@ -233,6 +264,40 @@ L5 Directly observable / replicable — any qualified party can examine and repr
 RULE: Never treat L1 or L2 as established fact.
 ```
 
+### 3i. Source Triangulation
+
+When ≥3 sources make conflicting claims about the same underlying fact, **reconcile structurally before drawing conclusions**. Headline source-counting ("10 outlets confirm") is the most common laundering vector for institutionally-networked single-origin claims.
+
+**Triangulation table:**
+
+| # | Source | Source tier | Institutional node | CoI | Warrant | Claim verbatim | Date |
+|---|---|---|---|---|---|---|---|
+
+After tabulating:
+
+- **Network reduction.** Collapse rows that share funding / ownership / mandate / national alignment into one node. "10 sources" within one network = one node. Re-state the source count post-reduction.
+- **Minimal agreement (floor):** the strongest factual claim *every* source agrees on. This is what survives the disagreement.
+- **Maximal claim (ceiling):** the strongest claim *any* source asserts. This is the rhetorical extreme.
+- **Bracket of resolution:** the actual distance between floor and ceiling — often narrower than the apparent disagreement, because partisans on both ends are arguing over interpretation while sharing the factual core.
+- **Genuinely-independent convergence:** if sources from *different* institutional nodes (different funders, different countries, different ideological alignments) converge on the same claim, that convergence is load-bearing even if the count is small. Network-reduced count of 3 from independent nodes outweighs headline count of 10 from one node.
+- **Single-origin amplification check:** trace the disagreement backward. If the "many sources" all derive from a single primary briefing / leaker / dataset / press release, they are one node by origin, regardless of institutional affiliation.
+
+**Output:**
+
+```
+Triangulation verdict on [disputed fact]:
+- Floor (minimal agreement):    [what survives]
+- Ceiling (maximal claim):      [what any source asserts]
+- Bracket width:                [Wide / Moderate / Narrow]
+- Post-network-reduction count: [N nodes; vs. headline source count of M]
+- Independent-convergence:      [which nodes converge on what]
+- Single-origin amplification?: [yes / no — trace if yes]
+- Held verdict:                 [what the network-reduced evidence supports]
+- What would resolve this:      [evidence that would close the bracket]
+```
+
+Referenceable from `scientific-fact-classification` (when multiple sources make conflicting claims about a single fact) and `peer-review` (when the literature is contested on a load-bearing citation).
+
 ---
 
 ## Phase 4 — Cui Bono
@@ -308,8 +373,11 @@ Actors:      [Who did what, per this hypothesis]
 Motive:      [Why]
 Mechanism:   [How]
 
-Supporting evidence:
-  [Each: claim → source → source tier → CoI → evidence tier → date]
+Positive evidence (FOR this hypothesis — direct evidence supporting its claim):
+  [Each: claim → source → source tier → CoI → evidence tier → date → warrant]
+
+Doubt cast on the alternative (AGAINST the rival — evidence that weakens the other hypothesis):
+  [Each: claim → source → source tier → CoI → evidence tier → date → warrant]
 
 Explains well:    [Anomalies accounted for naturally]
 Struggles with:   [Facts/red flags it cannot accommodate]
@@ -318,11 +386,17 @@ Falsification:    [Single piece of evidence that would disprove it]
 Confidence:       [Low / Medium / High + rationale]
 ```
 
+> **Asymmetry check (mandatory).** A hypothesis whose entire support is "Doubt cast on the alternative" — with the Positive evidence column empty or thin — is structurally asymmetric to one with direct positive evidence. **Both columns must be filled for both hypotheses. An empty Positive column is itself a finding** that pushes Phase 9's verdict.
+>
+> This is the most common failure mode in dual-hypothesis work: the official narrative is steelmanned with positive evidence, and the alternative is built only from anomalies and motive (doubt cast on the official) — or vice versa. The skill exists to catch this asymmetry.
+
 > **Steelman sourcing (mandatory).** Hypothesis B must be built from its own primary literature — best-case arguments by its actual proponents. Not from mainstream rebuttals. Check: "Did I read the best primary source by Hypothesis B advocates, or reconstruct from critics?"
 
 **Comparison.**
 ```
                           A (Official)     B (Alternative)
+Positive-evidence count:                                   ← direct support
+Doubt-only-evidence count:                                 ← only weakens rival
 Explains all red flags?
 Supported by Tier 0?
 Free of CoI-conflicted
@@ -332,9 +406,13 @@ Falsifiable?
 Most parsimonious?
 Cui Bono alignment?
 ─────────────────────────────────────────
+Symmetry check: Is each hypothesis built from positive evidence,
+  or primarily from doubt cast on the other?
 Unresolved by either:
 Overall assessment:       [or state evidence is insufficient to favor either]
 ```
+
+> **Reading the symmetry row.** If hypothesis A has 10 positive-evidence items and B has 0 (only doubt-cast), B is not at parity with A regardless of how many anomalies it catalogs. The honest conclusion is: A is supported, B is open-question — not "the cases are evenly matched." Inversely, if both have rich positive evidence and the contest is over which mechanism better explains the data, that's the symmetric case where parsimony / Tier 0 / CoI become decisive.
 
 **Anti-bias safeguard:** before finalising, actively search for strongest evidence for whichever hypothesis currently seems *less* convincing.
 
@@ -367,30 +445,63 @@ Prefer fewest unsupported assumptions. But: sophisticated actors embed complexit
 ## Output
 
 ```markdown
-## Event Analysis: [Event]
+# Event Investigation: [Event]
 
-### Red Flags
-### Key Contemporary Sources (Tier 0)
-| Source | Date | Type | Key Finding |
-### Narrative Drift
+## Summary
+- **Event:** [one sentence — what happened, when, where]
+- **Investigation triggers:** [Phase 1 — which conditions warrant investigation]
+- **Verdict:** [one-line — Hypothesis A stronger / Hypothesis B stronger / undecidable on current evidence]
+
+## Red Flags
+[Phase 2 — anomalies + Phase 2e IO patterns matched]
+
+## Key Contemporary Sources (Tier 0)
+| Source | Date | Type | Key Finding | Warrant |
+
+## Narrative Drift
 [Contemporary vs. later accounts]
-### Geopolitically Aligned / Conflicted Sources
-### MSM Narrative Map
-### Evidence Integrity Assessment
-| Item | Collector | CoI | Chain | Independent Access | Ladder Level |
-### Evidence Gaps & Red Flags
-### Cui Bono
+
+## Source Network
+- **Geopolitically aligned / conflicted sources:**
+- **MSM narrative map:** [listed separately — map of official narrative, never independent corroboration]
+
+## Evidence Integrity Assessment
+| Item | Collector | CoI | Chain | Independent Access | Ladder Level | Warrant |
+
+## Evidence Gaps
+[Withheld, destroyed, classified, inaccessible — flagged, not silently omitted]
+
+## Cui Bono
 | Actor | Benefit | Plausibility |
-### MMO Suspect Matrix
+
+## MMO Suspect Matrix
 | Suspect | Motive | Means | Opportunity | Score |
-### Hypothesis A — Official (Steelmanned)
+
+## Hypothesis A — Official (Steelmanned)
 [Phase 9 template]
-### Hypothesis B — Best Alternative
-[Phase 9 template]
-### Dual Hypothesis Comparison
-### Bias & Fallacy Check (both hypotheses)
-### Confidence Assessment
-### What Would Change This
+
+## Hypothesis B — Best Alternative
+[Phase 9 template — built from its own primary literature]
+
+## Dual Hypothesis Comparison
+[Phase 9 head-to-head block]
+
+## Confidence & Severity
+- **Hypothesis A confidence:** Low / Medium / High + rationale
+- **Hypothesis B confidence:** Low / Medium / High + rationale
+- **Overall assessment:** [or state evidence insufficient to favor either]
+
+## What Would Change This
+[Specific evidence — declassified document, primary witness, forensic re-examination, foreign-archive access — that would shift the verdict]
+
+## Self-Audit
+- **Symmetry test:** Would I have reached the same verdict if the politically/socially expected answer ran the other way? If no — explain. If you can't tell — say so.
+- **Bias & fallacy check** (applied to *both* hypotheses): [Phases 7–8 outputs]
+- **Steelman sourcing check:** Was Hypothesis B built from its advocates' primary literature, or reconstructed from critics' summaries?
+- **Institutional-network check:** Were sources counted as independent only after the funding / mandate / national-alignment map was drawn?
+
+## Limits of This Analysis
+[Sources I could not access; languages not searched; FOIA / archive routes not attempted; domain expertise gaps]
 ```
 
 ---
