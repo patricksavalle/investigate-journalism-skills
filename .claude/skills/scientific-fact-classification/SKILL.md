@@ -218,6 +218,8 @@ Discipline: state prior · state alternatives (at minimum: chance, bias, confoun
 
 ## Phase 6 — Source & Methodological Quality
 
+**6.0 — Source weight vs. argument validity.** Source-tier and CoI demotion set *how much independent corroboration a claim requires before it is load-bearing*. They do not determine whether the argument itself is valid. A Nobel-laureate book foreword by an outside-field author is T5 and demands corroboration to load-bear; the *arguments inside it* are still answered by domain-expert peer-reviewed sources (substance refutation), not by listing the author's other contested beliefs. If you find yourself surfacing the arguer's unrelated views as part of the response to their argument, you have crossed from source-tier discipline into Argument/Advocate Conflation (`investigative-reasoning` Phase 8). The moves look similar; they are not the same.
+
 **6a. Transparency markers.** Pre-registration · open data and code · blinded outcome assessment · random assignment · adequate power · attempted replication · disclosed COIs and funding · reproducible methods · null results reported.
 
 **6b. Conflict of interest.** Funding/affiliation does not invalidate findings, but shifts the burden of proof for findings aligning with funder's commercial or ideological interest. Check: who funded, who employs authors, funder control of design/analysis/publication, independent replication by unaligned groups.

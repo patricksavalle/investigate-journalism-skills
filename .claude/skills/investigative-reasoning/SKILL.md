@@ -76,7 +76,7 @@ Historical parallel:   [pattern] precedent OR similar case OR false flag
 
 **0b. Institutional network mapping.** Before treating sources as independent corroboration, map shared funding, mandate, national identity, political alignment. Sources connected by any edge = **one** node, not many. Ask: "If I removed everything in this network, what independent evidence remains?"
 
-**0c. Hypothesis B sourcing commitment.** Build the alternative from its own best primary sources — documents and arguments by its actual advocates — not from mainstream characterisations or rebuttals. Mandatory pre-search: `"[alternative position] primary argument" OR "[key advocate] full argument"` before reading rebuttals.
+**0c. Hypothesis B sourcing commitment.** Build the alternative from its own best primary sources — documents and arguments by its actual advocates — not from mainstream characterisations or rebuttals. Mandatory pre-search: `"[alternative position] primary argument" OR "[key advocate] full argument"` before reading rebuttals. **WebFetch of at least one full primary document by a named Hypothesis B advocate is required before Phase 9 can be finalised. WebSearch snippets, Wikipedia sections, and advocacy-site summary pages do not satisfy this — they reproduce the rebuttal-side framing of B inside what is meant to be a steelman of B.**
 
 ---
 
@@ -188,7 +188,7 @@ Official + sharpest critics · foreign press (multiple languages for internation
 ### 3d. Web Search Practice
 
 **Do:** specific named entities · primary documents (`filetype:pdf`) · financial connections · date ranges (`before:`) · archive.org · cross-check ≥3 independent sources · record publication date.
-**Don't:** trust top results (SEO) · rely on single source · ignore contradictions · confuse publication frequency with credibility · treat Wikipedia as primary · assume "authoritative" later source supersedes contemporary eyewitness.
+**Don't:** trust top results (SEO) · rely on single source · ignore contradictions · confuse publication frequency with credibility · treat Wikipedia as primary · assume "authoritative" later source supersedes contemporary eyewitness · **frame queries with character-discrediting keywords about the arguer** (e.g. `"X" eccentric OR astrology OR "Nobel disease"`, or symmetrically `"X" suppressed OR "establishment cover-up"`) — the query selects for ad-hominem material regardless of how carefully results are read. Search for the *substantive scientific response to the argument*, not for *characterisation of the arguer*; source-tier demotion of the arguer is handled separately at Phase 3b and must not be conflated with this.
 
 ### 3e. Fact File
 
@@ -233,7 +233,7 @@ Simultaneous identical framing across many outlets · suspicious leak timing · 
 
 Evidence is not self-interpreting. Who collected, handled, stored, interpreted, and controls access matters as much as what it shows.
 
-**Principles.** Proximity in time · collector independence · geopolitical alignment of collecting body · unbroken chain of custody.
+**Principles.** Proximity in time · collector independence · geopolitical alignment of collecting body · unbroken chain of custody · **historical-vs-modern methodology separation** — a critique technically valid for a superseded technique (e.g. pre-1997 density-gradient EM purification) does not automatically reach methods that bypass it (e.g. post-1997 size-exclusion-chromatography cryo-EM). Name the era of both the critique and the modern method explicitly; do not let "modern science has confirmed it" gloss the methodological substitution.
 
 **Evidence tiers.**
 
@@ -450,6 +450,9 @@ Prefer fewest unsupported assumptions. But: sophisticated actors embed complexit
 - [ ] Evidence at L4–5, not L1–2 masquerading as established
 - [ ] Inaccessible evidence flagged, not silently omitted
 - [ ] Verdict floor stated separately from verdict leaning — floor = the conclusion that holds under either prior; leaning = the additional weight the analyst's framing produces. Both must be statable; if the leaning carries the verdict and the floor is empty, the verdict is interpretive, not source-traced
+- [ ] Hypothesis B's primary documents WebFetched at file-content level (not just WebSearched as summaries)
+- [ ] No search query this session was framed with character-discrediting keywords about either side's advocates
+- [ ] Where the critique targets a superseded methodology, the historical and modern methods are named separately and the bypass is documented
 
 ---
 
