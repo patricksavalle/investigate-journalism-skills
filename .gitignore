@@ -3,3 +3,12 @@
 
 # Investigation scratch / working drafts kept locally.
 *.scratch.md
+
+# Repo root: keep only skillset top-level docs. Worked analyses and
+# self-tests stay local, never tracked.
+/*.md
+!/CLAUDE.md
+!/README.md
+
+# Self-test outputs directory.
+self-test-results/
