@@ -6,7 +6,7 @@ This file sets the discipline. A `Stop` hook in `.claude/settings.json` provides
 
 ## Core rule: warrant on every load-bearing claim
 
-When producing analytical output of any kind — investigation, claim audit, fact classification, peer review, fallacy analysis, OSINT profile, first-principles audit — **every load-bearing factual claim must carry a warrant label**:
+When producing analytical output of any kind — investigation, article review, claim audit, fact classification, peer review, fallacy analysis, OSINT profile, first-principles audit — **every load-bearing factual claim must carry a warrant label**:
 
 | Label | Meaning |
 |---|---|
@@ -25,6 +25,7 @@ The point is not to eliminate `(memory)` use — some claims are genuinely backg
 These apply to any turn that invokes — or whose output substantively reflects — one of these skills:
 
 - `investigative-reasoning`
+- `journalistic-article-review`
 - `peer-review`
 - `scientific-fact-classification`
 - `fallacy-bias-manipulation-analysis-framework`
@@ -123,7 +124,7 @@ Analytical output is written as a **standalone, context-free document**. The rea
 
 ## Enforcement
 
-A `Stop` hook at `.claude/hooks/check-research-warrant.ps1` inspects the assistant's just-completed turn. If the output contains multiple analytical-framing markers (the language of investigative-reasoning, peer-review, scientific-fact-classification, etc.) **and** the turn made no WebFetch or WebSearch calls, the hook blocks the stop and feeds back a request to either fetch sources or label claims `(memory — unverified)`.
+A `Stop` hook at `.claude/hooks/check-research-warrant.ps1` inspects the assistant's just-completed turn. If the output contains multiple analytical-framing markers (the language of investigative-reasoning, journalistic-article-review, peer-review, scientific-fact-classification, etc.) **and** the turn made no WebFetch or WebSearch calls, the hook blocks the stop and feeds back a request to either fetch sources or label claims `(memory — unverified)`.
 
 The hook is intentionally conservative: it only fires when output looks like *produced* analysis, not when the conversation is *discussing* the methodology. False positives can be cleared by either adding a fetch, adding explicit warrant labels, or — for genuinely memory-only output the user has asked for — adding `(memory — unverified)` somewhere visible.
 

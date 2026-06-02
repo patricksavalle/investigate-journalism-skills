@@ -73,9 +73,11 @@ try {
         'Hypothesis A/B'   = 'Hypothesis\s+[AB]\b'
         'Investigation'    = 'Cui\s+Bono|MMO\s+(Matrix|Suspect)|Red\s+Flags?(\s+Analysis)?'
         'Classification'   = 'Established\s+fact|\bRefuted\b|Provisionally\s+accepted|Well-supported\s+finding|Authority-warranted\s+only|\bOrphaned\b'
+        'Article structure' = 'Journalistic Article Review|Article Map|Sourcing Audit|Evidence Load Test|Headline,\s*Framing'
+        'Journalism checks' = 'Right of reply|Source-network test|Quote context|Headline-body fit|Journalistic Verdict'
         'First-principles' = '\bBedrock\b|\bDecomposition\b|\bExcavation\b|\bRebuild\b|\bOverturned\b'
         'Peer/Tier'        = '\bSteelman\b|Tier\s*0|Tier\s*1|Bradford\s+Hill|\bGRADE\b'
-        'Warrant labels'   = '\(traced\)|\(deferred to consensus\)|\(deferred,\s+fragile\)'
+        'Warrant labels'   = '\(traced\)|\(deferred to consensus\)|\(deferred,\s+fragile\)|Sources\s+&\s+Warrants'
         'Revision'         = 'Anchor Declaration|Predicted Update|Calibration Audit|Asymmetric-warrant|Pressure-Direction Check'
     }
 
