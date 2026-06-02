@@ -41,7 +41,7 @@ If you can't show your work, you can't be trusted. If you can, you can be checke
 
 > **You don't have to learn the toolbox. You describe what you want, and the right tool loads itself.**
 
-1. **Install once.** Paste the prompt under [*Install*](#install) (below) into Claude Code or your AI agent of choice. The seven skills land in a standard location and stay there.
+1. **Install once.** Paste the prompt under [*Install*](#install) (below) into Claude Code or your AI agent of choice. The seven skills land in a standard location and stay there. Each skill is also self-contained enough to run on its own.
 2. **Just ask, in plain language.** *"Check whether this claim is solid."* *"Investigate this story."* *"Audit this paper."* The agent picks the right tool from your phrasing — you never need to remember tool names.
 3. **Read the report.** Every output follows the same shape: a verdict, the findings with each claim labelled by source type, what would change the conclusion, and a self-audit. The labels show you which parts were fetched fresh and which lean on the AI's memory.
 4. **Talk back. Push back. Argue with it.** Discussing the result is **encouraged, not risky** — the discipline survives the conversation. Your corrections get verified like any other source; un-sourced pushback gets flagged rather than silently absorbed. You **cannot accidentally corrupt the audit chain by chatting about it**. See [*Discussing the result*](#discussing-the-result) below for the mechanics.
@@ -62,6 +62,24 @@ If you can't show your work, you can't be trusted. If you can, you can be checke
 | **Update a verdict** — new evidence arrived; does it really change anything? | [`belief-revision`](./.claude/skills/belief-revision) |
 
 You don't have to know which tool to pick. Describe what you want and the agent loads the right one. The "Say:" phrases below show what activates each.
+
+---
+
+## Standalone support
+
+All seven skills can run standalone. That means a compatible AI runtime can load just one `SKILL.md` and still see the core research discipline it needs: warrant-label definitions, the user-supplied-input rule, objective report voice, source/provenance expectations, and the required self-audit. `CLAUDE.md` and `AGENTS.md` remain the canonical full policy files, but they are no longer required context for ordinary use of an individual skill.
+
+| Skill | Standalone? | Notes |
+|---|---|---|
+| [`scientific-fact-classification`](./.claude/skills/scientific-fact-classification) | Yes | Includes full warrant taxonomy, including `(mixed)`, plus a `Sources & Warrants` table. |
+| [`fallacy-bias-manipulation-analysis-framework`](./.claude/skills/fallacy-bias-manipulation-analysis-framework) | Yes | Can run text-only; adds source/warrant tracking when empirical claims or outside sources are invoked. |
+| [`investigative-reasoning`](./.claude/skills/investigative-reasoning) | Yes | Keeps mandatory web-search discipline, dual hypotheses, source network mapping, and evidence-integrity tables inline. |
+| [`osint-research`](./.claude/skills/osint-research) | Yes | Keeps OSINT safety constraints, Admiralty grading, warrant labels, access dates, and source alignment fields inline. |
+| [`peer-review`](./.claude/skills/peer-review) | Yes | Keeps citation verification, deployment-gap audit, source/warrant tracking, and review self-audit inline. |
+| [`first-principles-thinking`](./.claude/skills/first-principles-thinking) | Yes | Runs as a conceptual tool; when empirical Bedrock is invoked, it carries warrant labels and a conditional source table. |
+| [`belief-revision`](./.claude/skills/belief-revision) | Yes | Keeps the asymmetric-warrant rule inline, so weak new evidence cannot overturn stronger prior warrants. |
+
+The mirrored `.agents/skills/` copies are aligned with `.claude/skills/` for Codex-style runtimes.
 
 ---
 
@@ -119,7 +137,7 @@ You don't have to learn the wiring — each tool calls the others when it needs 
 
 ## How they stay honest
 
-Five rules bind every tool, so the discipline you get is the same regardless of which one produced the output:
+The full discipline is embedded in each standalone skill. Five rules are especially visible in every report, so the discipline you get is the same regardless of which one produced the output:
 
 1. **Every claim labelled.** Did the AI fetch the source this session, or is it working from memory? Both are allowed — but they're marked differently, and only fetched sources can be load-bearing.
 2. **Symmetry test.** Every output ends by answering: *would I have reached the same verdict if the politically expected answer ran the other way?* If not — explain why.
@@ -127,7 +145,7 @@ Five rules bind every tool, so the discipline you get is the same regardless of 
 4. **Map the network.** Ten outlets repeating one source is not ten sources. The tool surfaces this rather than letting "consensus" hide a single point of origin.
 5. **Your pushback doesn't override the chain.** When you correct the AI mid-analysis, your input is marked *user-supplied, unverified* until you provide a source. The audit trail has to survive *you*, because the reader downstream did not agree to trust you.
 
-A behind-the-scenes check ("Stop hook") will block the AI from producing investigation-style output when it didn't actually fetch any sources — so it can't fake the homework. Full rules are in [CLAUDE.md](./CLAUDE.md), and they enforce themselves; you don't need to read them to use the tools.
+A behind-the-scenes check ("Stop hook") will block the AI from producing investigation-style output when it didn't actually fetch any sources — so it can't fake the homework. Full canonical rules are in [CLAUDE.md](./CLAUDE.md) and [AGENTS.md](./AGENTS.md), but each individual skill carries the operational subset needed to run safely on its own.
 
 ---
 
@@ -155,7 +173,7 @@ This isn't about distrusting you. It's about preserving the audit trail for the 
 
 ## Install
 
-The skills live under `.claude/skills/` — the standard location, so any compatible AI agent can install them by copying the folder.
+The skills live under `.claude/skills/` — the standard location, so any compatible AI agent can install them by copying the folder. Codex-compatible mirrors also live under `.agents/skills/`.
 
 **For Claude Code,** paste this:
 
@@ -165,7 +183,7 @@ The skills live under `.claude/skills/` — the standard location, so any compat
 > If I'd prefer a project-only install, copy them into this project's `.claude/skills/` instead —
 > ask me which. After copying, remind me to restart Claude Code or run `/skills`.
 
-**For other AI runtimes** that support the SKILL pattern: point your loader at `.claude/skills/`. The files are plain Markdown with frontmatter — no build step.
+**For other AI runtimes** that support the SKILL pattern: point your loader at `.claude/skills/` or `.agents/skills/`. The files are plain Markdown with frontmatter — no build step. You may also copy a single skill folder by itself; all seven skills are standalone.
 
 ---
 
@@ -173,7 +191,7 @@ The skills live under `.claude/skills/` — the standard location, so any compat
 
 The discipline check ([`.claude/hooks/check-research-warrant.ps1`](./.claude/hooks/check-research-warrant.ps1)) reads marker phrases out of skill outputs. If you rename a section or warrant label inside a skill, update the hook regex in the same change — or the check stops catching things silently.
 
-New skill PRs should follow the existing pattern: frontmatter (`name`, `description`, `version`, `aligned` date), an Activation block with trigger phrases, a Pairs-With block, and the shared report scaffold (Summary → body → Confidence & Severity → What Would Change This → Self-Audit → Limits).
+New skill PRs should follow the existing pattern: frontmatter (`name`, `description`, `version`, `aligned` date), an Activation block with trigger phrases, a Pairs-With block, a standalone `Research Discipline (CLAUDE.md/AGENTS.md)` block, inline warrant-label definitions, source/provenance hooks where empirical evidence can appear, and the shared report scaffold (Summary → body → Confidence & Severity → What Would Change This → Self-Audit → Limits).
 
 ---
 

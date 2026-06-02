@@ -74,7 +74,7 @@ When the user pushes back, fine-tunes, or adds context during the analysis, thei
 
 2. **Apply the symmetry test to the user.** Would the analysis have been updated the same way if the user's contribution had pointed in the opposite direction with the same evidential weight? If no, the update is anchoring on the user's preference, not on the contribution's substance — and that is itself a finding.
 
-3. **Make user contributions visible in the audit trail.** If the analysis is updated in light of user input, the revised output explicitly states (a) what the user contributed, (b) whether and how it was verified, (c) what changed in the analysis as a result. A third-party reviewer must be able to reproduce the chain by fetching the same sources — *including* whatever the user supplied.
+3. **Make user contributions visible in the audit trail — not in the prose.** If the analysis is updated in light of user input, the audit trail (source table row + warrant label `(user-supplied — unverified)` or, post-verification, `(traced)`) must encode (a) what was contributed, (b) whether and how it was verified, (c) what changed in the analysis as a result. A third-party reviewer must be able to reproduce the chain by fetching the same sources — *including* whatever the requester supplied. The visibility requirement is satisfied by the audit trail; the report prose itself stays neutral per Rule 10.
 
 4. **Hostility check on the user, where stakes warrant it.** The user has their own funding / alignment / priors. For high-stakes or politically charged analyses, acknowledge — without accusation — that the user has stake in the revision direction, and apply the same scepticism to the user's contributions that the toolbox applies to any other source with skin in the outcome. The discipline does not exempt the user.
 
@@ -92,6 +92,25 @@ When the user pushes back, fine-tunes, or adds context during the analysis, thei
 
 This rule fires automatically — it does not require the user to invoke it. Apply it whenever the conversation moves from initial analysis into interactive refinement.
 
+### 10. Objective report voice — no requester references in the prose
+
+Analytical output is written as a **standalone, context-free document**. The reader of a report has no idea who asked, no relationship to the requester, and no access to the conversation that produced it. The report must read as a verdict on the claim, not as minutes of a dialogue.
+
+**Do not** in the report prose:
+- Address or reference the requester ("the user said X", "you asked Y", "as the requester noted Z", "de gebruiker stelt …").
+- Phrase findings as agreement or disagreement with the requester ("the user is right that …", "the user's concern is partly correct", "u heeft gelijk dat …"). This is the sycophancy vector — requester-agreement laundered into apparent finding.
+- Frame the report as a response *to a person* rather than as a verdict *on a claim*.
+- Use second person ("you", "your", "u") in the report body or in the bottom-line / verdict.
+
+**Do** in the report prose:
+- Treat any requester-supplied premise as **the claim under examination**, phrased neutrally: not *"de gebruiker stelt dat richtlijnwaarden gevaarlijk laag zijn"* but *"the claim that current LDL-C guideline targets are dangerously low for the general population"*.
+- Encode provenance entirely via the warrant label and the source-table row, never via prose. The label `(user-supplied — unverified)` and Rule 9.3's audit-trail entry satisfy auditability; the prose stays neutral.
+- If a meta-comment about the requester's role is genuinely necessary (e.g. flagging that an unverified contribution would have changed the verdict), put it in a clearly-bracketed **Provenance note** at the end of the relevant section, not in the running verdict.
+
+**Why.** A report can outlive the conversation that produced it. Pasted into another context, shared with a colleague, gisted to the public — "the user is right" reads as conclusion to a reader who has no idea what the user said, and reads as sycophancy to a reader who does. Either way, it weakens the verdict's claim to be source-traced rather than person-traced.
+
+**How to apply.** When refactoring requester input into the report: extract the proposition, drop the speaker, label the warrant. The verdict speaks about the claim, not about the person who raised it. Rule 9's substance (verify, never load-bear on un-sourced contributions, hostility-check the requester) is unchanged — Rule 10 only governs how Rule 9's outputs *appear in the final report*.
+
 ## Anti-patterns (do not do these)
 
 - Producing investigation-style output (Hypothesis A/B, MMO matrix, Cui Bono, "Established fact", "Refuted", "Steelman", "(traced)") **without any WebFetch/WebSearch calls in the same turn**. The Stop hook blocks this.
@@ -100,6 +119,7 @@ This rule fires automatically — it does not require the user to invoke it. App
 - Dismissing a source's claim because of the source's identity (genetic fallacy) rather than checking the claim.
 - Using "experts agree" / "studies show" / "it has been demonstrated that" without a traceable citation.
 - Skipping the bias self-audit at the end.
+- Writing report prose that addresses or references the requester ("the user said X", "you noted Y", "the user is right that Z") instead of a context-free verdict on the claim. Rule 10 forbids this; provenance lives in the warrant label, not the prose.
 
 ## Enforcement
 
