@@ -23,9 +23,9 @@ This skill is one tool in the truth-seeking toolbox. Compose it with:
 - `peer-review` — when the rhetoric is wrapped around a scientific paper, route the paper to full review.
 - `belief-revision` — when new evidence emerges about a previously analysed text and a calibrated update is needed.
 
-## Research Discipline (CLAUDE.md)
+## Research Discipline (CLAUDE.md/AGENTS.md)
 
-This skill audits text the user supplies; it does not normally fetch sources. But the rules in `CLAUDE.md` → *Operating rules* still bind whenever an analytical finding invokes empirical evidence:
+This skill audits text the user supplies; it does not normally fetch sources. But the rules in `CLAUDE.md` or `AGENTS.md` → *Operating rules* still bind whenever an analytical finding invokes empirical evidence:
 
 - **Rule 2** (steelman from primary literature) — when the text characterises another's position to attack it, fetch that position's own primary statement before judging the move "straw man" or "fair".
 - **Rule 3** (primary before secondary) — when the text cites a study or source, fetch the primary before accepting or refuting the text's characterisation of it.
