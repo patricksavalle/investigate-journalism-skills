@@ -175,13 +175,18 @@ Verify the citations most able to change the recommendation:
 - Citations supplying effect sizes, priors, or power assumptions.
 - Citations to authoritative or contradicting prior literature.
 
+If the paper's central claim relies on a cited empirical study, do not stop at "the citation says what the paper claims." Run a **targeted cited-study peer review** on that source: design, sample/materials, statistics, causal licence, reproduction/replication status, COI, and whether the cited study can bear the load assigned to it. This is mandatory for any cited study without which the reviewed paper's main conclusion, novelty claim, causal claim, or policy/clinical implication would materially weaken.
+
+Recursion limit: one cited-study layer is mandatory when central. Follow a second layer only when the first cited study's own central warrant depends on another citation and that dependency could change the recommendation. Beyond two layers, stop and recommend a dedicated citation-chain review.
+
 Process:
 
 1. Fetch DOI, publisher page, preprint, PMC, repository, protocol, registry, or other primary source.
 2. Locate the specific cited claim.
 3. Compare paper's characterisation with source content.
 4. Follow citation chains to the primary at least once for load-bearing claims.
-5. Check retraction, expression of concern, PubPeer or equivalent where relevant.
+5. For central empirical dependencies, perform the targeted cited-study peer review above.
+6. Check retraction, expression of concern, PubPeer or equivalent where relevant.
 
 Verdicts:
 
@@ -300,6 +305,10 @@ State explicitly what would change the recommendation upward or downward.
 | Paper claim | Cited source | Source actually says | Verdict | Severity | Warrant |
 |---|---|---|---|---|---|
 
+## Targeted Cited-Study Reviews
+| Cited study | Why central | Method/statistical adequacy | Reproduction/replication status | Can bear cited load? | Severity impact | Warrant |
+|---|---|---|---|---|---|---|
+
 ## Literature Context And Deployment Gap
 | Downstream use / literature claim | What this paper actually supports | Inside-lane / Lane-stretched / Outside-lane | Warrant |
 |---|---|---|---|
@@ -342,6 +351,7 @@ State explicitly what would change the recommendation upward or downward.
 | Abstract causal, design observational | Causal overreach | Major/Fatal; calibrate language or redesign |
 | Named framework invoked but requirements not checked | Framework laundering | Decompose requirements; verify each |
 | Cited source supports weaker claim | Citation overstatement | Quote both; grade by centrality |
+| Central claim rests on cited study | Unreviewed dependency | Run targeted cited-study peer review |
 | Input/material under-characterised | Active-agent or construct under-determination | Major/Fatal if central |
 | p < .05 without effect size/CI | Statistical opacity | Require effect sizes and uncertainty |
 | Many tests, one headline result | Multiple-testing risk | Require correction or exploratory framing |
