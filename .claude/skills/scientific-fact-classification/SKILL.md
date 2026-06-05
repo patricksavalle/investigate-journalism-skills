@@ -29,7 +29,7 @@ Claim classification without source-tracing reproduces training-data bias as ana
 - **Rule 1** (pre-classification hypothesis registration) — before classifying, register the prior expectation per claim's label. Otherwise post-hoc rationalisation will select the label.
 - **Rule 2** (steelman from primary literature) — Phase 0d Charity; for contested claims, fetch advocates' primary literature, not critics' summaries.
 - **Rule 3** (primary before secondary) — Phase 6d Provenance trace toward P1 (pre-registered + replicated primary).
-- **Rule 4** (map institutional networks) — Phase 6c failure modes (funder capture, citation cartel, prestige cascade) must be checked before consensus counts as evidence.
+- **Rule 4** (map institutional networks) — Phase 6c failure modes (funder capture, citation cartel, prestige cascade) must be checked before consensus can be used even as a prior.
 - **Rule 5** (Tier 0 priority) — for historically-settled claims, fetch contemporary primary sources; later retrospectives sanitise.
 - **Rule 6** (bias self-audit) — enforced in `## Self-Audit`.
 - **Rule 7** (minimum search volumes) — ≥3 independent primary lines for an "Established fact"; fewer = lower label.
@@ -44,7 +44,7 @@ Attach a warrant qualifier to every empirical classification:
 | Label | Meaning |
 |---|---|
 | `(traced)` | Followed evidence chain to a primary source fetched in this session. State URL + access date. |
-| `(deferred to consensus)` | Relying on a named consensus mechanism, such as a peer-reviewed literature body, regulatory body, or textbook. Name the body. |
+| `(deferred to consensus)` | Relying on a named social/institutional consensus mechanism, such as a literature body, regulatory body, or textbook. Consensus is not scientific warrant; it is a political/social coordination signal and at most a prior until traced to reproduced or replicated evidence. |
 | `(deferred, fragile)` | Deferred to consensus, but Phase 6c failure modes apply: funder capture, ideological capture, prestige cascade, replication crisis, or similar. State which. |
 | `(memory — unverified)` | Recalled from training data, not verified this session. Never load-bearing without an explicit caveat that it could be wrong. |
 | `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Treat as a hypothesis to test, never as authority. |
@@ -88,11 +88,11 @@ Mismatching standards across domains (holding history to physics's bar, or vice 
 
 **0f. Self-audit commitment.** Same standards regardless of which side of debate the conclusion lands on. State at end whether verdicts would have been the same if the conclusion ran the other way.
 
-**0g. Consensus is a social mechanism, not a truth-detector.** Peer review, expert agreement, journal acceptance, textbook inclusion are **consensus mechanisms** — social processes for coordinating on what to treat as established. Evidence about what a community believes, not direct evidence about the world. Failure modes: funder capture, publication bias, prestige cascade, ideological alignment, slow correction (continental drift, peptic-ulcer aetiology, leaded petrol, dietary-fat orthodoxy).
+**0g. Consensus is political/social coordination, not science.** Peer review, expert agreement, journal acceptance, textbook inclusion, and venue reputation are **consensus mechanisms** — political, institutional, and social processes for coordinating on what a community will treat as established. They are evidence about alignment, incentives, gatekeeping, or communication norms, not direct evidence about the world. Do not upgrade a scientific claim because it is consensus, peer reviewed, or published in a reputable venue. Upgrade only for reproduced results, independent replication, transparent methods/data/code, valid measurement, and successful risky predictions. Failure modes: funder capture, publication bias, prestige cascade, ideological alignment, slow correction (continental drift, peptic-ulcer aetiology, leaded petrol, dietary-fat orthodoxy).
 
 Every empirical claim carries a **warrant type**:
 - **Traced** — analyst followed chain from primary evidence to claim
-- **Deferred** — relying on a consensus mechanism without tracing
+- **Deferred** — relying on a social/institutional consensus mechanism without tracing
 
 Both are legitimate (most knowledge is necessarily deferred), but different. Test: *Could I explain this to a sceptic using evidence and reasoning, without ultimately appealing to "the experts agree"?* If no, it is deferred — however credentialed the source.
 
@@ -163,7 +163,9 @@ T8  Anecdote, testimonial
 
 **3b. GRADE adjustments.**
 *Downgrade for:* risk of bias, inconsistency, indirectness, imprecision, publication bias, no pre-registration, single study, fragility.
-*Upgrade for:* large effect, dose–response, confounders that would all bias against, independent replication, mechanistic coherence, pre-registration.
+*Upgrade for:* reproduced analyses, independent replication, large effect, dose–response, confounders that would all bias against, mechanistic coherence, pre-registration, open data/code/materials sufficient for checking.
+
+Do **not** upgrade for peer-review status, journal impact, publisher reputation, author prestige, or citation count. Treat those as provenance/search signals that may justify checking the paper sooner; they do not add scientific warrant unless the underlying methods and results survive inspection.
 
 After adjustment, certainty: **High / Moderate / Low / Very Low**. State which, and why.
 
@@ -184,7 +186,11 @@ After adjustment, certainty: **High / Moderate / Low / Very Low**. State which, 
 | Cohort selected on dependent variable | Selection effect as finding |
 | Base rate ignored | Conditional probabilities misread |
 
-**3d. Replication.** Single-study findings are provisional by default. State: replicated / single-study / mixed / failed / field has known crisis (psychology, nutrition epidemiology, preclinical cancer). Discount accordingly.
+**3d. Reproduction and replication.** Single-study findings are provisional by default. Separate:
+- **Reproduction:** same data/code/materials re-run or re-analysed and the reported results are recovered.
+- **Replication:** independent data, samples, labs, populations, instruments, or teams test the same claim.
+
+State: reproduced / not reproducible / replication attempted / replicated / single-study / mixed / failed / field has known crisis (psychology, nutrition epidemiology, preclinical cancer). Discount accordingly. A peer-reviewed but unreproduced paper remains provisional; a reproducible preprint may carry more scientific warrant than a prestigious unreproducible publication.
 
 ---
 
@@ -224,19 +230,19 @@ not P(E | H) alone. Evidence that fits H but also fits ¬H is weak.
 
 Discipline: state prior · state alternatives (at minimum: chance, bias, confounding, publication artefact) · compare likelihoods · update conservatively. Weak likelihood ratio applied to strong prior moves credence only a little.
 
-"Extraordinary claims require extraordinary evidence" is this principle, not a rhetorical dismissal. The standard is symmetric — overturning established consensus also requires strong evidence.
+"Extraordinary claims require extraordinary evidence" is this principle, not a rhetorical dismissal. The standard is symmetric: overturning a reproduced evidence base requires strong evidence; overturning a mere consensus mechanism requires auditing the political/institutional chain and tracing the underlying evidence.
 
 ---
 
 ## Phase 6 — Source & Methodological Quality
 
-**6.0 — Source weight vs. argument validity.** Source-tier and CoI demotion set *how much independent corroboration a claim requires before it is load-bearing*. They do not determine whether the argument itself is valid. A Nobel-laureate book foreword by an outside-field author is T5 and demands corroboration to load-bear; the *arguments inside it* are still answered by domain-expert peer-reviewed sources (substance refutation), not by listing the author's other contested beliefs. If you find yourself surfacing the arguer's unrelated views as part of the response to their argument, you have crossed from source-tier discipline into Argument/Advocate Conflation (`investigative-reasoning` Phase 8). The moves look similar; they are not the same.
+**6.0 — Source status vs. argument validity.** Source status and CoI demotion set *how much independent corroboration a claim requires before it is load-bearing*. They do not determine whether the argument itself is valid. Peer review, journal venue, author seniority, institution, publisher, and citation count are status/provenance facts, not scientific principles. A Nobel-laureate book foreword by an outside-field author is low provenance and demands corroboration to load-bear; the *arguments inside it* are still answered by domain-expert, methodologically sound, reproducible evidence (substance refutation), not by listing the author's other contested beliefs. If you find yourself surfacing the arguer's unrelated views as part of the response to their argument, you have crossed from source-status discipline into Argument/Advocate Conflation (`investigative-reasoning` Phase 8). The moves look similar; they are not the same.
 
-**6a. Transparency markers.** Pre-registration · open data and code · blinded outcome assessment · random assignment · adequate power · attempted replication · disclosed COIs and funding · reproducible methods · null results reported.
+**6a. Transparency and reproduction markers.** Pre-registration · open data and code · executable analysis environment · blinded outcome assessment · random assignment · adequate power · attempted reproduction · attempted replication · disclosed COIs and funding · reproducible methods · null results reported.
 
 **6b. Conflict of interest.** Funding/affiliation does not invalidate findings, but shifts the burden of proof for findings aligning with funder's commercial or ideological interest. Check: who funded, who employs authors, funder control of design/analysis/publication, independent replication by unaligned groups.
 
-**6c. Consensus failure modes** (Phase 0g). A consensus claim earns weight as a **prior** only when: authorities genuinely expert in relevant subdomain · claim within their scope · field tracks matters of fact · underlying evidence publicly available and reproducible · dissenters engaged on the merits.
+**6c. Consensus failure modes** (Phase 0g). A consensus claim never earns scientific weight by itself. It can be used only as a **political/social prior** when: authorities genuinely expert in relevant subdomain · claim within their scope · field tracks matters of fact · underlying evidence publicly available and reproducible · dissenters engaged on the merits.
 
 | Failure mode | Pattern |
 |---|---|
@@ -250,22 +256,23 @@ Discipline: state prior · state alternatives (at minimum: chance, bias, confoun
 | Replication-crisis field | Apparent consensus rests on findings that don't replicate |
 | Definitional drift | "X is established" but X has been redefined since the original evidence |
 
-**6d. Provenance trace.**
+**6d. Evidence trace.**
 ```
-P1   Pre-registered + replicated + peer-reviewed primary
-P2   Peer-reviewed primary, no replication yet
-P3   Systematic review / meta-analysis
-P4   Government / regulatory technical reports
-P5   Position statements of major scientific bodies
-P6   Textbooks (lag the frontier)
-P7   Preprints (not peer-reviewed)
-P8   Reputable science journalism citing primary sources
-P9   General journalism / popular books
-P10  Blogs, opinion media, advocacy sites
-P11  Social media, anonymous sources, single testimonials
+P1   Independently replicated + reproduced + transparent primary evidence
+P2   Reproduced primary evidence, no independent replication yet
+P3   Pre-registered primary evidence with auditable data/code/materials
+P4   Systematic review / meta-analysis with reproducible search, risk-of-bias handling, and publication-bias checks
+P5   Primary evidence not yet reproduced, including peer-reviewed papers and preprints
+P6   Government / regulatory technical reports with inspectable methods
+P7   Position statements of major scientific bodies
+P8   Textbooks (lag the frontier)
+P9   Science journalism citing primary sources, including reputable outlets
+P10  General journalism / popular books
+P11  Blogs, opinion media, advocacy sites
+P12  Social media, anonymous sources, single testimonials
 ```
 
-Trace claims toward P1. Many disputes evaporate at the trace step.
+Trace claims toward P1. Peer review and venue reputation affect where to look, not how much warrant the result gets after inspection. Many disputes evaporate at the trace step.
 
 **Multi-source reconciliation.** When ≥3 sources make conflicting claims about a single load-bearing fact, hand the dispute to `investigative-reasoning` Phase 3i (Source Triangulation) before classifying. The triangulation procedure exposes single-origin amplification ("10 outlets" with one source-node) and independent convergence (small numerical count but distinct nodes), both of which change a claim's classification more than the per-source quality ratings do.
 
@@ -293,24 +300,24 @@ Each claim gets a label on **two axes**: evidence strength + warrant type (Phase
 
 **7b. Warrant qualifier** (attach to every empirical label — canonical project labels per `CLAUDE.md` / `AGENTS.md`):
 - **(traced)** — followed evidence chain to a primary source fetched this session (URL + access date stated)
-- **(deferred to consensus)** — relying on a named consensus mechanism (peer-reviewed literature, regulatory body, textbook); name the body
+- **(deferred to consensus)** — relying on a named social/institutional consensus mechanism; name the body and state that it is not scientific warrant unless traced to reproduced or replicated evidence
 - **(deferred, fragile)** — deferred but Phase 6c failure modes apply (funder capture, ideological capture, prestige cascade, replication crisis, etc.); state which
 - **(memory — unverified)** — recalled from training data, not verified this session; never load-bearing without an explicit "this could be wrong" caveat
 - **(user-supplied — unverified)** — supplied by the requester and not verified in-session; use only as a hypothesis to test
 - **(mixed)** — part traced, part deferred; state which is which
 
-**7c. Consensus-specific labels** (when strength comes from the consensus mechanism rather than evidence the user can follow):
+**7c. Consensus-specific labels** (when a prior comes from the consensus mechanism rather than evidence the reader can follow):
 
 | Label | When |
 |---|---|
-| **Consensus-warranted** | Genuine, well-functioning consensus; not traced; treat as strong prior, not known fact |
-| **Consensus-warranted, fragile** | Consensus exists but 6c failure modes present |
+| **Consensus-prior** | Named institutional consensus that appears tied to reproducible evidence; not traced; treat as a political/social prior, not scientific fact |
+| **Consensus-prior, fragile** | Consensus exists but 6c failure modes present |
 | **Authority-warranted only** | Single authority, no evidence trace |
 | **Orphaned** | Cited as established, trace dead-ends — primary source missing, doesn't say what reported, or retracted |
 
 **7d. Reporting.** State strength + warrant + evidence (or consensus mechanism) that drove placement + what would change it. Examples:
 - *Established fact (traced)* — multiple independent lines, mechanism known, chain followed
-- *Well-supported finding (deferred to consensus)* — strong field consensus; not traced; strong prior
+- *Provisionally accepted (deferred to consensus)* — field consensus appears tied to reproducible evidence; not traced; political/social prior only
 - *Provisionally accepted (deferred, consensus failure modes present)* — consensus in replication-crisis field
 - *Authority-warranted only* — single regulatory body asserts; no trace
 
@@ -390,7 +397,7 @@ Examples:
 | Pattern | Suspect | Default move |
 |---|---|---|
 | "Studies show…" (no citation) | Anonymous authority | Provenance unknown — investigate |
-| "Scientists agree…" (no method) | Bare appeal to consensus | Treat as prior; warrant = deferred |
+| "Scientists agree…" (no method) | Bare appeal to consensus | Treat as political/social prior only; warrant = deferred |
 | "It's been proven that…" | Overstated certainty | Almost never literally true in science |
 | "The science is settled" | Closing-down move | Reopen — settled by what, traced or deferred? |
 | "Just a theory" | Folk-vs-scientific equivocation | Category error |
@@ -400,7 +407,9 @@ Examples:
 | Replication in crisis fields | Replication artefact | Discount; flag consensus as fragile |
 | Cited expert speaking outside field | Misapplied authority | Discount |
 | Single anomalous study contradicts large literature | Likely fluke | Default to body — but check whether body is deferred |
-| Pre-registered + replicated + open data | Genuine corroboration | Upgrade |
+| Pre-registered + reproduced + independently replicated + open data/code | Genuine corroboration | Upgrade |
+| Peer-reviewed / high-impact venue only | Status laundering | Do not upgrade; inspect reproduction, replication, and methods |
+| Reproducible preprint with open data/code | Inspectable primary evidence | May outrank unreproduced peer-reviewed papers |
 | Mechanism specified and tested | Independent line of support | Upgrade |
 | Modal smuggling ("could", "may" → strong conclusion) | Hedge becoming claim | Match conclusion to evidence |
 | Definitions shift mid-argument | Equivocation | Hold definition fixed |

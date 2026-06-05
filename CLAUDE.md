@@ -10,15 +10,17 @@ When producing analytical output of any kind — investigation, article review, 
 
 | Label | Meaning |
 |---|---|
-| `(traced)` | Followed evidence chain to a primary source fetched in this session via WebFetch or WebSearch. URL + access date stated. |
-| `(deferred to consensus)` | Relying on a named consensus mechanism (peer-reviewed body of literature, regulatory body, textbook). Said body must be named. |
+| `(traced)` | Followed evidence chain to a primary source fetched in this session via WebFetch/WebSearch or an explicit terminal/API fetch when the browser fetch path is unsuitable. URL + access date stated. |
+| `(deferred to consensus)` | Relying on a named social/institutional consensus mechanism (literature body, regulatory body, textbook, official record system). Consensus is not scientific warrant; for scientific claims, treat it only as a political/social prior unless traced to reproduced or replicated evidence. |
 | `(deferred, fragile)` | Deferred to consensus but `scientific-fact-classification` Phase 6c failure modes (funder capture, ideological capture, prestige cascade, replication crisis, etc.) apply. State which. |
 | `(memory — unverified)` | Recalled from training data, not verified this session. Permitted only with this label, and never load-bearing without an explicit "this could be wrong" caveat. |
 | `(user-supplied — unverified)` | Provided by the user during interactive refinement (an asserted fact, a counter-argument's premise, a "consider this" claim). Never load-bearing on its own; treated as a hypothesis to test or an input to verify. See Rule 9. |
 
 The point is not to eliminate `(memory)` use — some claims are genuinely background knowledge. The point is **to make memory-reliance visible** so the reader, and Claude itself, can see where verification is missing.
 
-**Strictness on `(traced)`.** `(traced)` is **per-session, not lifetime**. If you did not fetch the primary in *this* conversation via WebFetch or WebSearch — and state the URL + access date — the label is `(memory — unverified)`, even when the chain is well-known and the analyst could fetch it. Confidence about an unverified chain belongs in surrounding prose ("the evidence chain is well-documented in [X]; I can describe it but did not fetch in this session") — never laundered into a `(traced)` label. The label's weight comes from *what was actually done this turn*; weakening it weakens the entire discipline.
+**Strictness on `(traced)`.** `(traced)` is **per-session, not lifetime**. If you did not fetch the primary in *this* conversation via WebFetch/WebSearch or an explicit terminal/API fetch — and state the URL + access date — the label is `(memory — unverified)`, even when the chain is well-known and the analyst could fetch it. Confidence about an unverified chain belongs in surrounding prose ("the evidence chain is well-documented in [X]; I can describe it but did not fetch in this session") — never laundered into a `(traced)` label. The label's weight comes from *what was actually done this turn*; weakening it weakens the entire discipline.
+
+**GitHub Gist and raw-source fallback.** GitHub Gist HTML pages can render poorly or return little useful text through browser/web fetch tools. When a gist or similar source is load-bearing, prefer the raw or API endpoint first: `https://gist.githubusercontent.com/{owner}/{gist_id}/raw` for single-file gists, a file-specific raw URL where needed, or `https://api.github.com/gists/{gist_id}` to enumerate files. If the in-app/web fetch path cannot retrieve the content and a terminal fetch is used instead (`Invoke-WebRequest`, `curl`, `wget`, or `gh gist view`), that fetch may count as `(traced)` only when the command visibly targets the public source URL or gist id, the retrieved content is inspected in-session, and the report states the URL + access date. Do not narrate a failed generic webfetch as a blocker once the raw/API route is available; go directly to the raw/API route, requesting network escalation only when sandboxing blocks the fetch.
 
 ## Operating rules
 
@@ -57,7 +59,7 @@ End every analytical output by answering, in writing: **"Would I have reached th
 - Beyond 40: recommend a dedicated deep-research session
 
 ### 8. Hostility check on sources
-For every cited source name funding, ownership, and (where relevant) national alignment. A peer-reviewed paper on glyphosate safety from a Monsanto-funded lab is not the same warrant as the same paper from an independent group, and both must be labelled.
+For every cited source name funding, ownership, and (where relevant) national alignment. A reproducible, independently replicated paper on glyphosate safety from a Monsanto-funded lab is not the same warrant as the same reproduced finding from an independent group, and both must be labelled. Peer review, journal venue, and consensus status are provenance signals, not scientific warrant.
 
 ### 9. Interactive refinement: user contributions are inputs, not warrants
 
@@ -114,7 +116,7 @@ Analytical output is written as a **standalone, context-free document**. The rea
 
 ## Anti-patterns (do not do these)
 
-- Producing investigation-style output (Hypothesis A/B, MMO matrix, Cui Bono, "Established fact", "Refuted", "Steelman", "(traced)") **without any WebFetch/WebSearch calls in the same turn**. The Stop hook blocks this.
+- Producing investigation-style output (Hypothesis A/B, MMO matrix, Cui Bono, "Established fact", "Refuted", "Steelman", "(traced)") **without any source-fetch calls in the same turn**. WebFetch/WebSearch are preferred; explicit terminal/API fetches are allowed for raw sources such as GitHub gists. The Stop hook blocks this.
 - Building Hypothesis B from mainstream rebuttal summaries.
 - Treating MSM amplification across many outlets as independent corroboration.
 - Dismissing a source's claim because of the source's identity (genetic fallacy) rather than checking the claim.
@@ -124,7 +126,7 @@ Analytical output is written as a **standalone, context-free document**. The rea
 
 ## Enforcement
 
-A `Stop` hook at `.claude/hooks/check-research-warrant.ps1` inspects the assistant's just-completed turn. If the output contains multiple analytical-framing markers (the language of investigative-reasoning, journalistic-article-review, peer-review, scientific-fact-classification, etc.) **and** the turn made no WebFetch or WebSearch calls, the hook blocks the stop and feeds back a request to either fetch sources or label claims `(memory — unverified)`.
+A `Stop` hook at `.claude/hooks/check-research-warrant.ps1` inspects the assistant's just-completed turn. If the output contains multiple analytical-framing markers (the language of investigative-reasoning, journalistic-article-review, peer-review, scientific-fact-classification, etc.) **and** the turn made no source-fetch calls, the hook blocks the stop and feeds back a request to either fetch sources or label claims `(memory — unverified)`.
 
 The hook is intentionally conservative: it only fires when output looks like *produced* analysis, not when the conversation is *discussing* the methodology. False positives can be cleared by either adding a fetch, adding explicit warrant labels, or — for genuinely memory-only output the user has asked for — adding `(memory — unverified)` somewhere visible.
 

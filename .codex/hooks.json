@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "pwsh -NoProfile -ExecutionPolicy Bypass -File 'C:\\Users\\Patrick\\Projects\\investigate-journalism-skills\\.codex\\hooks\\check-research-warrant.ps1'",
+            "command": "pwsh -NoProfile -ExecutionPolicy Bypass -File .codex/hooks/check-research-warrant.ps1",
             "timeout": 10
           }
         ]

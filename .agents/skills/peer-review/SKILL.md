@@ -65,7 +65,7 @@ This skill is standalone. Apply these rules even if `CLAUDE.md` / `AGENTS.md` ar
 - **Rule 4 — Map institutional networks.** Treat studies, authors, funders, labs, policy bodies, and commentators as one node when they share material alignment until independent corroboration is shown.
 - **Rule 5 — Tier 0 priority.** For citation chains and time-sensitive fields, prefer original/contemporary primary sources over later reviews or summaries.
 - **Rule 6 — Bias self-audit.** End by answering whether the same verdict would have been reached if the paper's conclusion ran the other way.
-- **Rule 7 — Minimum search volumes.** Typical paper: verify 5-15 load-bearing citations/sources. Synthetic review or high-impact paper: more. Beyond 40, recommend a dedicated deep-research session.
+- **Rule 7 — Minimum search volumes.** Typical paper: verify 5-15 load-bearing citations/sources. Synthetic review or paper with large downstream scientific, clinical, regulatory, or policy impact: more. Beyond 40, recommend a dedicated deep-research session.
 - **Rule 8 — Hostility check on sources.** For each cited source used by the review, record funding, ownership, mandate, author/funder alignment, and national alignment where relevant.
 - **Rule 9 — User input is not a warrant.** User-supplied corrections are `(user-supplied — unverified)` until fetched and verified. Do not soften severity grades on pressure absent new primary evidence.
 - **Rule 10 — Objective report voice.** Write the report as a standalone verdict on the paper. Do not refer to the requester in the report prose.
@@ -77,7 +77,7 @@ Every load-bearing factual claim made by the review carries a warrant:
 | Label | Meaning |
 |---|---|
 | `(traced)` | Evidence chain followed to a primary source fetched in this session. State URL and access date. |
-| `(deferred to consensus)` | Relying on a named consensus mechanism such as CONSORT, STROBE, PRISMA, ICH-GCP, ARRIVE, a regulator, a textbook, or a peer-reviewed literature body. Name it. |
+| `(deferred to consensus)` | Relying on a named social/institutional consensus mechanism such as CONSORT, STROBE, PRISMA, ICH-GCP, ARRIVE, a regulator, a textbook, or a literature body. Consensus is not scientific warrant; for scientific claims, treat it only as a political/social prior unless traced to reproduced or replicated evidence. |
 | `(deferred, fragile)` | Deferred to consensus, but known failure modes apply: funder capture, ideological capture, prestige cascade, replication crisis, publication bias, or similar. State which. |
 | `(memory — unverified)` | Recalled from training data, not verified in-session. Never load-bearing without an explicit caveat. |
 | `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Treat as a hypothesis to test, never as authority. |
@@ -95,10 +95,12 @@ Register before search:
 | Field and subfield | Use the field's actual standards |
 | Stated contribution | One sentence, quote where possible |
 | Strongest fair reading | The best version of what the paper claims |
-| Prior expectation | Field consensus and likely strength before detailed checking |
+| Prior expectation | Field consensus as a political/social prior, plus likely paper strength before detailed checking |
 | Failure modes to test | Method mismatch, inferential gap, causal overreach, citation mismatch, p-hacking, missing data/code, COI, deployment gap |
 
 Commit to position neutrality: do not make "conclusion disagreeable" do the work of "methods flawed"; do not make prestige do the work of evidence.
+
+Venue/status discipline: peer review, journal reputation, publisher, author prestige, institution, and citation count are provenance facts, not scientific principles. Record them in the paper identity, but do not upgrade the paper's evidential strength or recommendation because of them. Upgrade only for valid design, reproduced analyses, independent replication, transparent data/code/materials, adequate measurement, and conclusions that stay inside the evidence.
 
 ## Phase 1 — Paper Map
 
@@ -210,6 +212,7 @@ Audit both the paper's lane and its downstream use:
 | Is the paper consistent with recent systematic reviews/meta-analyses? | Fetch relevant synthesis if load-bearing |
 | Are strong contradictions or replications engaged? | If not, flag selective context |
 | Is novelty real? | Check whether similar methods/results already exist |
+| Has the result been reproduced or independently replicated? | Prefer reproduction/replication over venue or citation status |
 | Are downstream users citing it correctly? | Sample later papers, policy, regulatory, media, or institutional uses |
 
 Deployment-gap categories:
@@ -230,11 +233,17 @@ Check:
 |---|---|
 | Data | Public, controlled-access with clear process, or unavailable |
 | Code | Available, versioned, executable enough to reproduce analyses |
-| Methods | Protocol detail sufficient for replication |
+| Methods | Protocol detail sufficient for reproduction and independent replication |
 | Materials | Reagents, suppliers, catalogue numbers, corpus/data versions, survey instrument |
 | Pre-registration | Present, followed, deviations declared |
 | COI | Financial, institutional, ideological, author contribution, funder role |
 | Openness limits | Paywalls, inaccessible supplements, unavailable data, undisclosed materials |
+
+Separate two checks:
+- **Reproduction:** can the reported analyses/results be recovered from the same data, code, materials, and protocol?
+- **Replication:** has an independent team, sample, lab, population, instrument, or dataset tested the same claim?
+
+A prestigious peer-reviewed paper with unavailable data/code or unreproducible analyses is downgraded. A preprint or low-status venue with open materials and reproduced analyses can outrank a high-status paper on scientific warrant, though it may still need independent replication before strong generalisation.
 
 Use `osint-research` for author/funder/retraction/affiliation checks when those facts become load-bearing.
 
@@ -340,3 +349,5 @@ State explicitly what would change the recommendation upward or downward.
 | Sample scope narrower than conclusion | Generalisation overreach | Restrict conclusion |
 | Downstream citation uses paper for stronger claim | Deployment gap | Separate paper fault from misuse |
 | COI disclosure absent in stake-heavy field | Disclosure failure | Require disclosure and source-network check |
+| Prestigious venue used as evidence | Status laundering | Ignore venue as warrant; inspect methods/reproduction |
+| Reproducible preprint vs unreproducible journal article | Evidence beats venue | Weight reproducibility and replication higher |

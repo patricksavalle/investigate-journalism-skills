@@ -46,7 +46,7 @@ Every load-bearing finding carries a warrant per `CLAUDE.md` / `AGENTS.md`:
 | Label | Meaning |
 |---|---|
 | `(traced)` | Followed evidence chain to a public source fetched in this session. State URL + access date; archive URL when useful. |
-| `(deferred to consensus)` | Relying on a named consensus mechanism or official registry class without independently tracing each underlying record. Name the mechanism. |
+| `(deferred to consensus)` | Relying on a named social/institutional consensus mechanism or official registry class without independently tracing each underlying record. Consensus is not scientific warrant; for scientific claims, treat it only as a political/social prior unless traced to reproduced or replicated evidence. |
 | `(deferred, fragile)` | Deferred to consensus, but failure modes apply: state control, platform opacity, coordinated reporting, registry gaps, capture, or similar. State which. |
 | `(memory — unverified)` | Recalled from training data, not verified this session. Never load-bearing without an explicit caveat that it could be wrong. |
 | `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Treat as a selector or hypothesis to verify, never as attribution. |

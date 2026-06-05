@@ -2,7 +2,7 @@
 #
 # Reads the Stop-hook JSON payload from stdin, inspects the just-completed
 # assistant turn, and blocks the stop when analytical-framing markers are
-# present without a WebFetch or WebSearch call in the same turn.
+# present without a source-fetch call in the same turn.
 #
 # Fires only on substantive analytical output (3+ distinct marker categories),
 # not on conversations about the methodology. Exits 0 on any internal error
@@ -43,9 +43,10 @@ try {
     }
     if ($boundary -lt 0) { exit 0 }
 
-    # Collect assistant text and tool_use names since the boundary.
+    # Collect assistant text and source-fetch tool usage since the boundary.
     $assistantTextParts = @()
     $toolNames = New-Object 'System.Collections.Generic.HashSet[string]'
+    $sourceFetchSeen = $false
     for ($i = $boundary + 1; $i -lt $entries.Count; $i++) {
         $e = $entries[$i]
         if ($e.type -ne 'assistant') { continue }
@@ -56,18 +57,38 @@ try {
                 $assistantTextParts += [string]$block.text
             }
             elseif ($block.type -eq 'tool_use' -and $block.name) {
-                [void]$toolNames.Add([string]$block.name)
+                $toolName = [string]$block.name
+                [void]$toolNames.Add($toolName)
+
+                if ($toolName -in @('WebFetch', 'WebSearch', 'web.run')) {
+                    $sourceFetchSeen = $true
+                }
+
+                $command = ''
+                try {
+                    if ($block.input -and $block.input.command) {
+                        $command = [string]$block.input.command
+                    }
+                } catch { $command = '' }
+
+                if ($command) {
+                    $isFetchCommand = $command -match '(?i)\b(Invoke-WebRequest|Invoke-RestMethod|iwr|irm|curl|wget)\b' -and $command -match 'https?://'
+                    $isGistView = $command -match '(?i)\bgh\s+gist\s+view\b'
+                    if ($isFetchCommand -or $isGistView) {
+                        $sourceFetchSeen = $true
+                    }
+                }
             }
         }
     }
     $text = ($assistantTextParts -join "`n")
     if ([string]::IsNullOrWhiteSpace($text)) { exit 0 }
 
-    if ($toolNames.Contains('WebFetch') -or $toolNames.Contains('WebSearch')) { exit 0 }
+    if ($sourceFetchSeen) { exit 0 }
     if ($text -match '\(memory\s*[-—]\s*unverified\)') { exit 0 }
 
     # Marker categories must stay in sync with the skill output templates in
-    # .claude/skills/*/SKILL.md. The regexes match both old (colon-label) and
+    # .agents/skills/*/SKILL.md and .claude/skills/*/SKILL.md. The regexes match both old (colon-label) and
     # new (## heading) styles so the hook survives heading-format changes.
     $categories = [ordered]@{
         'Hypothesis A/B'   = 'Hypothesis\s+[AB]\b'
@@ -90,15 +111,15 @@ try {
     $reason = @"
 Research-discipline check blocked this stop.
 
-The just-completed turn produced analytical output (categories detected: $($matched -join ', ')) but made no WebFetch or WebSearch calls. This is the failure mode CLAUDE.md is built to prevent: analysis from memory laundering training-data bias.
+The just-completed turn produced analytical output (categories detected: $($matched -join ', ')) but made no source-fetch calls. This is the failure mode CLAUDE.md is built to prevent: analysis from memory laundering training-data bias.
 
 Before stopping, do one of:
-  1. Fetch primary sources (WebFetch / WebSearch) and rewrite with (traced) labels + URLs + access dates.
-  2. Add explicit (deferred to consensus) labels naming the consensus mechanism.
+  1. Fetch primary sources (WebFetch / WebSearch, or an explicit terminal/API fetch for raw sources such as GitHub gists) and rewrite with (traced) labels + URLs + access dates.
+  2. Add explicit (deferred to consensus) labels naming the social/institutional consensus mechanism; for scientific claims, state that it is only a political/social prior unless traced to reproduced or replicated evidence.
   3. If genuinely answering from background knowledge, add (memory - unverified) somewhere visible.
   4. End the response with the bias self-audit answer (CLAUDE.md rule #6).
 
-Hook at .claude/hooks/check-research-warrant.ps1. Inspect via /hooks; disable in .claude/settings.json.
+Hook at .codex/hooks/check-research-warrant.ps1. Inspect or disable via .codex/hooks.json.
 "@
 
     @{ decision = 'block'; reason = $reason } | ConvertTo-Json -Compress | Write-Output

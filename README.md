@@ -27,7 +27,7 @@ You do not need to remember the skill names. Ask in plain language, for example:
 
 Every analytical skill embeds the same discipline:
 
-- **Warrant labels:** claims are marked as `(traced)`, `(deferred to consensus)`, `(deferred, fragile)`, `(memory — unverified)`, or `(user-supplied — unverified)`.
+- **Warrant labels:** claims are marked as `(traced)`, `(deferred to consensus)`, `(deferred, fragile)`, `(memory — unverified)`, or `(user-supplied — unverified)`; consensus labels mark social/institutional priors, not scientific warrant.
 - **Primary before secondary:** papers, filings, datasets, speeches, and documents are checked at the source where possible.
 - **Source-network checks:** repeated claims from one funding, ownership, mandate, or alignment node are not treated as independent corroboration.
 - **Self-audit:** reports end by asking whether the verdict would survive if the expected answer ran the other way.
@@ -43,6 +43,12 @@ Mirrors:
 
 - Claude-style skills: [`.claude/skills/`](./.claude/skills)
 - Agent-runtime skills for Codex, Gemini, and other compatible agents: [`.agents/skills/`](./.agents/skills)
+
+Hooks are runtime-specific, not skill-specific:
+
+- Claude Code uses [`.claude/settings.json`](./.claude/settings.json) and [`.claude/hooks/`](./.claude/hooks).
+- Codex uses [`.codex/hooks.json`](./.codex/hooks.json) and [`.codex/hooks/`](./.codex/hooks).
+- `.agents/skills/` does not need its own hooks folder. Gemini and other agents can use the `.agents` skills, but hook enforcement depends on whether that runtime supports an equivalent hook system.
 
 ## Install
 

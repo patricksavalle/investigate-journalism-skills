@@ -42,7 +42,7 @@ When an Excavation reaches `Bedrock` via an empirical claim — not via definiti
 | Label | Meaning |
 |---|---|
 | `(traced)` | Followed evidence chain to a primary source fetched in this session. State URL + access date. |
-| `(deferred to consensus)` | Relying on a named consensus mechanism, such as a literature body, regulatory body, official record system, or textbook. Name the body. |
+| `(deferred to consensus)` | Relying on a named social/institutional consensus mechanism, such as a literature body, regulatory body, official record system, or textbook. Consensus is not scientific warrant; for scientific claims, treat it only as a political/social prior unless traced to reproduced or replicated evidence. |
 | `(deferred, fragile)` | Deferred to consensus, but failure modes apply: funder capture, ideological capture, prestige cascade, replication crisis, or similar. State which. |
 | `(memory — unverified)` | Recalled from training data, not verified this session. Never load-bearing without an explicit caveat that it could be wrong. |
 | `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Treat as a hypothesis or stipulation candidate, never as authority. |
