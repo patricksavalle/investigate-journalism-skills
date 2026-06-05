@@ -208,8 +208,11 @@ Fallback minimum checks:
 | Pseudoreplication | Unit of analysis equals unit of randomisation/sampling |
 | ML leakage | Split integrity, contamination, repeated test-set tuning |
 | Causal overreach | Design identifies causation, temporality, confounding, reverse causation, language calibration |
+| Reverse causation unresolved | Directionality failure; downgrade causal language unless design or analysis rules out reverse direction |
 
 Quote the abstract/conclusion language and compare it with the design. "Associated with" in results becoming "causes" in the abstract is a Major or Fatal finding depending on centrality.
+
+For any causal claim, state whether reverse causation was ruled out by design, tested directly, made implausible by mechanism/timing, or left unresolved. If reverse causation remains plausible, require association/prediction language. Grade Major or Fatal when a central conclusion, abstract claim, clinical/policy implication, or media-use hook depends on causal direction that the design cannot establish.
 
 For animal, primate, clinical, intervention, challenge, toxicity, infection, or behavioural studies, always write the denominator sentence before grading: `n=[total]; groups=[n per group]; affected/responded=[x/y per group]; unaffected/non-responded=[x/y per group]`. If a headline, abstract, or conclusion implies a general effect while a substantial fraction of subjects were unaffected, flag responder-generalisation overreach. Grade Major or Fatal when the central claim depends on treating partial response as general effect.
 
@@ -350,7 +353,7 @@ State explicitly what would change the recommendation upward or downward.
 [field-calibrated checks from Phase 2]
 
 ## Statistical And Causal Audit
-[specialist outputs or fallback checks; quote specific numbers/language]
+[specialist outputs or fallback checks; quote specific numbers/language; state reverse-causation status for causal claims]
 
 ## Sample And Responder Denominators
 | Group | n | Affected/responded | Unaffected/non-responded | Exclusions/missing | Claim language fits denominator? | Severity | Warrant |
@@ -417,6 +420,7 @@ State explicitly what would change the recommendation upward or downward.
 |---|---|---|
 | Title names one standard, methods apply another | Claim-standard mismatch | Grade title/abstract overclaim; decompose both standards |
 | Abstract causal, design observational | Causal overreach | Major/Fatal; calibrate language or redesign |
+| Reverse causation not addressed | Directionality failure | Downgrade to association or require design/analysis that rules out reverse direction |
 | Named framework invoked but requirements not checked | Framework laundering | Build criterion-to-operation table; verify each requirement |
 | Framework criterion satisfied only by citations | Citation-borrowed warrant | Verify cited source and separate current-paper evidence from borrowed support |
 | Cited source supports weaker claim | Citation overstatement | Quote both; grade by centrality |

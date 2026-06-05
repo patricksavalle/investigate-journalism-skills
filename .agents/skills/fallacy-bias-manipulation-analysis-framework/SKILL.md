@@ -223,7 +223,7 @@ Flag biases the text **exploits or exhibits**, not every bias in the literature.
 
 **6b. Framing.** Misleading averages · missing baseline/denominator · absolute-vs-relative-risk confusion · relative risk reduction presented as absolute risk reduction · odds/hazard/rate ratio presented as risk · percent-of-percent · truncated axes · arbitrary time windows · rate-vs-count substitution · false precision · composite indices with hidden weights · Goodhart's Law exploitation.
 
-**6c. Inference.** Base-rate neglect · Simpson's Paradox (exploited) · ecological fallacy · atomistic fallacy · McNamara fallacy · ignored confounding · ignored reverse causation · statistical-vs-practical significance · sampling-vs-systematic-error confusion.
+**6c. Inference.** Base-rate neglect · Simpson's Paradox (exploited) · ecological fallacy · atomistic fallacy · McNamara fallacy · ignored confounding · ignored reverse causation · causal direction asserted without temporal/design support · statistical-vs-practical significance · sampling-vs-systematic-error confusion.
 
 **6d. Source manipulation.** Unnamed authority · single source amplified across many outlets (echo) · missing/buried COI · retracted studies cited as current · ellipsis quotes changing meaning.
 
@@ -389,6 +389,7 @@ An argument that collapses under repair was being carried by the faults.
 | Percentage without denominator | Missing baseline |
 | Relative reduction without absolute risk | Magnitude inflation |
 | Odds/hazard/rate ratio called "risk" | Metric substitution |
+| Cause asserted, reverse direction not checked | Directionality failure |
 | Truncated y-axis | Graphical deception |
 | "No true X would…" | No true Scotsman |
 | Criterion changes after met | Moving goalposts |

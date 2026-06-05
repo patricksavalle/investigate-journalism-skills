@@ -251,6 +251,7 @@ Severity tags: **Fatal**, **Major**, **Minor**, **Optional**, **Praise**.
 | Three experts from one advocacy network | False independence | Collapse to one node and seek independent source |
 | Anonymous official source makes accusation | Uncheckable authority | Require document, named corroboration, or strong caveat |
 | Study reported as causation but design is observational | Causal overreach | Route to `peer-review` / `scientific-fact-classification` |
+| Causal claim with reverse direction unaddressed | Directionality failure | Downgrade wording to association or route to causal specialist check |
 | Relative risk reduction reported without absolute risk | Magnitude inflation | Recompute or request event rates; route central claims to `scientific-fact-classification` |
 | Odds/hazard/rate ratio reported as risk | Metric substitution | Name the metric exactly and avoid risk-language unless conversion is justified |
 | Serious allegation with no right of reply | Fairness failure | Major unless response was sought and fairly represented |

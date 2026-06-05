@@ -236,6 +236,14 @@ Correlation is data; causation is an inference from data + model. State the mode
 | Specificity | Often absent for real causes; prefer negative-control/falsification exposures |
 | Analogy | Similar causes elsewhere → similar effects (weakest) |
 
+**4a-1. Causal direction burden.** If a claim aims to establish causation, explicitly address reverse causation before accepting causal language. State whether reverse causation was:
+- **Ruled out by design** — randomisation, intervention, prospective measurement, temporal ordering, or another design feature makes reverse direction structurally implausible.
+- **Tested directly** — lagged models, negative controls, sensitivity analyses, cross-lagged designs, intervention/removal tests, or equivalent checks evaluate the reverse direction.
+- **Made implausible** — mechanism and timing make reverse direction unlikely enough for the strength of the causal claim.
+- **Unresolved** — reverse direction remains plausible or untested.
+
+If reverse causation is unresolved, downgrade to association, prediction, correlation, or hypothesis. Strong causal wording is not warranted when the reverse direction could explain the result.
+
 **4b. DAG / counterfactual.** Diagram causal structure; identify confounders, mediators, colliders. Confounder = common cause of A and B. Adjusting for mediator hides effect; for confounder reveals it; for collider creates spurious correlation. Rule out: reverse causation, selection, sampling bias. Use negative controls — exposures or outcomes that should *not* show effect; if they do, suspect bias.
 
 **4c. Common errors.** Correlation→causation · post hoc · ignored confounding · ecological fallacy (group → individuals) · individual fallacy (the reverse) · single-cause · Texas sharpshooter · survivorship.
@@ -377,7 +385,7 @@ Examples:
 - **Type:** [Phase 1]
 - **Demarcation:** [falsifiable? pseudoscience signatures?]
 - **Evidence:** tier + GRADE adjustments + replication + statistical flags
-- **Causal status (if relevant):** Bradford Hill summary; alternatives ruled out
+- **Causal status (if relevant):** Bradford Hill summary; reverse-causation status; alternatives ruled out
 - **Bayesian context:** prior, strongest alternative, likelihood ratio direction
 - **Source quality:** provenance tier, transparency, COIs
 - **Warrant type:** traced / deferred / deferred with failure modes / mixed
@@ -427,6 +435,7 @@ Examples:
 | "Just a theory" | Folk-vs-scientific equivocation | Category error |
 | One study found… | Single-study fallacy | Provisional at best |
 | "Linked to" / "associated with" + strong conclusion | Correlation as causation | Apply Phase 4 |
+| Causal claim, reverse causation unaddressed | Directionality failure | Downgrade to association unless design/analysis rules out reverse direction |
 | "Risk doubles" without absolute risk | Relative-risk inflation | Recompute as absolute |
 | "50% reduction" without baseline risk | Relative-risk laundering | Require event rates and ARR/RRR separately |
 | Odds ratio / hazard ratio described as "risk" | Metric substitution | Rename the metric or convert with data |
