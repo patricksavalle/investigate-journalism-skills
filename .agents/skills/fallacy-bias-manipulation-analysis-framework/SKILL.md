@@ -215,7 +215,7 @@ Flag biases the text **exploits or exhibits**, not every bias in the literature.
 
 **6a. Data.** Cherry-picking · p-hacking · Texas sharpshooter · suppressed correlative · survivorship bias · selection bias · publication bias.
 
-**6b. Framing.** Misleading averages · missing baseline/denominator · absolute-vs-relative-risk confusion · percent-of-percent · truncated axes · arbitrary time windows · rate-vs-count substitution · false precision · composite indices with hidden weights · Goodhart's Law exploitation.
+**6b. Framing.** Misleading averages · missing baseline/denominator · absolute-vs-relative-risk confusion · relative risk reduction presented as absolute risk reduction · odds/hazard/rate ratio presented as risk · percent-of-percent · truncated axes · arbitrary time windows · rate-vs-count substitution · false precision · composite indices with hidden weights · Goodhart's Law exploitation.
 
 **6c. Inference.** Base-rate neglect · Simpson's Paradox (exploited) · ecological fallacy · atomistic fallacy · McNamara fallacy · ignored confounding · ignored reverse causation · statistical-vs-practical significance · sampling-vs-systematic-error confusion.
 
@@ -381,6 +381,8 @@ An argument that collapses under repair was being carried by the faults.
 | Term seems to shift meaning | Equivocation |
 | Only favourable examples | Cherry-picking |
 | Percentage without denominator | Missing baseline |
+| Relative reduction without absolute risk | Magnitude inflation |
+| Odds/hazard/rate ratio called "risk" | Metric substitution |
 | Truncated y-axis | Graphical deception |
 | "No true X would…" | No true Scotsman |
 | Criterion changes after met | Moving goalposts |

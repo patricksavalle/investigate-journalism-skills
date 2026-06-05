@@ -1,8 +1,8 @@
 ---
 name: peer-review
 description: A standalone orchestrator for rigorous, citation-verified peer review of scientific papers, manuscripts, preprints, studies, systematic reviews, methods papers, and research reports. Use when the task is to evaluate whether a paper's methods, statistics, causal claims, citations, reproducibility, and conclusions support its stated contribution; verify that cited sources say what the paper claims; assess pre-registration, transparency, and conflicts of interest; or produce a referee-style report with Fatal / Major / Minor findings and an explicit recommendation. Route article-level reporting about a paper to journalistic-article-review, individual claim status to scientific-fact-classification, source/network checks to osint-research or investigative-reasoning, rhetoric to fallacy-bias-and-manipulation-analysis, and later corrections to belief-revision.
-version: 1.1
-aligned: 2026-06-02
+version: 1.2
+aligned: 2026-06-05
 ---
 
 # Peer Review
@@ -113,8 +113,9 @@ Map the paper's internal load:
 | Design | What was actually done |
 | Inputs/materials/data | Concrete physical material, dataset, corpus, survey frame, intervention, or sample |
 | Outcomes | Primary, secondary, exploratory |
-| Results | Effect sizes, uncertainty, null/negative results |
-| Conclusions | Exact language; especially modal verbs and causal verbs |
+| Results | Effect sizes, uncertainty, null/negative results, affected/unaffected counts by group |
+| Title / abstract claim | Exact headline claim; named standards or proof-language are load-bearing, not packaging |
+| Conclusions | Exact language; especially modal verbs, causal verbs, named standards, and proof-language |
 | Load-bearing citations | Sources that make the contribution possible |
 | Inference gap | Distance between what was measured and what is claimed |
 
@@ -128,7 +129,7 @@ Hold the paper to its own genre's bar:
 |---|---|
 | RCT / clinical | CONSORT; randomisation; allocation concealment; blinding; ITT; pre-registration and deviations |
 | Observational epidemiology | STROBE; confounding strategy; temporality; reverse-causation check; representativeness |
-| Lab biology | Reagent/sample identity; controls; biological and technical replicates; contamination checks; ARRIVE for animal work |
+| Lab biology / animal | Reagent/sample identity; active-agent/material isolation; carrier-matrix controls; biological and technical replicates; animal/group counts; affected/unaffected distribution; contamination checks; ARRIVE for animal work |
 | Psychology / behavioural | Pre-registration; effect sizes and CIs; power; replication-crisis awareness; sample scope |
 | Surveys | Sampling frame; response rate; non-response; validated instrument; question-order effects |
 | Economics / policy | Identification strategy; parallel trends or exclusion restrictions; clustered SEs; robustness checks |
@@ -138,7 +139,44 @@ Hold the paper to its own genre's bar:
 | Replication | Same operationalisation; pre-registered; powered for original effect; nuanced success/failure |
 | Qualitative | Sampling logic; reflexivity; analytic procedure; triangulation or member checking where warranted |
 
-Mandatory material question: what, in concrete terms, was actually used? If "purified X", "isolated Y", "treated W", or "the dataset" carries the conclusion, check whether the paper characterises it enough to support the active-agent or construct claim.
+### Framework-To-Operation Traceability
+
+When a paper invokes a named standard, criterion set, checklist, model, diagnostic category, or proof threshold, the invocation is itself a load-bearing claim. Do not pass through phrases such as "fulfils X", "meets Y", "according to Z", "gold-standard", "validated", "isolated", "purified", "causal", "diagnostic", "representative", "pre-registered", or "CONSORT/PRISMA/STROBE/ARRIVE-compliant" without decomposing the operational requirements.
+
+Apply this invariant:
+
+> A framework claim is warranted only when each required operation is mapped to a concrete action, material object, measurement, control, citation, and warrant.
+
+Build a criterion table before grading the claim:
+
+| Requirement | What the framework requires | What this paper directly did | What is borrowed from citations | Material / dataset / intervention used | Controls or exclusions | Status |
+|---|---|---|---|---|---|---|
+| [criterion] | [operation required] | Shown / not shown / unclear | Source + warrant or none | Exact object, preparation, version, population, or construct | Negative, mock, placebo, sham, contaminant, carrier, confounder, or sensitivity check | Satisfied / partial / unreported / contradicted |
+
+Rules:
+
+- **Claim-standard identity.** The title, abstract, methods, and conclusion must name the same standard. If the title says one standard but the body applies a modified, weaker, narrower, or different standard, flag title/abstract overclaim. Grade Major or Fatal when the standard claim is central.
+- **Criterion-by-criterion satisfaction.** "Framework fulfilled" is false or overstated if any required criterion is unreported, citation-borrowed without verification, only partially satisfied, or satisfied under a different standard. Grade by centrality.
+- **Current-paper vs citation-borrowed warrant.** Separate "this paper directly showed X" from "this paper cites prior work for X." Citation-borrowed criteria must be citation-verified in Phase 4 before they can carry the framework claim.
+- **Local warrant boundary.** A strong broader literature can support the scientific conclusion while leaving this paper's own framework/proof claim overstated. Do not let consensus or later corroboration repair the wording of the paper under review.
+- **Operational equivalence check.** The operation actually performed must match the operation claimed. "Measured a proxy", "used a preparation", "analysed a convenience sample", or "applied a classifier" is not automatically equivalent to the claimed active agent, construct, population, or endpoint.
+
+### Active-Agent / Material Isolation Audit
+
+Mandatory material question: what, in concrete terms, was actually used? If "purified X", "isolated Y", "treated W", "administered Z", "the dataset", "the intervention", or a named construct carries the conclusion, check whether the paper characterises it enough to support the active-agent or construct claim.
+
+For any causal, mechanistic, intervention, infection, toxicology, material-science, ML, survey, or dataset claim, identify:
+
+| Dimension | Minimum question |
+|---|---|
+| Active agent / construct | What exact entity is claimed to do the work? |
+| Carrier matrix | What else was administered, measured, exposed, cultured, processed, sampled, or bundled with it? |
+| Preparation / processing | How was it produced, filtered, purified, extracted, passaged, cleaned, labelled, transformed, split, or normalised? |
+| Dose / version / route | What amount, version, route, time window, population, or environment was used? |
+| Exclusion controls | Were mock, sham, placebo, heat-inactivated, vehicle-only, blank, negative, contamination, carrier-only, confounder, leakage, or sensitivity controls used? |
+| Identity verification | How was the active agent, sample, construct, dataset, endpoint, or label verified independently of the outcome? |
+
+If the claimed active agent is not separated from plausible co-administered causes, carrier effects, processing artefacts, contaminants, batch effects, dataset leakage, measurement artefacts, or construct drift, flag **active-agent / construct under-determination**. Grade as Major when the conclusion can be repaired by caveat or controls; Fatal when the central causal/proof claim depends on the unresolved identity.
 
 ## Phase 3 — Statistical And Causal Sufficiency
 
@@ -154,15 +192,22 @@ Fallback minimum checks:
 |---|---|
 | p-hacking / forking paths | Pre-registration, number of tests, selective reporting, p-values clustered below threshold |
 | Low power | A priori power, confidence intervals, Type-M/sign errors |
+| Small n / responder skew | Per-group n, affected/unaffected counts, non-responder fraction, whether the central claim describes all subjects or only responders |
 | Multiple comparisons | Correction or explicit exploratory framing |
 | Wrong model/test | Distribution, dependence, clustering, unit of analysis |
 | Practical irrelevance | Absolute effects, baseline risk, clinical/policy significance |
+| Relative-only effect claim | Event counts, baseline risk, absolute effect, relative effect, timeframe, population |
+| Odds / hazard / rate ratio as risk | Metric named exactly; conversion justified before risk language |
 | Subgroup cherry-pick | Pre-specified subgroup, interaction test, all subgroups reported |
 | Pseudoreplication | Unit of analysis equals unit of randomisation/sampling |
 | ML leakage | Split integrity, contamination, repeated test-set tuning |
 | Causal overreach | Design identifies causation, temporality, confounding, reverse causation, language calibration |
 
 Quote the abstract/conclusion language and compare it with the design. "Associated with" in results becoming "causes" in the abstract is a Major or Fatal finding depending on centrality.
+
+For animal, primate, clinical, intervention, challenge, toxicity, infection, or behavioural studies, always write the denominator sentence before grading: `n=[total]; groups=[n per group]; affected/responded=[x/y per group]; unaffected/non-responded=[x/y per group]`. If a headline, abstract, or conclusion implies a general effect while a substantial fraction of subjects were unaffected, flag responder-generalisation overreach. Grade Major or Fatal when the central claim depends on treating partial response as general effect.
+
+For any comparative effect claim in epidemiology, clinical work, animal work, policy, safety, efficacy, behavioural outcomes, or model evaluation, write the effect decomposition before grading: counts/events by group, baseline/control risk, comparison/treatment risk, absolute risk difference, relative risk or named ratio, timeframe, population, and uncertainty. Keep ARR/ARI, RRR/relative increase, odds ratio, hazard ratio, and rate ratio separate. A relative-only benefit or harm claim is under-contextualised by default; grade Major when it carries the abstract, conclusion, clinical/policy implication, or media-use hook.
 
 ## Phase 4 — Citation Verification
 
@@ -301,9 +346,25 @@ State explicitly what would change the recommendation upward or downward.
 ## Statistical And Causal Audit
 [specialist outputs or fallback checks; quote specific numbers/language]
 
+## Sample And Responder Denominators
+| Group | n | Affected/responded | Unaffected/non-responded | Exclusions/missing | Claim language fits denominator? | Severity | Warrant |
+|---|---|---|---|---|---|---|---|
+
+## Quantified Effect Decomposition
+| Claim | Population/timeframe | Events / total by group | Baseline risk | Comparison risk | Absolute effect | Relative effect / metric | Uncertainty | Practical meaning | Severity | Warrant |
+|---|---|---|---|---|---|---|---|---|---|---|
+
 ## Citation Verification
 | Paper claim | Cited source | Source actually says | Verdict | Severity | Warrant |
 |---|---|---|---|---|---|
+
+## Framework-To-Operation Traceability
+| Framework / standard claim | Requirement | Directly shown in this paper | Citation-borrowed support | Material / dataset / intervention identity | Controls / exclusions | Status | Severity | Warrant |
+|---|---|---|---|---|---|---|---|---|
+
+## Active-Agent / Material Isolation
+| Claim | Claimed active agent / construct | What was actually used | Carrier matrix / co-administered material | Preparation / processing | Identity verification | Exclusion controls | Adequate? | Severity | Warrant |
+|---|---|---|---|---|---|---|---|---|---|
 
 ## Targeted Cited-Study Reviews
 | Cited study | Why central | Method/statistical adequacy | Reproduction/replication status | Can bear cited load? | Severity impact | Warrant |
@@ -348,12 +409,20 @@ State explicitly what would change the recommendation upward or downward.
 
 | Pattern | Risk | Default move |
 |---|---|---|
+| Title names one standard, methods apply another | Claim-standard mismatch | Grade title/abstract overclaim; decompose both standards |
 | Abstract causal, design observational | Causal overreach | Major/Fatal; calibrate language or redesign |
-| Named framework invoked but requirements not checked | Framework laundering | Decompose requirements; verify each |
+| Named framework invoked but requirements not checked | Framework laundering | Build criterion-to-operation table; verify each requirement |
+| Framework criterion satisfied only by citations | Citation-borrowed warrant | Verify cited source and separate current-paper evidence from borrowed support |
 | Cited source supports weaker claim | Citation overstatement | Quote both; grade by centrality |
 | Central claim rests on cited study | Unreviewed dependency | Run targeted cited-study peer review |
-| Input/material under-characterised | Active-agent or construct under-determination | Major/Fatal if central |
+| Input/material under-characterised | Active-agent or construct under-determination | Identify carrier matrix, preparation, identity checks, and exclusion controls; Major/Fatal if central |
+| Claimed active agent bundled with carrier, culture, vehicle, batch, dataset, or proxy | Matrix/confound ambiguity | Require mock/vehicle/blank/carrier-only or equivalent controls |
+| Broad literature supports conclusion but paper overstates its own proof | Local warrant boundary breach | Preserve conclusion context but grade this paper's claim separately |
 | p < .05 without effect size/CI | Statistical opacity | Require effect sizes and uncertainty |
+| Small sample carries central claim | Fragility / low power | State per-group n; downgrade unless effect is robust and replicated |
+| Half or more subjects unaffected | Responder-generalisation overreach | Separate responder result from general claim; grade by centrality |
+| Relative risk reduction without baseline | Relative-effect laundering | Report ARR/RRR and event rates separately |
+| Odds/hazard/rate ratio described as risk | Metric substitution | Rename metric or justify conversion from data |
 | Many tests, one headline result | Multiple-testing risk | Require correction or exploratory framing |
 | Data/code "available on request" | Reproducibility weakness | Downgrade transparency |
 | Sample scope narrower than conclusion | Generalisation overreach | Restrict conclusion |

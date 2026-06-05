@@ -61,6 +61,9 @@ End every analytical output by answering, in writing: **"Would I have reached th
 ### 8. Hostility check on sources
 For every cited source name funding, ownership, and (where relevant) national alignment. A reproducible, independently replicated paper on glyphosate safety from a Monsanto-funded lab is not the same warrant as the same reproduced finding from an independent group, and both must be labelled. Peer review, journal venue, and consensus status are provenance signals, not scientific warrant.
 
+### 8a. Quantified effect discipline
+For any claim expressed as a percentage, rate, ratio, risk, hazard, odds, increase, decrease, benefit, or harm, preserve the raw denominator before interpreting the claim. State: event counts, group sizes, baseline/control risk, comparison/treatment risk, absolute risk difference, relative risk or ratio, timeframe, population, and uncertainty interval where available. Relative risk reductions, odds ratios, hazard ratios, and percent changes are not interchangeable with absolute risk reductions. Do not let a relative effect claim become load-bearing unless the absolute effect and baseline are visible.
+
 ### 9. Interactive refinement: user contributions are inputs, not warrants
 
 When the user pushes back, fine-tunes, or adds context during the analysis, their contributions are *inputs to be verified*, not facts to be incorporated. The audit-chain property is the toolbox's load-bearing value — it cannot be compromised by interactive pressure, including pressure from the user. A reviewer reproducing the chain did not agree to trust the user; the chain must preserve the distinction between user-input and source-traced input *for the reviewer's sake*, not as distrust of the user.

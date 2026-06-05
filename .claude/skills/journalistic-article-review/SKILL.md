@@ -151,6 +151,7 @@ Audit editorial presentation separately from factual accuracy:
 | Quote context | Do quoted fragments preserve the source's meaning in context? |
 | Loaded language | Are adjectives or verbs doing evidentiary work? |
 | Missing denominator | Are rates, baselines, timeframes, or comparison groups omitted? |
+| Relative-vs-absolute effect | Are absolute risk, relative risk, baseline rate, timeframe, and population kept separate? |
 | Missing alternative | Is a plausible alternative explanation ignored? |
 | False balance | Are weak and strong sources given equal weight? |
 | False certainty | Is unsettled evidence written as settled fact? |
@@ -244,6 +245,8 @@ Severity tags: **Fatal**, **Major**, **Minor**, **Optional**, **Praise**.
 | Three experts from one advocacy network | False independence | Collapse to one node and seek independent source |
 | Anonymous official source makes accusation | Uncheckable authority | Require document, named corroboration, or strong caveat |
 | Study reported as causation but design is observational | Causal overreach | Route to `peer-review` / `scientific-fact-classification` |
+| Relative risk reduction reported without absolute risk | Magnitude inflation | Recompute or request event rates; route central claims to `scientific-fact-classification` |
+| Odds/hazard/rate ratio reported as risk | Metric substitution | Name the metric exactly and avoid risk-language unless conversion is justified |
 | Serious allegation with no right of reply | Fairness failure | Major unless response was sought and fairly represented |
 | Caveat appears only near the end | Buried limitation | Flag framing distortion |
 | Quote fragment changes source meaning | Quote-context failure | Fetch original context and compare |

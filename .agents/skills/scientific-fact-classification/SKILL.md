@@ -111,7 +111,7 @@ Quote each load-bearing claim. Number. Type:
 | Causal | Bradford Hill / DAG (Phase 4) |
 | Theoretical / explanatory | Predictive success, scope, unification |
 | Predictive | Track record, calibration |
-| Statistical / probabilistic | Sample size, base rate, CI |
+| Statistical / probabilistic | Sample size, base rate, absolute effect, relative effect, CI |
 | Existence | Detection or theoretical necessity |
 | Mechanism | Pathway evidence, intervention |
 | Normative / value | Not empirically falsifiable; argument quality |
@@ -182,9 +182,27 @@ After adjustment, certainty: **High / Moderate / Low / Very Low**. State which, 
 | Subgroup analysis foregrounded | Often post-hoc fishing |
 | Underpowered null claim | Absence of evidence ≠ evidence of absence |
 | Relative risk without absolute | Inflates apparent importance |
+| Absolute risk absent | Cannot judge practical significance |
+| Odds / hazard / rate ratio presented as risk ratio | Effect metric substitution |
+| Percent change without baseline | Magnitude laundering |
 | Surrogate treated as hard outcome | Proxy ≠ thing of interest |
 | Cohort selected on dependent variable | Selection effect as finding |
 | Base rate ignored | Conditional probabilities misread |
+
+**3c-1. Quantified effect decomposition.** For any claim expressed as a percentage, rate, ratio, risk, hazard, odds, increase, decrease, benefit, or harm, write the decomposition before classification:
+
+```text
+Population/timeframe: [who, where, duration]
+Counts: [events / total] in each group
+Baseline risk: [control/comparator event rate]
+Comparison risk: [treatment/exposure event rate]
+Absolute effect: [risk difference, ARR/ARI where applicable]
+Relative effect: [RR/RRR/relative increase/OR/HR/rate ratio, named exactly]
+Uncertainty: [CI/credible interval/p-value if available]
+Practical meaning: [NNT/NNH when meaningful, or why not]
+```
+
+Never treat relative risk reduction as absolute risk reduction. Never translate odds ratios, hazard ratios, or rate ratios into risk ratios unless the conversion is justified from the underlying data. If the absolute effect cannot be recovered, classify the claim no stronger than provisional and flag missing denominator/baseline.
 
 **3d. Reproduction and replication.** Single-study findings are provisional by default. Separate:
 - **Reproduction:** same data/code/materials re-run or re-analysed and the reported results are recovered.
@@ -404,6 +422,8 @@ Examples:
 | One study found… | Single-study fallacy | Provisional at best |
 | "Linked to" / "associated with" + strong conclusion | Correlation as causation | Apply Phase 4 |
 | "Risk doubles" without absolute risk | Relative-risk inflation | Recompute as absolute |
+| "50% reduction" without baseline risk | Relative-risk laundering | Require event rates and ARR/RRR separately |
+| Odds ratio / hazard ratio described as "risk" | Metric substitution | Rename the metric or convert with data |
 | Replication in crisis fields | Replication artefact | Discount; flag consensus as fragile |
 | Cited expert speaking outside field | Misapplied authority | Discount |
 | Single anomalous study contradicts large literature | Likely fluke | Default to body — but check whether body is deferred |
