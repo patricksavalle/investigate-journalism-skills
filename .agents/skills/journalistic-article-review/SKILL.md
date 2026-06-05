@@ -47,6 +47,12 @@ Use specialist skills rather than reimplementing them:
 
 This skill owns the article-level synthesis: headline-body fit, sourcing architecture, editorial framing, missing context, fairness to targets, and publication-readiness.
 
+## When This Skill Is Silent Or Ambiguous
+
+First check whether another project skill owns the missing layer: scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`.
+
+If no skill clearly owns the gap, reason from first principles and explicit warrants. Built-in knowledge may suggest hypotheses, search terms, possible failure modes, or questions to verify, but any empirical premise remains `(memory — unverified)` until traced. Reasoning may connect warranted premises; it may not manufacture premises.
+
 ## Research Discipline (CLAUDE.md/AGENTS.md)
 
 This skill is standalone. Apply these rules even if `CLAUDE.md` / `AGENTS.md` are not loaded:

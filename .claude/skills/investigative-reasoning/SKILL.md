@@ -22,6 +22,12 @@ Trigger only when explicitly requested: *"investigate this event"*, *"develop a 
 - `first-principles-thinking` — when the official narrative invokes a named framework (Koch's, intelligence-community assessment, treaty trigger) and the framework itself needs decomposition.
 - `belief-revision` — when new evidence emerges about a previously investigated event (declassified document, new whistleblower, forensic re-examination) and a calibrated update of the dual-hypothesis verdict is needed.
 
+## When This Skill Is Silent Or Ambiguous
+
+First check whether another project skill owns the missing layer: scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`.
+
+If no skill clearly owns the gap, reason from first principles and explicit warrants. Built-in knowledge may suggest hypotheses, search terms, possible failure modes, or questions to verify, but any empirical premise remains `(memory — unverified)` until traced. Reasoning may connect warranted premises; it may not manufacture premises.
+
 ## Research Discipline (CLAUDE.md/AGENTS.md)
 
 This skill is the most rule-saturated application of the project's research discipline. All rules in `CLAUDE.md` / `AGENTS.md` → *Operating rules* bind:

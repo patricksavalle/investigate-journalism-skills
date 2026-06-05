@@ -24,6 +24,12 @@ Trigger when the task is **systematic information gathering** on a target: profi
 - `first-principles-thinking` — when an account's self-description ("we are a charity", "this is open-source") needs decomposition before downstream investigation.
 - `belief-revision` — when new identifiers, archive captures, or attribution evidence emerge after a brief is delivered and a calibrated update is needed.
 
+## When This Skill Is Silent Or Ambiguous
+
+First check whether another project skill owns the missing layer: scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`.
+
+If no skill clearly owns the gap, reason from first principles and explicit warrants. Built-in knowledge may suggest hypotheses, search terms, possible failure modes, or questions to verify, but any empirical premise remains `(memory — unverified)` until traced. Reasoning may connect warranted premises; it may not manufacture premises.
+
 ## Research Discipline (CLAUDE.md/AGENTS.md)
 
 OSINT collection without truth-seeking discipline produces dossiers, not intelligence. The rules in `CLAUDE.md` / `AGENTS.md` → *Operating rules* bind here:

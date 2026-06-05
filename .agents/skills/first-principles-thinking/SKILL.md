@@ -20,6 +20,12 @@ The goal isn't to be contrarian. It's to separate **what is** from **what is ass
 - `osint-research` — when a foundational fact ("X owns Y", "Z said this") needs identifier-level verification.
 - `belief-revision` — when new evidence reveals that a prior Bedrock entry was actually an Assumption (or vice versa) and the rebuild needs re-running.
 
+## When This Skill Is Silent Or Ambiguous
+
+First check whether another project skill owns the missing layer: scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`.
+
+If no skill clearly owns the gap, reason from first principles and explicit warrants. Built-in knowledge may suggest hypotheses, search terms, possible failure modes, or questions to verify, but any empirical premise remains `(memory — unverified)` until traced. Reasoning may connect warranted premises; it may not manufacture premises.
+
 ## Research Discipline (CLAUDE.md/AGENTS.md)
 
 First-principles is a conceptual tool — it does not normally fetch sources. But when an Excavation reaches `Bedrock` via an empirical claim, the rules in `CLAUDE.md` / `AGENTS.md` → *Operating rules* bind the verification of that Bedrock:
