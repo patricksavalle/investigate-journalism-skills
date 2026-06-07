@@ -106,11 +106,14 @@ Extract the article's load-bearing structure:
 | Nut graf / thesis | What the story asks the reader to believe |
 | Factual claims | Checkable descriptive assertions |
 | Causal claims | "Led to", "caused", "because", "sparked", "resulted in" |
+| Claim layers | Split adjacent but distinct claims, especially existence / detection / association / infectivity / causation / proof-certainty |
 | Evidence | Documents, datasets, interviews, observations, images, studies |
 | Sources | Named, anonymous, official, expert, affected party, adversarial |
 | Targets | Persons or institutions criticised or accused |
 | Caveats | Limitations, uncertainty, contrary evidence, corrections |
 | Missing primaries | Any cited item not linked, quoted, or inspectable |
+
+**Claim-splitting rule.** Do not let a supported neighbouring claim carry a stronger adjacent claim. Evidence that X exists, can be detected, is associated with Y, or temporally precedes Y does not by itself support "X causes Y." Treat each layer as a separate article claim with its own evidence burden. If the article blends the layers, split them before the Evidence Load Test.
 
 ## Phase 2 — Sourcing Audit
 
@@ -145,6 +148,27 @@ Verdicts:
 
 Route individual empirical claims to `scientific-fact-classification` when classification matters to the verdict.
 
+### Causal Claim Gate
+
+If an article makes a causal claim ("X causes Y", "X led to Y", "Y is due to X", "X is the cause of disease/outcome Y"), the claim may be marked **Supported** only when the article's evidence, or the primary evidence fetched during review, addresses causal direction.
+
+Minimum gate:
+
+| Requirement | Pass condition |
+|---|---|
+| Reverse causation | Ruled out by design, directly tested, or made implausible by mechanism and timing |
+| Temporality | Cause clearly precedes effect at the relevant biological/social timescale |
+| Alternative causes | Major plausible common causes, confounders, selection effects, and passenger-marker explanations addressed |
+| Intervention / challenge / negative-control evidence | Present where ethically and practically possible, or limitation explicitly caveated |
+| Measurement-layer separation | Detection, association, infectivity, and causation are not treated as interchangeable |
+
+If reverse causation is not addressed, the causal claim is **not demonstrated**. Downgrade the verdict for that claim to **Overstated**, **Under-contextualised**, or **Unsupported** depending on the remaining evidence. Do not write "causation is supported but reverse causation is a caveat"; unresolved reverse causation means causation has not been shown by that article.
+
+Severity default:
+
+- **Major** — reverse causation is unaddressed for a central causal claim, but the article's main verdict also rests on independently supported non-causal claims.
+- **Fatal** — the headline, rating, or central article verdict depends on a causal claim whose direction is not established.
+
 ## Phase 4 — Headline, Framing, And Omission
 
 Audit editorial presentation separately from factual accuracy:
@@ -159,6 +183,8 @@ Audit editorial presentation separately from factual accuracy:
 | Missing denominator | Are rates, baselines, timeframes, or comparison groups omitted? |
 | Relative-vs-absolute effect | Are absolute risk, relative risk, baseline rate, timeframe, and population kept separate? |
 | Missing alternative | Is a plausible alternative explanation ignored? |
+| Causal-direction gap | Does a causal claim fail the Causal Claim Gate, especially by leaving reverse causation unresolved? |
+| Claim-layer collapse | Are existence, detection, association, infectivity, causation, and proof-certainty blended as if they were one claim? |
 | False balance | Are weak and strong sources given equal weight? |
 | False certainty | Is unsettled evidence written as settled fact? |
 | Temporal framing | Does the article blur what was known then vs. known now? |
