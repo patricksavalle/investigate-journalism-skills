@@ -24,13 +24,14 @@ Do not trigger for:
 
 This skill takes a prior analytical output and produces a revision in its format. Compose with:
 
+- `intuitive-thinking` - when a new hunch challenges the prior verdict but has not yet been tied to new evidence. Capture it as `(intuition — unwarranted)` before revising.
 - The skill that produced the prior verdict — `investigative-reasoning`, `peer-review`, `scientific-fact-classification`, `fallacy-bias-and-manipulation-analysis`, `osint-research`, or `first-principles-thinking`. The revision is output in that skill's report shape.
 - `investigative-reasoning` Phase 3i (Source Triangulation) — when the new evidence conflicts with prior sources, triangulate before revising.
 - `scientific-fact-classification` — when the revision requires re-classifying a claim's strength label.
 
 ## When This Skill Is Silent Or Ambiguous
 
-First check whether another project skill owns the missing layer: scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`.
+First check whether another project skill owns the missing layer: hunch / gut feeling / anomaly signal -> `intuitive-thinking`; scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`.
 
 If no skill clearly owns the gap, reason from first principles and explicit warrants. Built-in knowledge may suggest hypotheses, search terms, possible failure modes, or questions to verify, but any empirical premise remains `(memory — unverified)` until traced. Reasoning may connect warranted premises; it may not manufacture premises.
 
@@ -60,6 +61,7 @@ Use the standard warrant labels:
 | `(deferred, fragile)` | Deferred to consensus, but failure modes apply: funder capture, ideological capture, prestige cascade, state secrecy, replication crisis, or similar. State which. |
 | `(memory — unverified)` | Recalled from training data, not verified this session. Never load-bearing without an explicit caveat that it could be wrong. |
 | `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Treat as a hypothesis to test, never as authority. |
+| `(intuition — unwarranted)` | A gut feeling, anomaly signal, or pattern impression. It may generate hypotheses and search leads, but is never evidence and never load-bearing. |
 
 This skill adds one extension: **the revised verdict inherits the lower of (prior verdict's warrant, new evidence's warrant).** Overturning a `(traced)` prior with `(memory — unverified)` or `(user-supplied — unverified)` new evidence is not a calibrated revision; it is anchoring on the most recent thing read or said.
 

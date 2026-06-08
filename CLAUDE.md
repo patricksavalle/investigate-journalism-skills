@@ -15,6 +15,7 @@ When producing analytical output of any kind — investigation, article review, 
 | `(deferred, fragile)` | Deferred to consensus but `scientific-fact-classification` Phase 6c failure modes (funder capture, ideological capture, prestige cascade, replication crisis, etc.) apply. State which. |
 | `(memory — unverified)` | Recalled from training data, not verified this session. Permitted only with this label, and never load-bearing without an explicit "this could be wrong" caveat. |
 | `(user-supplied — unverified)` | Provided by the user during interactive refinement (an asserted fact, a counter-argument's premise, a "consider this" claim). Never load-bearing on its own; treated as a hypothesis to test or an input to verify. See Rule 9. |
+| `(intuition — unwarranted)` | A gut feeling, anomaly signal, pattern impression, or "something feels off" reaction. It may generate hypotheses and search leads. It is never evidence, never load-bearing, and cannot revise, refute, or establish a claim. |
 
 The point is not to eliminate `(memory)` use — some claims are genuinely background knowledge. The point is **to make memory-reliance visible** so the reader, and Claude itself, can see where verification is missing.
 
@@ -33,6 +34,13 @@ These apply to any turn that invokes — or whose output substantively reflects 
 - `fallacy-bias-manipulation-analysis-framework`
 - `osint-research`
 - `first-principles-thinking` (when applied to empirical claims)
+- `intuitive-thinking` (only as a pre-evidence Phase 0 hunch register)
+
+### 0. Intuition is a lead, not a warrant
+When analysis starts from a hunch, gut feeling, anomaly signal, or "something feels off" reaction, use `intuitive-thinking` to capture it before search. Label the immediate story `(intuition — unwarranted)`, name at least one ordinary explanation and one disconfirming test, then route the checkable claim to the relevant analytical skill. Do not cite intuition as evidence in the verdict.
+
+### 0a. Original article retrieval gate for article reviews
+For `journalistic-article-review`, the original article body must be fetched and inspected in-session, or the complete article text must be supplied in-session, before any review phase begins. If the original article cannot be found or inspected after reasonable retrieval attempts, stop the review immediately. Do not produce an Article Map, Sourcing Audit, Evidence Load Test, Findings, Journalistic Verdict, or headline/body analysis from snippets, summaries, quoted fragments, commentary, derivative reporting, archive metadata, or memory. The only permitted output is a short retrieval-failure note listing what was tried and what exact input would allow the review to proceed.
 
 ### 1. Pre-search hypothesis registration
 Before the first search, write down the hypotheses being tested. Top results frame the question; pre-registering them prevents the search from selecting which question gets answered.
@@ -65,7 +73,7 @@ For every cited source name funding, ownership, and (where relevant) national al
 For any claim expressed as a percentage, rate, ratio, risk, hazard, odds, increase, decrease, benefit, or harm, preserve the raw denominator before interpreting the claim. State: event counts, group sizes, baseline/control risk, comparison/treatment risk, absolute risk difference, relative risk or ratio, timeframe, population, and uncertainty interval where available. Relative risk reductions, odds ratios, hazard ratios, and percent changes are not interchangeable with absolute risk reductions. Do not let a relative effect claim become load-bearing unless the absolute effect and baseline are visible.
 
 ### 8b. Route before fallback reasoning
-If the active skill does not clearly specify how to handle a situation, first check whether another project skill owns the missing layer: scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`. If no skill clearly owns the gap, reason from first principles and explicit warrants. Built-in knowledge may suggest hypotheses, search terms, possible failure modes, or questions to verify, but any empirical premise remains `(memory — unverified)` until traced. Reasoning may connect warranted premises; it may not manufacture premises.
+If the active skill does not clearly specify how to handle a situation, first check whether another project skill owns the missing layer: hunch / gut feeling / anomaly signal -> `intuitive-thinking`; scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`. If no skill clearly owns the gap, reason from first principles and explicit warrants. Built-in knowledge may suggest hypotheses, search terms, possible failure modes, or questions to verify, but any empirical premise remains `(memory — unverified)` until traced. Reasoning may connect warranted premises; it may not manufacture premises.
 
 ### 8c. Causal direction burden
 If a claim aims to establish causation, explicitly address reverse causation before accepting causal language. State whether reverse causation was ruled out by design (randomisation, intervention, prospective measurement, temporal ordering), tested directly (lagged models, negative controls, sensitivity analyses), made implausible by mechanism and timing, or left unresolved. If reverse causation remains plausible, downgrade the claim to association, prediction, correlation, or hypothesis. Strong causal wording is a Major or Fatal overclaim when the reverse direction could explain the result.
@@ -131,6 +139,8 @@ Analytical output is written as a **standalone, context-free document**. The rea
 - Dismissing a source's claim because of the source's identity (genetic fallacy) rather than checking the claim.
 - Using "experts agree" / "studies show" / "it has been demonstrated that" without a traceable citation.
 - Skipping the bias self-audit at the end.
+- Letting a hunch, vibe, or "something feels off" reaction become a conclusion without passing through `(intuition — unwarranted)`, disconfirmation, and source-traced testing.
+- Producing an article review when the original article body was not found or inspected in-session.
 - Writing report prose that addresses or references the requester ("the user said X", "you noted Y", "the user is right that Z") instead of a context-free verdict on the claim. Rule 10 forbids this; provenance lives in the warrant label, not the prose.
 
 ## Enforcement

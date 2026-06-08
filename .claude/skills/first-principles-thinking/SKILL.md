@@ -13,6 +13,7 @@ The goal isn't to be contrarian. It's to separate **what is** from **what is ass
 
 ## Pairs With
 
+- `intuitive-thinking` - when the starting point is unease, a gut feeling, or a suspected hidden assumption that needs conversion into testable hypotheses.
 - `scientific-fact-classification` — when a Bedrock candidate is an empirical claim, hand it over for evidence-tier and warrant labelling. "Bedrock" requires more than the analyst's belief that something is foundational.
 - `fallacy-bias-and-manipulation-analysis` — when the claim sits inside a rhetorical text; this skill audits structure, that skill audits delivery.
 - `investigative-reasoning` — when the Unknowns surfaced by Excavation hide a contested event with primary-source trails to follow.
@@ -22,7 +23,7 @@ The goal isn't to be contrarian. It's to separate **what is** from **what is ass
 
 ## When This Skill Is Silent Or Ambiguous
 
-First check whether another project skill owns the missing layer: scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`.
+First check whether another project skill owns the missing layer: hunch / gut feeling / anomaly signal -> `intuitive-thinking`; scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`.
 
 If no skill clearly owns the gap, reason from first principles and explicit warrants. Built-in knowledge may suggest hypotheses, search terms, possible failure modes, or questions to verify, but any empirical premise remains `(memory — unverified)` until traced. Reasoning may connect warranted premises; it may not manufacture premises.
 
@@ -52,6 +53,7 @@ When an Excavation reaches `Bedrock` via an empirical claim — not via definiti
 | `(deferred, fragile)` | Deferred to consensus, but failure modes apply: funder capture, ideological capture, prestige cascade, replication crisis, or similar. State which. |
 | `(memory — unverified)` | Recalled from training data, not verified this session. Never load-bearing without an explicit caveat that it could be wrong. |
 | `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Treat as a hypothesis or stipulation candidate, never as authority. |
+| `(intuition — unwarranted)` | A gut feeling, anomaly signal, or pattern impression. It may generate hypotheses and search leads, but is never evidence and never load-bearing. |
 
 A "Bedrock" that is only `(memory — unverified)` should be downgraded to `Assumption` unless verified.
 

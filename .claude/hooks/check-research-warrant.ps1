@@ -84,6 +84,45 @@ try {
     $text = ($assistantTextParts -join "`n")
     if ([string]::IsNullOrWhiteSpace($text)) { exit 0 }
 
+    # Article reviews have an additional preflight: the original article body
+    # must be inspectable before a normal review can be produced.
+    $articleReviewProduced = $text -match '(?m)^#\s+Journalistic Article Review:|(?m)^##\s+Article Map\b|(?m)^##\s+Sourcing Audit\b|(?m)^##\s+Evidence Load Test\b|(?m)^##\s+Findings\b'
+    $articleReviewStopped = $text -match '(?m)^#\s+Review Stopped:\s+Original Article Not Found\b'
+    $articleAccessRecorded = $text -match '(?im)^\s*[-*]?\s*\*\*Original article access:\*\*|^\s*Original article access:|^\s*##\s+Phase -1\b|Original Article Retrieval Gate'
+    $articleAccessFailureMentioned = $text -match '(?is)original article(?:\s+body)?.{0,80}(not found|not inspectable|inaccessible|could not be found|cannot be found|could not be fetched|cannot be fetched|could not be inspected|cannot be inspected)'
+
+    if ($articleReviewProduced -and -not $articleReviewStopped -and -not $articleAccessRecorded) {
+        $reason = @"
+Research-discipline check blocked this stop.
+
+The just-completed turn produced a journalistic article review without recording original article access. A review must first fetch and inspect the original article body, or use complete article text supplied in-session.
+
+Before stopping, either:
+  1. Add `Original article access:` to the review summary with the fetched/supplied article source and access date.
+  2. If the original article body was not found or inspectable, replace the review with `# Review Stopped: Original Article Not Found` and list retrieval attempts.
+
+Hook at .claude/hooks/check-research-warrant.ps1. Inspect via /hooks; disable in .claude/settings.json.
+"@
+
+        @{ decision = 'block'; reason = $reason } | ConvertTo-Json -Compress | Write-Output
+        exit 0
+    }
+
+    if ($articleReviewProduced -and -not $articleReviewStopped -and $articleAccessFailureMentioned) {
+        $reason = @"
+Research-discipline check blocked this stop.
+
+The output says the original article was not found or inspectable, but still proceeds with article-review sections. When the original article body cannot be inspected, the whole review must stop.
+
+Replace the review with `# Review Stopped: Original Article Not Found`, list retrieval attempts, and state what exact input would allow the review to proceed.
+
+Hook at .claude/hooks/check-research-warrant.ps1. Inspect via /hooks; disable in .claude/settings.json.
+"@
+
+        @{ decision = 'block'; reason = $reason } | ConvertTo-Json -Compress | Write-Output
+        exit 0
+    }
+
     if ($sourceFetchSeen) { exit 0 }
     if ($text -match '\(memory\s*[-—]\s*unverified\)') { exit 0 }
 
