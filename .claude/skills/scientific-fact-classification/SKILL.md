@@ -15,6 +15,7 @@ Trigger only when explicitly requested: *"is X a fact?"*, *"weigh the evidence f
 
 ## Pairs With
 
+- `intuitive-thinking` - when a claim feels overstated, causal, inflated, or suspicious before evidence strength has been classified.
 - `peer-review` — when claims come from a paper that needs full methodological / statistical / citation audit, not only classification.
 - `fallacy-bias-and-manipulation-analysis` — for rhetorical / argumentative audit of the same text once claims are classified.
 - `investigative-reasoning` — when contested claims sit inside a contested event (forensic findings, causal mechanisms in a disputed incident).
@@ -24,7 +25,7 @@ Trigger only when explicitly requested: *"is X a fact?"*, *"weigh the evidence f
 
 ## When This Skill Is Silent Or Ambiguous
 
-First check whether another project skill owns the missing layer: scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`.
+First check whether another project skill owns the missing layer: hunch / gut feeling / anomaly signal -> `intuitive-thinking`; scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`.
 
 If no skill clearly owns the gap, reason from first principles and explicit warrants. Built-in knowledge may suggest hypotheses, search terms, possible failure modes, or questions to verify, but any empirical premise remains `(memory — unverified)` until traced. Reasoning may connect warranted premises; it may not manufacture premises.
 
@@ -54,6 +55,7 @@ Attach a warrant qualifier to every empirical classification:
 | `(deferred, fragile)` | Deferred to consensus, but Phase 6c failure modes apply: funder capture, ideological capture, prestige cascade, replication crisis, or similar. State which. |
 | `(memory — unverified)` | Recalled from training data, not verified this session. Never load-bearing without an explicit caveat that it could be wrong. |
 | `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Treat as a hypothesis to test, never as authority. |
+| `(intuition — unwarranted)` | A gut feeling, anomaly signal, or pattern impression. It may generate hypotheses and search leads, but is never evidence and never load-bearing. |
 | `(mixed)` | Part traced, part deferred. State which claim elements sit under which warrant. |
 
 If sources are fetched, record for each cited source: URL, access date, publication date where relevant, warrant label, and funding / ownership / mandate / national alignment where relevant.

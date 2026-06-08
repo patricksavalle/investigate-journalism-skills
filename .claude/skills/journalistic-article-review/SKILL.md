@@ -37,6 +37,7 @@ Use specialist skills rather than reimplementing them:
 
 | Need | Route to |
 |---|---|
+| Pre-search hunch, gut feeling, or article-level anomaly signal | `intuitive-thinking` |
 | Claim status, causal language, evidence strength | `scientific-fact-classification` |
 | Underlying scientific paper, preprint, or cited study | `peer-review` |
 | Rhetorical manipulation, loaded framing, fallacies | `fallacy-bias-and-manipulation-analysis` |
@@ -49,7 +50,7 @@ This skill owns the article-level synthesis: headline-body fit, sourcing archite
 
 ## When This Skill Is Silent Or Ambiguous
 
-First check whether another project skill owns the missing layer: scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`.
+First check whether another project skill owns the missing layer: hunch / gut feeling / anomaly signal -> `intuitive-thinking`; scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`.
 
 If no skill clearly owns the gap, reason from first principles and explicit warrants. Built-in knowledge may suggest hypotheses, search terms, possible failure modes, or questions to verify, but any empirical premise remains `(memory — unverified)` until traced. Reasoning may connect warranted premises; it may not manufacture premises.
 
@@ -57,6 +58,7 @@ If no skill clearly owns the gap, reason from first principles and explicit warr
 
 This skill is standalone. Apply these rules even if `CLAUDE.md` / `AGENTS.md` are not loaded:
 
+- **Rule 0 — Original article retrieval gate.** Before Phase 0, fetch and inspect the original article under review, or use the complete article text supplied in-session. If the original article cannot be found or inspected after reasonable retrieval attempts, stop the review. Do not reconstruct the article from search snippets, summaries, quoted fragments, commentary, archive metadata, or secondary reporting.
 - **Rule 1 — Pre-review hypothesis registration.** Before searching, write the article's apparent thesis, the strongest alternative interpretation, and the main ways the article could be right or misleading.
 - **Rule 2 — Steelman from primary material.** For any criticised person, institution, claim, or contested position, fetch its own primary statement or strongest advocate source, not only critics' summaries.
 - **Rule 3 — Primary before secondary.** If the article characterises a paper, court filing, dataset, speech, report, post, image, or document, fetch that primary item before relying on the article's characterisation.
@@ -79,8 +81,28 @@ Every load-bearing factual claim made by the review carries a warrant:
 | `(deferred, fragile)` | Deferred to consensus, but known failure modes apply: funder capture, ideological capture, prestige cascade, replication crisis, state narrative pressure, or similar. State which. |
 | `(memory — unverified)` | Recalled from training data, not verified in-session. Never load-bearing without an explicit caveat. |
 | `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Treat as a hypothesis to test, never as authority. |
+| `(intuition — unwarranted)` | A gut feeling, anomaly signal, or pattern impression. It may generate hypotheses and search leads, but is never evidence and never load-bearing. |
 
 Maintain a `Sources & Warrants` table whenever external facts appear.
+
+## Phase -1 — Original Article Retrieval Gate
+
+This gate is mandatory and precedes hypothesis registration.
+
+Acceptable article access:
+
+- The article URL is fetched and the article body is inspectable in-session.
+- An archived, cached, syndicated, raw/API, or local-file copy is fetched and clearly matches the original article identity.
+- The complete article text is supplied in-session, with any missing metadata recorded as a limitation.
+
+Retrieval attempts should match the article type and may include the canonical URL, outlet search, archive.org or other web archives, cached copies, syndicated republication, raw/API endpoints for platform-hosted posts, and local files supplied by the requester.
+
+Hard stop:
+
+- If the original article body cannot be found or inspected, stop the review immediately.
+- Do not proceed to Phase 0, Article Map, Sourcing Audit, Evidence Load Test, Findings, or Journalistic Verdict.
+- Do not infer the article's claims from headlines, snippets, excerpts, summaries, social posts, commentary, derivative reporting, or memory.
+- The only permitted output is a short retrieval-failure note listing what was tried and what exact input would allow the review to proceed.
 
 ## Phase 0 — Pre-Review Setup
 
@@ -223,11 +245,28 @@ Severity tags: **Fatal**, **Major**, **Minor**, **Optional**, **Praise**.
 
 ## Output
 
+If Phase -1 fails, use only this stop output:
+
+```markdown
+# Review Stopped: Original Article Not Found
+
+The review cannot proceed because the original article body was not found or inspectable in-session.
+
+## Retrieval Attempts
+- [URL/search/archive/local path tried + result]
+
+## Needed To Proceed
+- Original article URL, archived copy, local file, or complete article text.
+```
+
+If Phase -1 passes, use the normal review output:
+
 ```markdown
 # Journalistic Article Review: [title]
 
 ## Summary
 - **Article:** [title, outlet, author, date]
+- **Original article access:** [canonical URL / archive / local file / supplied full text; access date]
 - **Article type:**
 - **Verdict:** Reliable as reported / Mostly reliable with caveats / Mixed / Misleading / Unsupported / Contradicted
 - **Bottom line:** [one sentence]
@@ -273,6 +312,7 @@ Severity tags: **Fatal**, **Major**, **Minor**, **Optional**, **Praise**.
 
 | Pattern | Risk | Default move |
 |---|---|---|
+| Original article body cannot be fetched or inspected | Review would be reconstructed from fragments | Stop; no verdict or article-level findings |
 | Headline says "X proves Y"; body says "may suggest" | Headline overreach | Major or Fatal depending on centrality |
 | Three experts from one advocacy network | False independence | Collapse to one node and seek independent source |
 | Anonymous official source makes accusation | Uncheckable authority | Require document, named corroboration, or strong caveat |
