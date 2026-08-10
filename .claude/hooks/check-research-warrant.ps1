@@ -86,7 +86,22 @@ try {
 
     # Article reviews have an additional preflight: the original article body
     # must be inspectable before a normal review can be produced.
-    $articleReviewProduced = $text -match '(?m)^#\s+Journalistic Article Review:|(?m)^##\s+Article Map\b|(?m)^##\s+Sourcing Audit\b|(?m)^##\s+Evidence Load Test\b|(?m)^##\s+Findings\b'
+    # Headings unique to the article-review output template. Any one of these
+    # identifies a review on its own.
+    $articleReviewStrong = $text -match '(?m)^#\s+Journalistic Article Review:|(?m)^##\s+Article Map\b|(?m)^##\s+Sourcing Audit\b|(?m)^##\s+Evidence Load Test\b|(?m)^##\s+Headline,\s*Framing'
+
+    # "## Findings" is in that template too, but it is an ordinary heading any
+    # report, changelog, or summary may use, so alone it fires on non-review
+    # output. It counts only alongside a review-specific signal — which a real
+    # review always carries, since Phase 6 and the Sourcing Audit are mandatory
+    # whenever Phase -1 passes.
+    # Corroborators are anchored to headings or to a template verdict line, not
+    # to bare phrases: "right of reply" and "quote context" appear in prose that
+    # merely discusses the method, which the hook must not fire on.
+    $articleReviewFindings = $text -match '(?m)^##\s+Findings\b'
+    $articleReviewCorroborated = $text -match '(?m)^##\s+Specialist Checks\b|(?m)^##\s+Journalistic Verdict\b|(?im)\*\*Verdict:\*\*\s*\**\s*(?:Reliable as reported|Mostly reliable with caveats|Mixed|Misleading|Unsupported|Contradicted)\b'
+
+    $articleReviewProduced = $articleReviewStrong -or ($articleReviewFindings -and $articleReviewCorroborated)
     $articleReviewStopped = $text -match '(?m)^#\s+Review Stopped:\s+Original Article Not Found\b'
     $articleAccessRecorded = $text -match '(?im)^\s*[-*]?\s*\*\*Original article access:\*\*|^\s*Original article access:|^\s*##\s+Phase -1\b|Original Article Retrieval Gate'
     $articleAccessFailureMentioned = $text -match '(?is)original article(?:\s+body)?.{0,80}(not found|not inspectable|inaccessible|could not be found|cannot be found|could not be fetched|cannot be fetched|could not be inspected|cannot be inspected)'
