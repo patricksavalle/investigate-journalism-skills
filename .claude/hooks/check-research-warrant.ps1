@@ -197,7 +197,20 @@ Hook at .claude/hooks/check-research-warrant.ps1. Inspect via /hooks; disable in
     foreach ($k in $categories.Keys) {
         if ($text -match $categories[$k]) { $matched += $k }
     }
-    if ($matched.Count -lt 3) { exit 0 }
+    # Three marker categories catch produced analysis, but they also catch a
+    # turn that merely *quotes* the vocabulary -- a changelog, a review of this
+    # library, a commit message naming verdict labels. That false positive fired
+    # on a work report during the 2026-08-10 session.
+    #
+    # So three categories now need a report-shaped anchor alongside them. The
+    # anchor is the same one the (traced) check uses: a report H1, a Sources &
+    # Warrants heading, or a template verdict line. A report always has one; a
+    # turn describing reports does not.
+    #
+    # Five or more categories still fire on their own, so a dense prose analysis
+    # that skips headings entirely does not slip through the anchor requirement.
+    $denseAnalysis = $matched.Count -ge 5
+    if (-not ($denseAnalysis -or ($matched.Count -ge 3 -and $reportAnchor))) { exit 0 }
 
     $reason = @"
 Research-discipline check blocked this stop.

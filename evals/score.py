@@ -658,6 +658,69 @@ def score_catalogue(path: Path, name: str) -> dict:
     }
 
 
+# --------------------------------------------------------------------------
+# Severity counts
+# --------------------------------------------------------------------------
+
+# Findings-per-severity is the number that caught the reverted severity floor
+# (Majors 6 -> 0) and the number that flagged the 2026-08-10 post-merge drop
+# (6 -> 1). Until now it was counted by hand with ad-hoc greps, which got it
+# wrong twice in one session -- once matching the section headings themselves,
+# once missing the "**1. Title**" entry format. It belongs in the scorer.
+SEVERITIES = ("Fatal", "Major", "Minor")
+
+# The three entry shapes runs actually use under a severity heading.
+ENTRY_PATTERNS = (
+    r"^\*\*\d+\.",        # **1. Ethics approval status is unstated.**
+    r"^###\s+",           # ### Ethics approval status is unstated
+    r"^\s*[-*]\s+\*\*",   # - **Ethics approval status is unstated**
+)
+# A section that explicitly reports nothing. Counted as 0, not as unparseable,
+# so an empty section and an absent one stay distinguishable.
+NONE_RE = re.compile(r"^\s*None identified", re.I | re.M)
+
+
+def severity_counts(output: str) -> dict:
+    counts: dict[str, int | None] = {}
+    for sev in SEVERITIES:
+        m = re.search(rf"^##\s+{sev} Findings\s*$", output, re.M)
+        if not m:
+            counts[sev] = None  # section absent from this report
+            continue
+        nxt = re.search(r"^##\s+", output[m.end():], re.M)
+        body = output[m.end(): m.end() + nxt.start()] if nxt else output[m.end():]
+        if not body.strip() or NONE_RE.search(body):
+            counts[sev] = 0
+            continue
+        n = 0
+        for pat in ENTRY_PATTERNS:
+            n = len(re.findall(pat, body, re.M))
+            if n:
+                break
+        counts[sev] = n
+    return counts
+
+
+def score_severity(paths: list[Path]) -> dict:
+    per_run = {}
+    totals = {s: 0 for s in SEVERITIES}
+    for p in paths:
+        c = severity_counts(read_text(p))
+        per_run[p.name] = c
+        for s in SEVERITIES:
+            if c[s]:
+                totals[s] += c[s]
+    return {
+        "runs": len(paths),
+        "per_run": per_run,
+        "totals": totals,
+        "note": (
+            "null means the report has no section with that heading; 0 means the "
+            "section exists and reports none"
+        ),
+    }
+
+
 def verdict_distance(skill: str, a: str, b: str) -> int | None:
     spine, _ = VERDICT_SPINE.get(skill, ([], []))
     if a in spine and b in spine:
@@ -856,6 +919,27 @@ def selftest() -> int:
                 f"got {got!r} from {line[:60]!r}"
             )
 
+    # Severity counting, against all three entry shapes runs actually use plus
+    # the two "nothing here" cases. Counted by hand this got wrong twice in one
+    # session -- matching the headings themselves, then missing "**1. Title**".
+    sev_doc = (
+        "# Peer Review: X\n\n"
+        "## Fatal Findings\nNone identified. The central claim holds.\n\n"
+        "## Major Findings\n**1. First fault.**\nBody.\n\n**2. Second fault.**\nBody.\n\n"
+        "## Minor Findings\n- **A nit**\n- **Another nit**\n- **A third**\n\n"
+        "## Optional Suggestions\nnone\n"
+    )
+    got = severity_counts(sev_doc)
+    if got != {"Fatal": 0, "Major": 2, "Minor": 3}:
+        failures.append(f"severity_counts mis-counted: {got}")
+    if severity_counts("# Peer Review: X\n\n## Summary\n")["Major"] is not None:
+        failures.append("severity_counts should report null for an absent section")
+    hdr_only = severity_counts(
+        "## Fatal Findings\n\n## Major Findings\n\n## Minor Findings\n### One\n"
+    )
+    if hdr_only != {"Fatal": 0, "Major": 0, "Minor": 1}:
+        failures.append(f"severity_counts mis-read empty sections: {hdr_only}")
+
     # Catalogue extraction. The counts are the denominator of the reach metric,
     # so a table edit that silently breaks parsing would move the number without
     # anything having changed in a run. Phase 2e has exactly 18 numbered rows.
@@ -958,6 +1042,9 @@ def main(argv: Iterable[str] | None = None) -> int:
     s.add_argument("run_b", type=Path)
     s.add_argument("--skill")
 
+    v = sub.add_parser("severity", help="findings per severity across runs")
+    v.add_argument("run", type=Path, help="a run .md, or a directory of them")
+
     c = sub.add_parser(
         "catalogue", help="how much of a skill's lookup table a run reached"
     )
@@ -988,6 +1075,11 @@ def main(argv: Iterable[str] | None = None) -> int:
         res = score_symmetry(args.run_a, args.run_b, args.skill)
         emit(res)
         return 0 if res["meets_90pct_overlap"] else 1
+
+    if args.cmd == "severity":
+        runs = sorted(args.run.glob("*.md")) if args.run.is_dir() else [args.run]
+        emit(score_severity(runs))
+        return 0
 
     if args.cmd == "catalogue":
         runs = (

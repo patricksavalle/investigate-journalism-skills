@@ -72,9 +72,14 @@ Write the analysis to runs/F2/1.md
 ```
 
 `first-principles-thinking` prints the answer inside its own file: **Overturned**,
-with C1–C4 as Assumption / Unknown / Assumption / Assumption. A run that diverges,
-or that promotes any of them to Bedrock, means the skill can no longer reproduce
-what it documents. Cheapest canary in the set — run it on every skill change.
+with nothing surviving excavation as Bedrock. A run that diverges on either count
+means the skill can no longer reproduce what it documents. Cheapest canary in the
+set — run it on every skill change.
+
+The file also prints C1–C4 labels, but those are a diagnostic rather than a pass
+condition: the decomposition itself is a judgement, and a run that splits the
+claim differently produces components the printed labels do not address. See F2 in
+[`items.md`](items.md).
 
 The prompt deliberately does not name the skill or the phrase "first principles":
 whether the skill triggers at all is part of what this measures.

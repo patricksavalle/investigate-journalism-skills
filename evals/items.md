@@ -161,12 +161,21 @@ example. No item invents a fact.
 - **runs:** 3
 - **input:** the SKILL.md worked example — "We should ship our new feature behind a
   paywall because that's how premium SaaS products monetize."
-- **ground truth:** the SKILL.md states the verdict: **Overturned**, with C1–C4 as
-  Assumption / Unknown / Assumption / Assumption.
-- **scoring:** `reproducibility` against a known answer. Any run diverging from
-  *Overturned*, or promoting an Assumption to Bedrock, is a regression.
+- **ground truth:** the SKILL.md states the verdict — **Overturned** — and prints
+  C1–C4 as Assumption / Unknown / Assumption / Assumption.
+- **scoring:** `reproducibility` against a known answer. A run diverging from
+  *Overturned*, or promoting any component to Bedrock, is a regression.
+- **the component labels are a diagnostic, not a criterion.** First measured
+  2026-08-10: 3/3 *Overturned*, 3/3 with nothing promoted to Bedrock, but only 2/3
+  reproducing the printed labels — the third run decomposed the claim into
+  *different components*, so its C2 and C3 are not the file's C2 and C3, and even
+  its label multiset differs. Positional matching was checking something the skill
+  never promises: the decomposition is a judgement, and the item's own worked
+  example is one decomposition rather than the decomposition. Record the labels;
+  do not fail on them. What the skill does promise, and reproduced 3/3, is that no
+  component survives excavation as Bedrock and the rebuild overturns the claim.
 - **why:** the cheapest possible regression canary. If a skill cannot reproduce the
-  answer printed inside its own file, it has drifted.
+  answer printed inside its own file, it has drifted. Run it on every skill change.
 
 ## F3 — control: the retrieval gate must stop
 

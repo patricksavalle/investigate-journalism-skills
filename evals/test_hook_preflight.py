@@ -193,6 +193,39 @@ The prosecutor's filing names a chartered yacht `(traced)`.
         False,
         ("WebSearch",),
     ),
+    # --- marker-category gate: analysis vs talk about analysis ---------------
+    (
+        "work report quoting the vocabulary, no report anchor",
+        """
+Stage 0 taught the scorer to read a verdict written as `Hypothesis A (a named
+account)` rather than `Hypothesis A stronger`. Stage 2 canonicalised the
+`(traced)` row and the Steelman sourcing note across eight skills. F1 still
+lands on Established fact 3/3.
+""",
+        False,
+    ),
+    (
+        "dense prose analysis with no headings at all",
+        """
+Hypothesis A is the official account and Hypothesis B the alternative. On Cui
+Bono the beneficiary is clear. The claim that the platform was implausible is an
+Established fact `(traced)`, and the Steelman of B rests on Tier 0 material that
+nobody has produced.
+""",
+        True,
+    ),
+    (
+        "report anchor plus three categories, no fetch",
+        """
+# Event Investigation: Something
+
+## Summary
+- **Verdict:** Hypothesis A stronger
+
+Cui Bono favours the incumbent. The Steelman of B is thin.
+""",
+        True,
+    ),
     (
         "discussion of the (traced) label with no report anchor",
         """
