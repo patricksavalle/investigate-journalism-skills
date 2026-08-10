@@ -29,47 +29,11 @@ This skill takes a prior analytical output and produces a revision in its format
 - `investigative-reasoning` Phase 3i (Source Triangulation) — when the new evidence conflicts with prior sources, triangulate before revising.
 - `scientific-fact-classification` — when the revision requires re-classifying a claim's strength label.
 
-## When This Skill Is Silent Or Ambiguous
+<!-- include: routing -->
 
-First check whether another project skill owns the missing layer: hunch / gut feeling / anomaly signal -> `intuitive-thinking`; scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-and-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`.
+<!-- include: research-discipline -->
 
-If no skill clearly owns the gap, reason from first principles and explicit warrants. Built-in knowledge may suggest hypotheses, search terms, possible failure modes, or questions to verify, but any empirical premise remains `(memory — unverified)` until traced. Reasoning may connect warranted premises; it may not manufacture premises.
-
-## Research Discipline (CLAUDE.md/AGENTS.md)
-
-Belief revision is itself an analytical act. The rules in `CLAUDE.md` / `AGENTS.md` → *Operating rules* bind:
-
-- **Rule 1** (pre-search hypothesis registration) — Phase 0b mandates predicting the update direction before incorporating the new evidence. Otherwise the revision is confabulated post-hoc to match what you wanted to find.
-- **Rule 2** (steelman from primary literature) — the new evidence must be steelmanned from its source's own statement; not from critics or summaries.
-- **Rule 3** (primary before secondary) — new evidence must be traced to a primary source. "I heard X said Y" is not revision-ready.
-- **Rule 4** (map institutional networks) — is the new evidence from a source-node already counted in the prior, or genuinely new?
-- **Rule 5** (Tier 0 priority for time-sensitive claims) — for time-sensitive or historical revisions, contemporary primary sources outrank later retrospective smoothing.
-- **Rule 6** (bias self-audit) — was the revision driven by evidence or by social / career / political pressure?
-- **Rule 7** (minimum search volumes) — revision across verdict categories requires enough source depth to match the prior claim's stakes; thin evidence can refine, not overturn.
-- **Rule 8** (hostility check on sources) — does the new evidence's source have skin in the revision direction?
-- **Rule 9** (interactive refinement: user contributions are inputs, not warrants) — the most consequential rule for this skill. The user's own "new evidence" — whether a fact they assert, a claim they vouch for, or pressure for a particular revision direction — is labelled `(user-supplied — unverified)` and cannot drive a revision until traced to a primary source. The Asymmetric-Warrant Rule binds: `(user-supplied — unverified)` cannot overturn `(traced)` any more than `(memory — unverified)` can. If the user pushes for an Overturned status without supplying a verifiable source, the honest status is Refined (in the parts the unverified input could legitimately reach: open questions, "what would change this") — not Overturned.
-- **Rule 10** (objective report voice) — write the revision as a standalone update to the prior verdict, with no requester references in the report prose.
-
-## Warrant Labels (Project Standard)
-
-Use the standard warrant labels:
-
-| Label | Meaning |
-|---|---|
-| `(traced)` | Followed the evidence chain to a primary source fetched in this session via WebFetch/WebSearch, or an explicit terminal/API fetch where the browser fetch path is unsuitable. State URL + access date. |
-| `(deferred to consensus)` | Relying on a named social/institutional consensus mechanism (literature body, regulatory body, textbook, official record system). Consensus is not scientific warrant; for scientific claims, treat it only as a political/social prior unless traced to reproduced or replicated evidence. |
-| `(deferred, fragile)` | Deferred to consensus, but `scientific-fact-classification` Phase 6c failure modes apply — funder capture, ideological capture, prestige cascade, replication crisis, publication bias, or similar. State which. |
-| `(memory — unverified)` | Recalled from training data, not verified this session. Permitted only with this label, and never load-bearing without an explicit "this could be wrong" caveat. |
-| `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Never load-bearing on its own; treat as a hypothesis to test or an input to verify. |
-| `(intuition — unwarranted)` | A gut feeling, anomaly signal, or pattern impression. It may generate hypotheses and search leads. It is never evidence, never load-bearing, and cannot revise, refute, or establish a claim. |
-
-This skill adds one extension: **the revised verdict inherits the lower of (prior verdict's warrant, new evidence's warrant).** Overturning a `(traced)` prior with `(memory — unverified)` or `(user-supplied — unverified)` new evidence is not a calibrated revision; it is anchoring on the most recent thing read or said.
-
-The asymmetric-warrant rule binds especially when the user is the source of the "new evidence":
-
-- `(user-supplied — unverified)` cannot overturn `(traced)`.
-- `(user-supplied — unverified)` cannot overturn a traced evidence base. It can challenge `(deferred to consensus)` only by turning the consensus into a hypothesis to audit; revision requires a verifiable primary source that survives source-status / CoI / institutional-network checks.
-- User contributions that come with a URL must be fetched in-session before being promoted to `(traced)`. A URL the user supplies is not yet `(traced)` — the agent's own fetch is.
+<!-- include: warrant-labels -->
 
 ---
 
@@ -227,7 +191,7 @@ Most calibrated revisions are *Refined* or *Shifted*. *Overturned* should be rar
 - **Verdict-stability:** [why this status, not an adjacent one]
 
 ## Self-Audit
-- **Symmetry test:** Would the same revision have been made if the new evidence had pointed the other way? Name the specific steps (which load-bearing claims the new evidence was read as hitting, and the status boundary chosen) where the verdict is most sensitive to the prior — asserting symmetry flatly, without identifying where it could break, claims the property rather than showing it. If no — explain. If you can't tell — say so.
+<!-- include: symmetry-audit -->
 - **Asymmetric-warrant rule respected?** [yes / no]
 - **What would revise this further:** [evidence whose appearance would shift the revised verdict]
 

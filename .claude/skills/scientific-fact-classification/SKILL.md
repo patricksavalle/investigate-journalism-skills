@@ -33,15 +33,15 @@ If no skill clearly owns the gap, reason from first principles and explicit warr
 
 Claim classification without source-tracing reproduces training-data bias as analysis. The rules in `CLAUDE.md` / `AGENTS.md` → *Operating rules* bind:
 
-- **Rule 1** (pre-classification hypothesis registration) — before classifying, register the prior expectation per claim's label. Otherwise post-hoc rationalisation will select the label.
+- **Rule 1** (pre-search hypothesis registration) — before classifying, register the prior expectation per claim's label. Otherwise post-hoc rationalisation will select the label.
 - **Rule 2** (steelman from primary literature) — Phase 0d Charity; for contested claims, fetch advocates' primary literature, not critics' summaries.
 - **Rule 3** (primary before secondary) — Phase 6d Provenance trace toward P1 (pre-registered + replicated primary).
 - **Rule 4** (map institutional networks) — Phase 6c failure modes (funder capture, citation cartel, prestige cascade) must be checked before consensus can be used even as a prior.
-- **Rule 5** (Tier 0 priority) — for historically-settled claims, fetch contemporary primary sources; later retrospectives sanitise.
+- **Rule 5** (Tier 0 priority for time-sensitive claims) — for historically-settled claims, fetch contemporary primary sources; later retrospectives sanitise.
 - **Rule 6** (bias self-audit) — enforced in `## Self-Audit`.
 - **Rule 7** (minimum search volumes) — ≥3 independent primary lines for an "Established fact"; fewer = lower label.
 - **Rule 8** (hostility check on sources) — Phase 6b conflict-of-interest; demote sources whose funder has skin in the conclusion.
-- **Rule 9** (interactive refinement) — when the user pushes for re-classification ("this is actually Established fact" / "you should call this Refuted"), label the contribution `(user-supplied — unverified)` and re-examine the evidence; do not shift the classification on user pressure absent new primary sources.
+- **Rule 9** (interactive refinement: user contributions are inputs, not warrants) — when the user pushes for re-classification ("this is actually Established fact" / "you should call this Refuted"), label the contribution `(user-supplied — unverified)` and re-examine the evidence; do not shift the classification on user pressure absent new primary sources.
 - **Rule 10** (objective report voice) — write the classification as a standalone verdict on the claim, with no requester references in the report prose.
 
 ## Warrant Labels (Project Standard)
@@ -50,12 +50,12 @@ Attach a warrant qualifier to every empirical classification:
 
 | Label | Meaning |
 |---|---|
-| `(traced)` | Followed evidence chain to a primary source fetched in this session. State URL + access date. |
-| `(deferred to consensus)` | Relying on a named social/institutional consensus mechanism, such as a literature body, regulatory body, or textbook. Consensus is not scientific warrant; it is a political/social coordination signal and at most a prior until traced to reproduced or replicated evidence. |
-| `(deferred, fragile)` | Deferred to consensus, but Phase 6c failure modes apply: funder capture, ideological capture, prestige cascade, replication crisis, or similar. State which. |
-| `(memory — unverified)` | Recalled from training data, not verified this session. Never load-bearing without an explicit caveat that it could be wrong. |
-| `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Treat as a hypothesis to test, never as authority. |
-| `(intuition — unwarranted)` | A gut feeling, anomaly signal, or pattern impression. It may generate hypotheses and search leads, but is never evidence and never load-bearing. |
+| `(traced)` | Followed the evidence chain to a primary source fetched in this session via WebFetch/WebSearch, or an explicit terminal/API fetch where the browser fetch path is unsuitable. State URL + access date. |
+| `(deferred to consensus)` | Relying on a named social/institutional consensus mechanism (literature body, regulatory body, textbook, official record system). Consensus is not scientific warrant; for scientific claims, treat it only as a political/social prior unless traced to reproduced or replicated evidence. |
+| `(deferred, fragile)` | Deferred to consensus, but `scientific-fact-classification` Phase 6c failure modes apply — funder capture, ideological capture, prestige cascade, replication crisis, publication bias, or similar. State which. |
+| `(memory — unverified)` | Recalled from training data, not verified this session. Permitted only with this label, and never load-bearing without an explicit "this could be wrong" caveat. |
+| `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Never load-bearing on its own; treat as a hypothesis to test or an input to verify. |
+| `(intuition — unwarranted)` | A gut feeling, anomaly signal, or pattern impression. It may generate hypotheses and search leads. It is never evidence, never load-bearing, and cannot revise, refute, or establish a claim. |
 | `(mixed)` | Part traced, part deferred. State which claim elements sit under which warrant. |
 
 If sources are fetched, record for each cited source: URL, access date, publication date where relevant, warrant label, and funding / ownership / mandate / national alignment where relevant.
@@ -416,7 +416,7 @@ Examples:
 |---|---|---|---|---|---|---|
 
 ## Self-Audit
-- **Symmetry test:** Would I have reached the same verdict if the politically/socially expected answer ran the other way? If no — explain. If you can't tell — say so. State explicitly per contested claim.
+- **Symmetry test:** Would the same verdict have been reached if the politically/socially expected answer ran the other way? Name the specific judgements (the strength label per contested claim, the GRADE adjustments, which Phase 6c failure modes were called present) where the verdict is most sensitive to the prior — asserting symmetry flatly, without identifying where it could break, claims the property rather than showing it. If no — explain. If you can't tell — say so. State this explicitly per contested claim.
 - **Cross-domain consistency:** Same standards applied across domains (Phase 0e), not mismatched (e.g. holding history to physics's bar or vice versa).
 - **Consensus-mechanism audit:** Where warrant is `(deferred to consensus)`, were the Phase 6c failure modes actually checked, or assumed absent?
 

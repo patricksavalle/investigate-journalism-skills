@@ -56,43 +56,11 @@ Offload specialist work where possible:
 
 If a specialist skill is unavailable, use the fallback checks in this skill and label any memory-based facts `(memory — unverified)`.
 
-## When This Skill Is Silent Or Ambiguous
+<!-- include: routing -->
 
-First check whether another project skill owns the missing layer: hunch / gut feeling / anomaly signal -> `intuitive-thinking`; scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-and-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`.
+<!-- include: research-discipline -->
 
-If no skill clearly owns the gap, reason from first principles and explicit warrants. Built-in knowledge may suggest hypotheses, search terms, possible failure modes, or questions to verify, but any empirical premise remains `(memory — unverified)` until traced. Reasoning may connect warranted premises; it may not manufacture premises.
-
-## Research Discipline (CLAUDE.md/AGENTS.md)
-
-This skill is standalone. Apply these rules even if `CLAUDE.md` / `AGENTS.md` are not loaded:
-
-- **Rule 1** (pre-search hypothesis registration) — Before searching, register the reviewer's prior expectation about the field consensus, likely paper strength, and possible failure modes.
-- **Rule 2** (steelman from primary literature) — Restate the paper's central claim and strongest methodological rationale before criticising.
-- **Rule 3** (primary before secondary) — Fetch the cited paper, protocol, dataset, guideline, registry, or primary document before relying on a secondary characterisation.
-- **Rule 4** (map institutional networks) — Treat studies, authors, funders, labs, policy bodies, and commentators as one node when they share material alignment until independent corroboration is shown.
-- **Rule 5** (Tier 0 priority for time-sensitive claims) — For citation chains and time-sensitive fields, prefer original/contemporary primary sources over later reviews or summaries.
-- **Rule 6** (bias self-audit) — End by answering whether the same verdict would have been reached if the paper's conclusion ran the other way.
-- **Rule 7** (minimum search volumes) — Typical paper: verify 5-15 load-bearing citations/sources. Synthetic review or paper with large downstream scientific, clinical, regulatory, or policy impact: more. Beyond 40, recommend a dedicated deep-research session.
-- **Rule 8** (hostility check on sources) — For each cited source used by the review, record funding, ownership, mandate, author/funder alignment, and national alignment where relevant.
-- **Rule 9** (interactive refinement: user contributions are inputs, not warrants) — User-supplied corrections are `(user-supplied — unverified)` until fetched and verified. Do not soften severity grades on pressure absent new primary evidence.
-- **Rule 10** (objective report voice) — Write the report as a standalone verdict on the paper. Do not refer to the requester in the report prose.
-
-## Warrant Labels
-
-Every load-bearing factual claim made by the review carries a warrant:
-
-| Label | Meaning |
-|---|---|
-| `(traced)` | Followed the evidence chain to a primary source fetched in this session via WebFetch/WebSearch, or an explicit terminal/API fetch where the browser fetch path is unsuitable. State URL + access date. |
-| `(deferred to consensus)` | Relying on a named social/institutional consensus mechanism (literature body, regulatory body, textbook, official record system). Consensus is not scientific warrant; for scientific claims, treat it only as a political/social prior unless traced to reproduced or replicated evidence. |
-| `(deferred, fragile)` | Deferred to consensus, but `scientific-fact-classification` Phase 6c failure modes apply — funder capture, ideological capture, prestige cascade, replication crisis, publication bias, or similar. State which. |
-| `(memory — unverified)` | Recalled from training data, not verified this session. Permitted only with this label, and never load-bearing without an explicit "this could be wrong" caveat. |
-| `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Never load-bearing on its own; treat as a hypothesis to test or an input to verify. |
-| `(intuition — unwarranted)` | A gut feeling, anomaly signal, or pattern impression. It may generate hypotheses and search leads. It is never evidence, never load-bearing, and cannot revise, refute, or establish a claim. |
-
-The consensus mechanisms most often deferred to here are reporting and conduct standards — CONSORT, STROBE, PRISMA, ICH-GCP, ARRIVE — and a regulator, textbook, or literature body. None of them is scientific warrant on its own.
-
-A citation-verification verdict is itself a reviewer claim. Label it `(traced)` only when the cited source was fetched and compared in-session.
+<!-- include: warrant-labels -->
 
 ## Phase 0 — Pre-Review Setup
 
@@ -431,7 +399,7 @@ State explicitly what would change the recommendation upward or downward.
 - Downward:
 
 ## Self-Audit
-- **Symmetry test:** Would the same recommendation have been reached if the paper's conclusion ran the other way? Execute the flip; do not merely assert. Name the specific judgements (which findings were graded Fatal rather than Major, the citation verdicts, the recommendation threshold) where the verdict is most sensitive to the prior — asserting symmetry flatly, without identifying where it could break, claims the property rather than showing it. If no — explain. If you can't tell — say so.
+<!-- include: symmetry-audit -->
 - **Standards applied:** [genre and field]
 - **Difference in approach vs actual fault separated:**
 - **Reviewer priors named:** [topic/authors/funder direction, if any]

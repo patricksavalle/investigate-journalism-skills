@@ -42,7 +42,7 @@ This skill audits text the user supplies; it does not normally fetch sources. Bu
 - **Rule 6** (bias self-audit) — enforced in `## Self-Audit` of the output template.
 - **Rule 7** (minimum search volumes) — applies only when the analyst undertakes outside investigation; otherwise inactive here.
 - **Rule 8** (hostility check on sources) — when the text recruits an authority, name that authority's funding / alignment / mandate alongside the citation.
-- **Rule 9** (interactive refinement) — applies the moment the user pushes back on a flag, offers a counter-argument, or supplies "actually, this is what the author meant" framing. User contributions are labelled `(user-supplied — unverified)` and treated as hypotheses to test against the text, never as authority that overrides a flag.
+- **Rule 9** (interactive refinement: user contributions are inputs, not warrants) — applies the moment the user pushes back on a flag, offers a counter-argument, or supplies "actually, this is what the author meant" framing. User contributions are labelled `(user-supplied — unverified)` and treated as hypotheses to test against the text, never as authority that overrides a flag.
 - **Rule 10** (objective report voice) — write the audit as a standalone verdict on the claim or text, with no requester references in the report prose.
 
 ## Warrant Labels (Project Standard)
@@ -51,12 +51,12 @@ Every load-bearing factual claim this skill *invokes* (e.g. "this technique is d
 
 | Label | Meaning |
 |---|---|
-| `(traced)` | Followed evidence chain to a primary source fetched in this session. State URL + access date. |
-| `(deferred to consensus)` | Relying on a named social/institutional consensus mechanism, such as a literature body, regulatory body, or textbook. Consensus is not scientific warrant; for scientific claims, treat it only as a political/social prior unless traced to reproduced or replicated evidence. |
-| `(deferred, fragile)` | Deferred to consensus, but known failure modes apply: funder capture, ideological capture, prestige cascade, replication crisis, or similar. State which. |
-| `(memory — unverified)` | Recalled from training data, not verified this session. Never load-bearing without an explicit caveat that it could be wrong. |
-| `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Treat as a hypothesis to test, never as authority. |
-| `(intuition — unwarranted)` | A gut feeling, anomaly signal, or pattern impression. It may generate hypotheses and search leads, but is never evidence and never load-bearing. |
+| `(traced)` | Followed the evidence chain to a primary source fetched in this session via WebFetch/WebSearch, or an explicit terminal/API fetch where the browser fetch path is unsuitable. State URL + access date. |
+| `(deferred to consensus)` | Relying on a named social/institutional consensus mechanism (literature body, regulatory body, textbook, official record system). Consensus is not scientific warrant; for scientific claims, treat it only as a political/social prior unless traced to reproduced or replicated evidence. |
+| `(deferred, fragile)` | Deferred to consensus, but `scientific-fact-classification` Phase 6c failure modes apply — funder capture, ideological capture, prestige cascade, replication crisis, publication bias, or similar. State which. |
+| `(memory — unverified)` | Recalled from training data, not verified this session. Permitted only with this label, and never load-bearing without an explicit "this could be wrong" caveat. |
+| `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Never load-bearing on its own; treat as a hypothesis to test or an input to verify. |
+| `(intuition — unwarranted)` | A gut feeling, anomaly signal, or pattern impression. It may generate hypotheses and search leads. It is never evidence, never load-bearing, and cannot revise, refute, or establish a claim. |
 
 The fallacy labels themselves are analytical (definitional), not empirical — they do not require a warrant, but any empirical claim recruited to defend them does.
 
@@ -361,7 +361,7 @@ An argument that collapses under repair was being carried by the faults.
 |---|---|---|---|---|---|---|
 
 ## Self-Audit
-- **Symmetry test:** Would I have reached the same verdict if the politically/socially expected answer ran the other way? If no — explain. If you can't tell — say so.
+- **Symmetry test:** Would the same verdict have been reached if the politically/socially expected answer ran the other way? Name the specific flags (which faults were graded load-bearing, and where the charitable reading was drawn) where the verdict is most sensitive to the prior — asserting symmetry flatly, without identifying where it could break, claims the property rather than showing it. If no — explain. If you can't tell — say so.
 - **Fallacy-fallacy guard:** the argument being unsound does not make the conclusion false.
 - **Priors named:** direction of analyst's own priors on the topic, stated.
 

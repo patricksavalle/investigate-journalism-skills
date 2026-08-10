@@ -23,42 +23,11 @@ Trigger only when explicitly requested: *"is X a fact?"*, *"weigh the evidence f
 - `osint-research` — when claim provenance is contested and needs identifier-level source tracing.
 - `belief-revision` — when new evidence (replication, retraction, contrary primary source) shifts a previously assigned classification and a calibrated update is needed.
 
-## When This Skill Is Silent Or Ambiguous
+<!-- include: routing -->
 
-First check whether another project skill owns the missing layer: hunch / gut feeling / anomaly signal -> `intuitive-thinking`; scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-and-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`.
+<!-- include: research-discipline -->
 
-If no skill clearly owns the gap, reason from first principles and explicit warrants. Built-in knowledge may suggest hypotheses, search terms, possible failure modes, or questions to verify, but any empirical premise remains `(memory — unverified)` until traced. Reasoning may connect warranted premises; it may not manufacture premises.
-
-## Research Discipline (CLAUDE.md/AGENTS.md)
-
-Claim classification without source-tracing reproduces training-data bias as analysis. The rules in `CLAUDE.md` / `AGENTS.md` → *Operating rules* bind:
-
-- **Rule 1** (pre-search hypothesis registration) — before classifying, register the prior expectation per claim's label. Otherwise post-hoc rationalisation will select the label.
-- **Rule 2** (steelman from primary literature) — Phase 0d Charity; for contested claims, fetch advocates' primary literature, not critics' summaries.
-- **Rule 3** (primary before secondary) — Phase 6d Provenance trace toward P1 (pre-registered + replicated primary).
-- **Rule 4** (map institutional networks) — Phase 6c failure modes (funder capture, citation cartel, prestige cascade) must be checked before consensus can be used even as a prior.
-- **Rule 5** (Tier 0 priority for time-sensitive claims) — for historically-settled claims, fetch contemporary primary sources; later retrospectives sanitise.
-- **Rule 6** (bias self-audit) — enforced in `## Self-Audit`.
-- **Rule 7** (minimum search volumes) — ≥3 independent primary lines for an "Established fact"; fewer = lower label.
-- **Rule 8** (hostility check on sources) — Phase 6b conflict-of-interest; demote sources whose funder has skin in the conclusion.
-- **Rule 9** (interactive refinement: user contributions are inputs, not warrants) — when the user pushes for re-classification ("this is actually Established fact" / "you should call this Refuted"), label the contribution `(user-supplied — unverified)` and re-examine the evidence; do not shift the classification on user pressure absent new primary sources.
-- **Rule 10** (objective report voice) — write the classification as a standalone verdict on the claim, with no requester references in the report prose.
-
-## Warrant Labels (Project Standard)
-
-Attach a warrant qualifier to every empirical classification:
-
-| Label | Meaning |
-|---|---|
-| `(traced)` | Followed the evidence chain to a primary source fetched in this session via WebFetch/WebSearch, or an explicit terminal/API fetch where the browser fetch path is unsuitable. State URL + access date. |
-| `(deferred to consensus)` | Relying on a named social/institutional consensus mechanism (literature body, regulatory body, textbook, official record system). Consensus is not scientific warrant; for scientific claims, treat it only as a political/social prior unless traced to reproduced or replicated evidence. |
-| `(deferred, fragile)` | Deferred to consensus, but `scientific-fact-classification` Phase 6c failure modes apply — funder capture, ideological capture, prestige cascade, replication crisis, publication bias, or similar. State which. |
-| `(memory — unverified)` | Recalled from training data, not verified this session. Permitted only with this label, and never load-bearing without an explicit "this could be wrong" caveat. |
-| `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Never load-bearing on its own; treat as a hypothesis to test or an input to verify. |
-| `(intuition — unwarranted)` | A gut feeling, anomaly signal, or pattern impression. It may generate hypotheses and search leads. It is never evidence, never load-bearing, and cannot revise, refute, or establish a claim. |
-| `(mixed)` | Part traced, part deferred. State which claim elements sit under which warrant. |
-
-If sources are fetched, record for each cited source: URL, access date, publication date where relevant, warrant label, and funding / ownership / mandate / national alignment where relevant.
+<!-- include: warrant-labels -->
 
 ---
 
@@ -416,7 +385,7 @@ Examples:
 |---|---|---|---|---|---|---|
 
 ## Self-Audit
-- **Symmetry test:** Would the same verdict have been reached if the politically/socially expected answer ran the other way? Name the specific judgements (the strength label per contested claim, the GRADE adjustments, which Phase 6c failure modes were called present) where the verdict is most sensitive to the prior — asserting symmetry flatly, without identifying where it could break, claims the property rather than showing it. If no — explain. If you can't tell — say so. State this explicitly per contested claim.
+<!-- include: symmetry-audit -->
 - **Cross-domain consistency:** Same standards applied across domains (Phase 0e), not mismatched (e.g. holding history to physics's bar or vice versa).
 - **Consensus-mechanism audit:** Where warrant is `(deferred to consensus)`, were the Phase 6c failure modes actually checked, or assumed absent?
 

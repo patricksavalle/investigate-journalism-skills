@@ -48,44 +48,11 @@ Use specialist skills rather than reimplementing them:
 
 This skill owns the article-level synthesis: headline-body fit, sourcing architecture, editorial framing, missing context, fairness to targets, and publication-readiness.
 
-## When This Skill Is Silent Or Ambiguous
+<!-- include: routing -->
 
-First check whether another project skill owns the missing layer: hunch / gut feeling / anomaly signal -> `intuitive-thinking`; scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-and-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`.
+<!-- include: research-discipline -->
 
-If no skill clearly owns the gap, reason from first principles and explicit warrants. Built-in knowledge may suggest hypotheses, search terms, possible failure modes, or questions to verify, but any empirical premise remains `(memory — unverified)` until traced. Reasoning may connect warranted premises; it may not manufacture premises.
-
-## Research Discipline (CLAUDE.md/AGENTS.md)
-
-This skill is standalone. Apply these rules even if `CLAUDE.md` / `AGENTS.md` are not loaded:
-
-- **Rule 0** (original article retrieval gate) — Before Phase 0, fetch and inspect the original article under review, or use the complete article text supplied in-session. If the original article cannot be found or inspected after reasonable retrieval attempts, stop the review. Do not reconstruct the article from search snippets, summaries, quoted fragments, commentary, archive metadata, or secondary reporting.
-- **Rule 1** (pre-search hypothesis registration) — Before searching, write the article's apparent thesis, the strongest alternative interpretation, and the main ways the article could be right or misleading.
-- **Rule 2** (steelman from primary literature) — For any criticised person, institution, claim, or contested position, fetch its own primary statement or strongest advocate source, not only critics' summaries.
-- **Rule 3** (primary before secondary) — If the article characterises a paper, court filing, dataset, speech, report, post, image, or document, fetch that primary item before relying on the article's characterisation.
-- **Rule 4** (map institutional networks) — Treat sources sharing ownership, funding, mandate, syndication, political alignment, national alignment, or campaign infrastructure as one node until independent corroboration is shown.
-- **Rule 5** (Tier 0 priority for time-sensitive claims) — For fast-moving or historical claims, record publication dates and prefer contemporaneous primary records over later retrospectives.
-- **Rule 6** (bias self-audit) — End by answering whether the same verdict would have been reached if the politically or socially expected answer ran the other way.
-- **Rule 7** (minimum search volumes) — Quick article check: 5-10 fetched sources. Substantial article review: 10-20. Narrative-captured or geopolitical article: 20-40+ and geographically diversified.
-- **Rule 8** (hostility check on sources) — For every cited source, name role, stake, funding/ownership/mandate, and national alignment where relevant.
-- **Rule 9** (interactive refinement: user contributions are inputs, not warrants) — User-supplied claims are `(user-supplied — unverified)` until fetched and verified in-session. Treat them as hypotheses, not evidence.
-- **Rule 10** (objective report voice) — Write the report as a standalone verdict on the article. Do not refer to the requester in the report prose.
-
-## Warrant Labels
-
-Every load-bearing factual claim made by the review carries a warrant:
-
-| Label | Meaning |
-|---|---|
-| `(traced)` | Followed the evidence chain to a primary source fetched in this session via WebFetch/WebSearch, or an explicit terminal/API fetch where the browser fetch path is unsuitable. State URL + access date. |
-| `(deferred to consensus)` | Relying on a named social/institutional consensus mechanism (literature body, regulatory body, textbook, official record system). Consensus is not scientific warrant; for scientific claims, treat it only as a political/social prior unless traced to reproduced or replicated evidence. |
-| `(deferred, fragile)` | Deferred to consensus, but `scientific-fact-classification` Phase 6c failure modes apply — funder capture, ideological capture, prestige cascade, replication crisis, publication bias, or similar. State which. |
-| `(memory — unverified)` | Recalled from training data, not verified this session. Permitted only with this label, and never load-bearing without an explicit "this could be wrong" caveat. |
-| `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Never load-bearing on its own; treat as a hypothesis to test or an input to verify. |
-| `(intuition — unwarranted)` | A gut feeling, anomaly signal, or pattern impression. It may generate hypotheses and search leads. It is never evidence, never load-bearing, and cannot revise, refute, or establish a claim. |
-
-The consensus mechanisms most often deferred to here are a regulator, a court record system, an official statistics body, or a methods guideline. State narrative pressure is an additional `(deferred, fragile)` failure mode for reporting on contested events.
-
-Maintain a `Sources & Warrants` table whenever external facts appear.
+<!-- include: warrant-labels -->
 
 ## Phase -1 — Original Article Retrieval Gate
 
@@ -300,7 +267,7 @@ If Phase -1 passes, use the normal review output:
 - Downward:
 
 ## Self-Audit
-- **Symmetry test:** Would the same verdict have been reached if the politically/socially expected answer ran the other way? Name the specific judgements (the Evidence Load Test verdicts, the source-independence calls, the severity tags) where the verdict is most sensitive to the prior — asserting symmetry flatly, without identifying where it could break, claims the property rather than showing it. If no — explain. If you can't tell — say so.
+<!-- include: symmetry-audit -->
 - **Source-network test:** If the largest institutional/source node were removed, what independent evidence remains?
 - **Requester-input test:** Any user-supplied inputs are labelled and non-load-bearing unless traced.
 

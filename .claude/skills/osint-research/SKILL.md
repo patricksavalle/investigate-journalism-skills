@@ -39,11 +39,11 @@ OSINT collection without truth-seeking discipline produces dossiers, not intelli
 - **Rule 2** (steelman from primary literature) — when the target has primary writings (manifesto, filings, interviews), fetch them directly; never rely solely on critics' summaries.
 - **Rule 3** (primary before secondary) — when a finding traces back to another report, fetch the underlying source before treating the secondary as independent.
 - **Rule 4** (map institutional networks) — before counting multiple outlets / accounts as independent corroboration, map shared ownership / funding / coordination (Phase 4 inauthenticity checks help).
-- **Rule 5** (Tier 0 priority) — for time-sensitive media (live events, account behaviour), contemporaneous archive captures outrank later screenshots; preserve via web.archive.org at collection time.
+- **Rule 5** (Tier 0 priority for time-sensitive claims) — for time-sensitive media (live events, account behaviour), contemporaneous archive captures outrank later screenshots; preserve via web.archive.org at collection time.
 - **Rule 6** (bias self-audit) — enforced in `## Self-Audit`.
 - **Rule 7** (minimum search volumes) — Phase 2 specifies Quick 5–15 / Standard 15–40 / Deep 40–100+.
 - **Rule 8** (hostility check on sources) — Phase 4 Admiralty rates source reliability; supplement with explicit funding / alignment / mandate where load-bearing.
-- **Rule 9** (interactive refinement) — when the user volunteers identifiers, attribution claims, or context about the target ("this account is actually run by X"), label `(user-supplied — unverified)` and treat as a hypothesis to verify via Admiralty-graded findings, never as established attribution.
+- **Rule 9** (interactive refinement: user contributions are inputs, not warrants) — when the user volunteers identifiers, attribution claims, or context about the target ("this account is actually run by X"), label `(user-supplied — unverified)` and treat as a hypothesis to verify via Admiralty-graded findings, never as established attribution.
 - **Rule 10** (objective report voice) — write the brief as a standalone finding on the target or question, with no requester references in the report prose.
 
 ## Warrant Labels (Project Standard)
@@ -52,12 +52,14 @@ Every load-bearing finding carries a warrant per `CLAUDE.md` / `AGENTS.md`:
 
 | Label | Meaning |
 |---|---|
-| `(traced)` | Followed evidence chain to a public source fetched in this session. State URL + access date; archive URL when useful. |
-| `(deferred to consensus)` | Relying on a named social/institutional consensus mechanism or official registry class without independently tracing each underlying record. Consensus is not scientific warrant; for scientific claims, treat it only as a political/social prior unless traced to reproduced or replicated evidence. |
-| `(deferred, fragile)` | Deferred to consensus, but failure modes apply: state control, platform opacity, coordinated reporting, registry gaps, capture, or similar. State which. |
-| `(memory — unverified)` | Recalled from training data, not verified this session. Never load-bearing without an explicit caveat that it could be wrong. |
-| `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Treat as a selector or hypothesis to verify, never as attribution. |
-| `(intuition — unwarranted)` | A gut feeling, anomaly signal, or pattern impression. It may generate hypotheses and search leads, but is never evidence and never load-bearing. |
+| `(traced)` | Followed the evidence chain to a primary source fetched in this session via WebFetch/WebSearch, or an explicit terminal/API fetch where the browser fetch path is unsuitable. State URL + access date. |
+| `(deferred to consensus)` | Relying on a named social/institutional consensus mechanism (literature body, regulatory body, textbook, official record system). Consensus is not scientific warrant; for scientific claims, treat it only as a political/social prior unless traced to reproduced or replicated evidence. |
+| `(deferred, fragile)` | Deferred to consensus, but `scientific-fact-classification` Phase 6c failure modes apply — funder capture, ideological capture, prestige cascade, replication crisis, publication bias, or similar. State which. |
+| `(memory — unverified)` | Recalled from training data, not verified this session. Permitted only with this label, and never load-bearing without an explicit "this could be wrong" caveat. |
+| `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Never load-bearing on its own; treat as a hypothesis to test or an input to verify. |
+| `(intuition — unwarranted)` | A gut feeling, anomaly signal, or pattern impression. It may generate hypotheses and search leads. It is never evidence, never load-bearing, and cannot revise, refute, or establish a claim. |
+
+For public-record work, `(traced)` should also state the archive URL where one exists — platform content is mutable and often removed. Deferring to a registry *class* without tracing each underlying record is `(deferred to consensus)`, and the failure modes that recur are state control, platform opacity, coordinated reporting, and registry gaps.
 
 Admiralty grading (Phase 4) rates *source reliability* and *claim credibility*; warrant labels rate *what the analyst did this session* (followed evidence to a primary, or recalled). Both travel with the finding — they are orthogonal.
 
@@ -257,7 +259,7 @@ Deliver in the form requested. Ask what was missing.
 [Falsification criteria — what evidence, if surfaced, would shift the verdict]
 
 ## Self-Audit
-- **Symmetry test:** Would I have reached the same verdict if the politically/socially expected answer ran the other way? If no — explain. If you can't tell — say so.
+- **Symmetry test:** Would the same verdict have been reached if the politically/socially expected answer ran the other way? Name the specific findings (the Admiralty grades and the attribution calls) where the verdict is most sensitive to the prior — asserting symmetry flatly, without identifying where it could break, claims the property rather than showing it. If no — explain. If you can't tell — say so.
 - **Diagonal-failure check:** Did source reliability bleed into credibility scoring?
 - **Coverage check:** Were foreign-language / regional engines used where appropriate?
 - **Harm check:** Were minor-protection and vulnerable-target rules honoured?

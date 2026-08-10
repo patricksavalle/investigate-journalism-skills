@@ -23,45 +23,11 @@ Trigger only when explicitly requested: *"investigate this event"*, *"develop a 
 - `first-principles-thinking` — when the official narrative invokes a named framework (Koch's, intelligence-community assessment, treaty trigger) and the framework itself needs decomposition.
 - `belief-revision` — when new evidence emerges about a previously investigated event (declassified document, new whistleblower, forensic re-examination) and a calibrated update of the dual-hypothesis verdict is needed.
 
-## When This Skill Is Silent Or Ambiguous
+<!-- include: routing -->
 
-First check whether another project skill owns the missing layer: hunch / gut feeling / anomaly signal -> `intuitive-thinking`; scientific claim status -> `scientific-fact-classification`; paper methods/statistics/citations/reproducibility -> `peer-review`; article framing/reporting accuracy -> `journalistic-article-review`; source identity/funding/public records -> `osint-research`; contested events or competing narratives -> `investigative-reasoning`; definitions, hidden assumptions, or argument bedrock -> `first-principles-thinking`; fallacies/rhetoric/statistical framing tricks -> `fallacy-bias-and-manipulation-analysis`; new evidence changing a prior verdict -> `belief-revision`.
+<!-- include: research-discipline -->
 
-If no skill clearly owns the gap, reason from first principles and explicit warrants. Built-in knowledge may suggest hypotheses, search terms, possible failure modes, or questions to verify, but any empirical premise remains `(memory — unverified)` until traced. Reasoning may connect warranted premises; it may not manufacture premises.
-
-## Research Discipline (CLAUDE.md/AGENTS.md)
-
-This skill is the most rule-saturated application of the project's research discipline. All rules in `CLAUDE.md` / `AGENTS.md` → *Operating rules* bind:
-
-- **Rule 1** (pre-search hypothesis registration) — Phase 0c mandates registering hypotheses before the first search.
-- **Rule 2** (steelman from primary literature) — Phase 0c mandates Hypothesis B built from its advocates' primary writing, not critics' summaries.
-- **Rule 3** (primary before secondary) — Phase 3b source tiers prioritise primaries; Phase 3h evidence ladder demands L4+ before any claim is "established".
-- **Rule 4** (map institutional networks) — Phase 0b mandates network mapping before independence is claimed for any set of sources.
-- **Rule 5** (Tier 0 priority for time-sensitive claims) — Phase 3b Tier 0 = contemporary primary sources; outrank later retrospectives for time-sensitive claims.
-- **Rule 6** (bias self-audit) — enforced in `## Self-Audit` of the output template.
-- **Rule 7** (minimum search volumes) — `Web Search — Mandatory` block specifies 5–10 / 10–20 / 20–40+ by complexity.
-- **Rule 8** (hostility check on sources) — Phase 3b CoI demotion + geopolitical-witness rule.
-- **Rule 9** (interactive refinement: user contributions are inputs, not warrants) — applies the moment the user pushes back on a hypothesis, supplies counter-evidence verbally, or asks for the verdict to be re-weighted. User contributions are labelled `(user-supplied — unverified)`, never load-bearing on the Hypothesis A vs B comparison without independent verification — the user has skin in the revision direction the same way every other source does.
-- **Rule 10** (objective report voice) — write the investigation as a standalone verdict on the event or claim, with no requester references in the report prose.
-
-## Warrant Labels (Project Standard)
-
-Every load-bearing factual claim — sources, evidence items, hypothesis-supporting facts — carries a warrant per `CLAUDE.md` / `AGENTS.md`:
-
-| Label | Meaning |
-|---|---|
-| `(traced)` | Followed the evidence chain to a primary source fetched in this session via WebFetch/WebSearch, or an explicit terminal/API fetch where the browser fetch path is unsuitable. State URL + access date. |
-| `(deferred to consensus)` | Relying on a named social/institutional consensus mechanism (literature body, regulatory body, textbook, official record system). Consensus is not scientific warrant; for scientific claims, treat it only as a political/social prior unless traced to reproduced or replicated evidence. |
-| `(deferred, fragile)` | Deferred to consensus, but `scientific-fact-classification` Phase 6c failure modes apply — funder capture, ideological capture, prestige cascade, replication crisis, publication bias, or similar. State which. |
-| `(memory — unverified)` | Recalled from training data, not verified this session. Permitted only with this label, and never load-bearing without an explicit "this could be wrong" caveat. |
-| `(user-supplied — unverified)` | Provided during interactive refinement and not verified in-session. Never load-bearing on its own; treat as a hypothesis to test or an input to verify. |
-| `(intuition — unwarranted)` | A gut feeling, anomaly signal, or pattern impression. It may generate hypotheses and search leads. It is never evidence, never load-bearing, and cannot revise, refute, or establish a claim. |
-
-Failure modes that recur on contested events, for the `(deferred, fragile)` label: geopolitical alignment of the deferring body, and state secrecy over the underlying record.
-
-The Fact File rows, Hypothesis A/B supporting-evidence lines, and Evidence Integrity table all carry warrant labels alongside source-tier and CoI tags.
-
-If sources are fetched, record for each cited source: URL, access date, publication date where relevant, warrant label, and funding / ownership / mandate / national alignment where relevant.
+<!-- include: warrant-labels -->
 
 ---
 
@@ -532,7 +498,7 @@ Prefer fewest unsupported assumptions. But: sophisticated actors embed complexit
 [Specific evidence — declassified document, primary witness, forensic re-examination, foreign-archive access — that would shift the verdict]
 
 ## Self-Audit
-- **Symmetry test:** Would the same verdict have been reached if the politically/socially expected answer ran the other way? Name the specific phases (the Phase 9 positive-evidence column, Phase 5 MMO scoring, the Phase 3b CoI demotion thresholds, the confidence rubric) where the verdict is most sensitive to the prior — asserting symmetry flatly, without identifying where it could break, claims the property rather than showing it. If no — explain. If you can't tell — say so.
+<!-- include: symmetry-audit -->
 - **Bias & fallacy check** (applied to *both* hypotheses): [Phases 7–8 outputs]
 - **Steelman sourcing check:** Was Hypothesis B built from its advocates' primary literature, or reconstructed from critics' summaries?
 - **Institutional-network check:** Were sources counted as independent only after the funding / mandate / national-alignment map was drawn?
