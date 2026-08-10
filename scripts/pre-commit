@@ -1,0 +1,45 @@
+#!/bin/sh
+# Library and harness gate. Install with:
+#   ln -sf ../../scripts/pre-commit .git/hooks/pre-commit
+# or on Windows without symlinks:
+#   cp scripts/pre-commit .git/hooks/pre-commit
+#
+# Bypass for a genuine emergency with: git commit --no-verify
+
+set -e
+
+# Probe rather than trust `command -v`: on Windows, python3 is often a Microsoft
+# Store alias stub that exists on PATH but cannot execute anything.
+PY=""
+for candidate in python3 python py; do
+    if command -v "$candidate" >/dev/null 2>&1 &&
+       "$candidate" -c "import sys; sys.exit(0)" >/dev/null 2>&1; then
+        PY="$candidate"
+        break
+    fi
+done
+
+if [ -z "$PY" ]; then
+    echo "pre-commit: no working python interpreter found; skipping checks" >&2
+    exit 0
+fi
+
+fail=0
+
+echo "pre-commit: validating skill library..."
+"$PY" scripts/validate-skills.py || fail=1
+
+echo "pre-commit: scorer self-test..."
+"$PY" evals/score.py selftest || fail=1
+
+echo "pre-commit: hook preflight regression..."
+"$PY" evals/test_hook_preflight.py || fail=1
+
+if [ "$fail" -ne 0 ]; then
+    echo "" >&2
+    echo "pre-commit: checks failed — commit aborted." >&2
+    echo "Fix the failures above, or bypass with --no-verify if you know why." >&2
+    exit 1
+fi
+
+echo "pre-commit: all checks passed."

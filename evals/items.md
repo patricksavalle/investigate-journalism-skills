@@ -39,9 +39,26 @@ example. No item invents a fact.
 - **baseline:** `self-test-results/task1-vitamin-d-classification.md`
 - **verdict vocabulary:** the Phase 7a strength labels
 - **scoring:** `reproducibility`
-- **note:** the skill's own Phase 7e worked example calls the inference "unsafe for
-  clinical recommendation outside deficiency states". A run landing on *Established
-  fact* or *Refuted* is a calibration failure in either direction.
+- **expected band:** *Weak / preliminary* through *Likely false*. Measured 2026-08-10:
+  *Likely false* ×5, exact agreement 1.000.
+- **fails if:** *Established fact* (over-claim) or *Refuted* (over-fire).
+- **why that band:** the claim names *healthy adults*. VITAL — n=25,871, 2000 IU/day,
+  median 5.3 y follow-up — found all-cause mortality HR 0.99 (95% CI 0.87–1.12) in an
+  unselected older population with no baseline vitamin D status requirement `(traced)`
+  <https://pubmed.ncbi.nlm.nih.gov/30415629/>, accessed 2026-08-10. The mortality
+  benefit that does appear is confined to insufficient and deficient populations and
+  rests on **emulated** trials rather than head-to-head RCTs — HR 0.85/0.81
+  (insufficiency), 0.79/0.75 (deficiency), against 0.97/1.02 when weighted to the
+  original trials' 25(OH)D distributions `(traced)`
+  <https://pubmed.ncbi.nlm.nih.gov/41719624/>, accessed 2026-08-10. Those are relative
+  effects; absolute effects for the emulated arms were not retrieved, so per CLAUDE.md
+  Rule 8a they are not load-bearing here.
+
+> **Correction, 2026-08-10.** This item originally set its band from the skill's Phase 7e
+> worked example ("unsafe for clinical recommendation outside deficiency states") and
+> flagged *Refuted* as an over-fire failure. That example is about vitamin D and **COVID**
+> mortality in a general population — a different outcome and a different population from
+> the claim under test. The band was wrong, not the runs. See the rule below.
 
 ---
 
@@ -124,6 +141,18 @@ example. No item invents a fact.
 ---
 
 ## Adding items
+
+**Derive the expected band from the claim as written, never from a worked example about a
+neighbouring claim.** A worked example that shares a topic may not share the population,
+outcome, timeframe, or comparator — and a band inherited across any of those does the
+verdict's work before the run starts. R2 was authored this way and had to be corrected
+against fetched primaries; the item that tests for population substitution was itself
+built on one. `first-principles-thinking` names the underlying rule: analogy is not
+bedrock.
+
+If a band cannot be stated without fetching, fetch before writing the item. An unfetched
+band is a pre-registered expectation with no warrant, which is the failure the library
+exists to catch.
 
 Keep the ratio honest: for every item where the discipline should fire, add one where it
 should not. The library's failure mode is not only missing a fault — it is manufacturing

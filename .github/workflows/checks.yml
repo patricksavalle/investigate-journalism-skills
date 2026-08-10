@@ -1,0 +1,25 @@
+name: checks
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # No third-party dependencies by design — nothing to install.
+      - name: Validate skill library
+        run: python scripts/validate-skills.py
+
+      - name: Scorer self-test
+        run: python evals/score.py selftest
+
+      - name: Stop-hook preflight regression
+        run: python evals/test_hook_preflight.py

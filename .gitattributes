@@ -1,0 +1,7 @@
+# Normalise line endings in the repository and in every working tree.
+# Without this, core.autocrlf=true gives Windows checkouts CRLF while files
+# untouched by a given checkout stay LF — mixed endings across the library,
+# which churns diffs and breaks the mirror byte-equality check.
+* text=auto eol=lf
+
+*.png binary
