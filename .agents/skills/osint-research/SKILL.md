@@ -43,6 +43,8 @@ OSINT collection without truth-seeking discipline produces dossiers, not intelli
 - **Rule 6** (bias self-audit) — enforced in `## Self-Audit`.
 - **Rule 7** (minimum search volumes) — Phase 2 specifies Quick 5–15 / Standard 15–40 / Deep 40–100+.
 - **Rule 8** (hostility check on sources) — Phase 4 Admiralty rates source reliability; supplement with explicit funding / alignment / mandate where load-bearing.
+- **Rule 8a** (quantified effect discipline) — Figures in a brief — engagement counts, growth rates, funding shares, percentage overlaps between account sets — carry their denominator and timeframe. "Up 400%" over an unstated base is not a finding.
+- **Rule 8c** (causal direction burden) — Attribution and behaviour claims ("the campaign drove the coverage", "the account network caused the trend") state whether the reverse direction was ruled out, tested, made implausible, or left unresolved. Co-occurrence in a timeline is not direction.
 - **Rule 9** (interactive refinement: user contributions are inputs, not warrants) — when the user volunteers identifiers, attribution claims, or context about the target ("this account is actually run by X"), label `(user-supplied — unverified)` and treat as a hypothesis to verify via Admiralty-graded findings, never as established attribution.
 - **Rule 10** (objective report voice) — write the brief as a standalone finding on the target or question, with no requester references in the report prose.
 

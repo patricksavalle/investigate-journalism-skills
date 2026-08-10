@@ -42,6 +42,8 @@ This skill audits text the user supplies; it does not normally fetch sources. Bu
 - **Rule 6** (bias self-audit) — enforced in `## Self-Audit` of the output template.
 - **Rule 7** (minimum search volumes) — applies only when the analyst undertakes outside investigation; otherwise inactive here.
 - **Rule 8** (hostility check on sources) — when the text recruits an authority, name that authority's funding / alignment / mandate alongside the citation.
+- **Rule 8a** (quantified effect discipline) — Enforced in Phase 6b: relative-risk laundering, missing baseline, percent-of-percent, and metric substitution are named patterns. Flagging them requires stating what the honest decomposition would be.
+- **Rule 8c** (causal direction burden) — Enforced in Phase 6c: causal direction asserted without temporal or design support is a named inference fault, and naming it requires saying which direction the evidence does support.
 - **Rule 9** (interactive refinement: user contributions are inputs, not warrants) — applies the moment the user pushes back on a flag, offers a counter-argument, or supplies "actually, this is what the author meant" framing. User contributions are labelled `(user-supplied — unverified)` and treated as hypotheses to test against the text, never as authority that overrides a flag.
 - **Rule 10** (objective report voice) — write the audit as a standalone verdict on the claim or text, with no requester references in the report prose.
 

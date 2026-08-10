@@ -19,7 +19,9 @@
       "rule7": "revision across verdict categories requires enough source depth to match the prior claim's stakes; thin evidence can refine, not overturn.",
       "rule8": "does the new evidence's source have skin in the revision direction?",
       "rule9": "the most consequential rule for this skill. The user's own \"new evidence\" — whether a fact they assert, a claim they vouch for, or pressure for a particular revision direction — is labelled `(user-supplied — unverified)` and cannot drive a revision until traced to a primary source. The Asymmetric-Warrant Rule binds: `(user-supplied — unverified)` cannot overturn `(traced)` any more than `(memory — unverified)` can. If the user pushes for an Overturned status without supplying a verifiable source, the honest status is Refined (in the parts the unverified input could legitimately reach: open questions, \"what would change this\") — not Overturned.",
-      "rule10": "write the revision as a standalone update to the prior verdict, with no requester references in the report prose."
+      "rule10": "write the revision as a standalone update to the prior verdict, with no requester references in the report prose.",
+      "rule8a": "New evidence expressed as an effect size carries its denominator and absolute effect before it can move a load-bearing claim. A dramatic relative figure is the most common way thin evidence looks decisive.",
+      "rule8c": "New evidence asserting causation states its direction status. Evidence that establishes association where the prior required causation refines the prior; it does not overturn it."
     },
     "symmetry-audit": {
       "question": "Would the same revision have been made if the new evidence had pointed the other way?",
@@ -47,7 +49,9 @@
       "rule7": "applies only when the analyst undertakes outside investigation; otherwise inactive here.",
       "rule8": "when the text recruits an authority, name that authority's funding / alignment / mandate alongside the citation.",
       "rule9": "applies the moment the user pushes back on a flag, offers a counter-argument, or supplies \"actually, this is what the author meant\" framing. User contributions are labelled `(user-supplied — unverified)` and treated as hypotheses to test against the text, never as authority that overrides a flag.",
-      "rule10": "write the audit as a standalone verdict on the claim or text, with no requester references in the report prose."
+      "rule10": "write the audit as a standalone verdict on the claim or text, with no requester references in the report prose.",
+      "rule8a": "Enforced in Phase 6b: relative-risk laundering, missing baseline, percent-of-percent, and metric substitution are named patterns. Flagging them requires stating what the honest decomposition would be.",
+      "rule8c": "Enforced in Phase 6c: causal direction asserted without temporal or design support is a named inference fault, and naming it requires saying which direction the evidence does support."
     },
     "symmetry-audit": {
       "question": "Would the same verdict have been reached if the politically/socially expected answer ran the other way?",
@@ -75,7 +79,9 @@
       "rule7": "applies only when the empirical sub-claim is contested; otherwise hand the sub-claim to `scientific-fact-classification` or `investigative-reasoning`.",
       "rule8": "applies when a Bedrock candidate relies on authority, consensus, or source claims with visible stakes.",
       "rule9": "applies the moment the user pushes back on an Excavation label (\"no, that's actually Bedrock, not Assumption\"). User contributions are labelled `(user-supplied — unverified)` and treated as a stipulation candidate — useful for surfacing where the user's definition differs from the surface claim, never as authority to relabel an Assumption as Bedrock without external verification.",
-      "rule10": "write the analysis as a standalone verdict on the claim, with no requester references in the report prose."
+      "rule10": "write the analysis as a standalone verdict on the claim, with no requester references in the report prose.",
+      "rule8a": "A quantified Bedrock candidate is not Bedrock until its denominator, baseline, and absolute effect are stated. A relative figure standing alone is an Assumption about magnitude.",
+      "rule8c": "When a component asserts causation, excavating it means asking which direction the evidence establishes. A causal component whose reverse direction is unresolved is an Assumption, not Bedrock."
     },
     "symmetry-audit": {
       "question": "Would the same verdict have been reached if the politically/socially expected answer ran the other way?",
@@ -103,7 +109,9 @@
       "rule7": "`Web Search — Mandatory` block specifies 5–10 / 10–20 / 20–40+ by complexity.",
       "rule8": "Phase 3b CoI demotion + geopolitical-witness rule.",
       "rule9": "applies the moment the user pushes back on a hypothesis, supplies counter-evidence verbally, or asks for the verdict to be re-weighted. User contributions are labelled `(user-supplied — unverified)`, never load-bearing on the Hypothesis A vs B comparison without independent verification — the user has skin in the revision direction the same way every other source does.",
-      "rule10": "write the investigation as a standalone verdict on the event or claim, with no requester references in the report prose."
+      "rule10": "write the investigation as a standalone verdict on the event or claim, with no requester references in the report prose.",
+      "rule8a": "Any red flag, Cui Bono claim, or hypothesis-supporting figure expressed as a percentage, rate, ratio, or increase carries its raw denominator: event counts, group sizes, baseline, absolute difference, timeframe, population. A relative figure is not load-bearing until the absolute one is stated.",
+      "rule8c": "Before Phase 9 lets either hypothesis assert that X caused Y, state whether the reverse direction was ruled out by design, tested directly, made implausible by mechanism and timing, or left unresolved. Unresolved means the hypothesis has an association, not a mechanism."
     },
     "symmetry-audit": {
       "question": "Would the same verdict have been reached if the politically/socially expected answer ran the other way?",
@@ -131,7 +139,9 @@
       "rule7": "Quick article check: 5-10 fetched sources. Substantial article review: 10-20. Narrative-captured or geopolitical article: 20-40+ and geographically diversified.",
       "rule8": "For every cited source, name role, stake, funding/ownership/mandate, and national alignment where relevant.",
       "rule9": "User-supplied claims are `(user-supplied — unverified)` until fetched and verified in-session. Treat them as hypotheses, not evidence.",
-      "rule10": "Write the report as a standalone verdict on the article. Do not refer to the requester in the report prose."
+      "rule10": "Write the report as a standalone verdict on the article. Do not refer to the requester in the report prose.",
+      "rule8a": "Enforced in Phase 4 (relative-vs-absolute effect, missing denominator) and by routing central figures to `scientific-fact-classification`.",
+      "rule8c": "Enforced by the Causal Claim Gate in Phase 3."
     },
     "symmetry-audit": {
       "question": "Would the same verdict have been reached if the politically/socially expected answer ran the other way?",
@@ -159,7 +169,9 @@
       "rule7": "Phase 2 specifies Quick 5–15 / Standard 15–40 / Deep 40–100+.",
       "rule8": "Phase 4 Admiralty rates source reliability; supplement with explicit funding / alignment / mandate where load-bearing.",
       "rule9": "when the user volunteers identifiers, attribution claims, or context about the target (\"this account is actually run by X\"), label `(user-supplied — unverified)` and treat as a hypothesis to verify via Admiralty-graded findings, never as established attribution.",
-      "rule10": "write the brief as a standalone finding on the target or question, with no requester references in the report prose."
+      "rule10": "write the brief as a standalone finding on the target or question, with no requester references in the report prose.",
+      "rule8a": "Figures in a brief — engagement counts, growth rates, funding shares, percentage overlaps between account sets — carry their denominator and timeframe. \"Up 400%\" over an unstated base is not a finding.",
+      "rule8c": "Attribution and behaviour claims (\"the campaign drove the coverage\", \"the account network caused the trend\") state whether the reverse direction was ruled out, tested, made implausible, or left unresolved. Co-occurrence in a timeline is not direction."
     },
     "symmetry-audit": {
       "question": "Would the same verdict have been reached if the politically/socially expected answer ran the other way?",
@@ -187,7 +199,9 @@
       "rule7": "Typical paper: verify 5-15 load-bearing citations/sources. Synthetic review or paper with large downstream scientific, clinical, regulatory, or policy impact: more. Beyond 40, recommend a dedicated deep-research session.",
       "rule8": "For each cited source used by the review, record funding, ownership, mandate, author/funder alignment, and national alignment where relevant.",
       "rule9": "User-supplied corrections are `(user-supplied — unverified)` until fetched and verified. Do not soften severity grades on pressure absent new primary evidence.",
-      "rule10": "Write the report as a standalone verdict on the paper. Do not refer to the requester in the report prose."
+      "rule10": "Write the report as a standalone verdict on the paper. Do not refer to the requester in the report prose.",
+      "rule8a": "Enforced in Phase 3: write the effect decomposition — counts by group, baseline risk, comparison risk, absolute difference, named relative metric, timeframe, uncertainty — before grading any comparative effect claim.",
+      "rule8c": "Enforced by the Causal Direction Gate in Phase 3."
     },
     "symmetry-audit": {
       "question": "Would the same recommendation have been reached if the paper's conclusion ran the other way? Execute the flip; do not merely assert.",
@@ -215,7 +229,9 @@
       "rule7": "≥3 independent primary lines for an \"Established fact\"; fewer = lower label.",
       "rule8": "Phase 6b conflict-of-interest; demote sources whose funder has skin in the conclusion.",
       "rule9": "when the user pushes for re-classification (\"this is actually Established fact\" / \"you should call this Refuted\"), label the contribution `(user-supplied — unverified)` and re-examine the evidence; do not shift the classification on user pressure absent new primary sources.",
-      "rule10": "write the classification as a standalone verdict on the claim, with no requester references in the report prose."
+      "rule10": "write the classification as a standalone verdict on the claim, with no requester references in the report prose.",
+      "rule8a": "Enforced in Phase 3c-1: write the quantified effect decomposition before assigning a strength label. If the absolute effect cannot be recovered, the claim is no stronger than provisional.",
+      "rule8c": "Enforced in Phase 4a-1."
     },
     "symmetry-audit": {
       "question": "Would the same verdict have been reached if the politically/socially expected answer ran the other way?",

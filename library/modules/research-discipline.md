@@ -11,5 +11,7 @@
 - **Rule 6** (bias self-audit) — {{rule6}}
 - **Rule 7** (minimum search volumes) — {{rule7}}
 - **Rule 8** (hostility check on sources) — {{rule8}}
+- **Rule 8a** (quantified effect discipline) — {{rule8a}}
+- **Rule 8c** (causal direction burden) — {{rule8c}}
 - **Rule 9** (interactive refinement: user contributions are inputs, not warrants) — {{rule9}}
 - **Rule 10** (objective report voice) — {{rule10}}

@@ -39,6 +39,8 @@ First-principles is a conceptual tool — it does not normally fetch sources. Bu
 - **Rule 6** (bias self-audit) — enforced in `## Self-Audit`.
 - **Rule 7** (minimum search volumes) — applies only when the empirical sub-claim is contested; otherwise hand the sub-claim to `scientific-fact-classification` or `investigative-reasoning`.
 - **Rule 8** (hostility check on sources) — applies when a Bedrock candidate relies on authority, consensus, or source claims with visible stakes.
+- **Rule 8a** (quantified effect discipline) — A quantified Bedrock candidate is not Bedrock until its denominator, baseline, and absolute effect are stated. A relative figure standing alone is an Assumption about magnitude.
+- **Rule 8c** (causal direction burden) — When a component asserts causation, excavating it means asking which direction the evidence establishes. A causal component whose reverse direction is unresolved is an Assumption, not Bedrock.
 - **Rule 9** (interactive refinement: user contributions are inputs, not warrants) — applies the moment the user pushes back on an Excavation label ("no, that's actually Bedrock, not Assumption"). User contributions are labelled `(user-supplied — unverified)` and treated as a stipulation candidate — useful for surfacing where the user's definition differs from the surface claim, never as authority to relabel an Assumption as Bedrock without external verification.
 - **Rule 10** (objective report voice) — write the analysis as a standalone verdict on the claim, with no requester references in the report prose.
 

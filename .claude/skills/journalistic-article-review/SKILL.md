@@ -67,6 +67,8 @@ This skill is standalone. Apply these rules even if `CLAUDE.md` / `AGENTS.md` ar
 - **Rule 6** (bias self-audit) — End by answering whether the same verdict would have been reached if the politically or socially expected answer ran the other way.
 - **Rule 7** (minimum search volumes) — Quick article check: 5-10 fetched sources. Substantial article review: 10-20. Narrative-captured or geopolitical article: 20-40+ and geographically diversified.
 - **Rule 8** (hostility check on sources) — For every cited source, name role, stake, funding/ownership/mandate, and national alignment where relevant.
+- **Rule 8a** (quantified effect discipline) — Enforced in Phase 4 (relative-vs-absolute effect, missing denominator) and by routing central figures to `scientific-fact-classification`.
+- **Rule 8c** (causal direction burden) — Enforced by the Causal Claim Gate in Phase 3.
 - **Rule 9** (interactive refinement: user contributions are inputs, not warrants) — User-supplied claims are `(user-supplied — unverified)` until fetched and verified in-session. Treat them as hypotheses, not evidence.
 - **Rule 10** (objective report voice) — Write the report as a standalone verdict on the article. Do not refer to the requester in the report prose.
 

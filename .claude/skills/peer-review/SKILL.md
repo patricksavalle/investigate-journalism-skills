@@ -74,6 +74,8 @@ This skill is standalone. Apply these rules even if `CLAUDE.md` / `AGENTS.md` ar
 - **Rule 6** (bias self-audit) — End by answering whether the same verdict would have been reached if the paper's conclusion ran the other way.
 - **Rule 7** (minimum search volumes) — Typical paper: verify 5-15 load-bearing citations/sources. Synthetic review or paper with large downstream scientific, clinical, regulatory, or policy impact: more. Beyond 40, recommend a dedicated deep-research session.
 - **Rule 8** (hostility check on sources) — For each cited source used by the review, record funding, ownership, mandate, author/funder alignment, and national alignment where relevant.
+- **Rule 8a** (quantified effect discipline) — Enforced in Phase 3: write the effect decomposition — counts by group, baseline risk, comparison risk, absolute difference, named relative metric, timeframe, uncertainty — before grading any comparative effect claim.
+- **Rule 8c** (causal direction burden) — Enforced by the Causal Direction Gate in Phase 3.
 - **Rule 9** (interactive refinement: user contributions are inputs, not warrants) — User-supplied corrections are `(user-supplied — unverified)` until fetched and verified. Do not soften severity grades on pressure absent new primary evidence.
 - **Rule 10** (objective report voice) — Write the report as a standalone verdict on the paper. Do not refer to the requester in the report prose.
 

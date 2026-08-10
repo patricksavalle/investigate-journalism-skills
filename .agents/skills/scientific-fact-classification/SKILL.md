@@ -41,6 +41,8 @@ Claim classification without source-tracing reproduces training-data bias as ana
 - **Rule 6** (bias self-audit) — enforced in `## Self-Audit`.
 - **Rule 7** (minimum search volumes) — ≥3 independent primary lines for an "Established fact"; fewer = lower label.
 - **Rule 8** (hostility check on sources) — Phase 6b conflict-of-interest; demote sources whose funder has skin in the conclusion.
+- **Rule 8a** (quantified effect discipline) — Enforced in Phase 3c-1: write the quantified effect decomposition before assigning a strength label. If the absolute effect cannot be recovered, the claim is no stronger than provisional.
+- **Rule 8c** (causal direction burden) — Enforced in Phase 4a-1.
 - **Rule 9** (interactive refinement: user contributions are inputs, not warrants) — when the user pushes for re-classification ("this is actually Established fact" / "you should call this Refuted"), label the contribution `(user-supplied — unverified)` and re-examine the evidence; do not shift the classification on user pressure absent new primary sources.
 - **Rule 10** (objective report voice) — write the classification as a standalone verdict on the claim, with no requester references in the report prose.
 

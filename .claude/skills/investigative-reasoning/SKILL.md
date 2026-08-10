@@ -41,6 +41,8 @@ This skill is the most rule-saturated application of the project's research disc
 - **Rule 6** (bias self-audit) — enforced in `## Self-Audit` of the output template.
 - **Rule 7** (minimum search volumes) — `Web Search — Mandatory` block specifies 5–10 / 10–20 / 20–40+ by complexity.
 - **Rule 8** (hostility check on sources) — Phase 3b CoI demotion + geopolitical-witness rule.
+- **Rule 8a** (quantified effect discipline) — Any red flag, Cui Bono claim, or hypothesis-supporting figure expressed as a percentage, rate, ratio, or increase carries its raw denominator: event counts, group sizes, baseline, absolute difference, timeframe, population. A relative figure is not load-bearing until the absolute one is stated.
+- **Rule 8c** (causal direction burden) — Before Phase 9 lets either hypothesis assert that X caused Y, state whether the reverse direction was ruled out by design, tested directly, made implausible by mechanism and timing, or left unresolved. Unresolved means the hypothesis has an association, not a mechanism.
 - **Rule 9** (interactive refinement: user contributions are inputs, not warrants) — applies the moment the user pushes back on a hypothesis, supplies counter-evidence verbally, or asks for the verdict to be re-weighted. User contributions are labelled `(user-supplied — unverified)`, never load-bearing on the Hypothesis A vs B comparison without independent verification — the user has skin in the revision direction the same way every other source does.
 - **Rule 10** (objective report voice) — write the investigation as a standalone verdict on the event or claim, with no requester references in the report prose.
 
