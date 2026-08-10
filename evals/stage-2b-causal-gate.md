@@ -97,3 +97,86 @@ Measure this **separately from** `stage-1-verdict-bridge`. Both touch
 `peer-review`'s severity behaviour, and the 2026-08-10 re-run already
 demonstrated what happens when two such edits ship together: the suppression
 could not be attributed to either.
+
+---
+
+# Measured — 2026-08-10
+
+Thirteen runs against the branch rebased onto `main` (F1 ×3, R2 ×5, R1 ×5),
+resolved model **claude-sonnet-5**, **$22.33**.
+
+## Against the criteria as registered
+
+| Criterion | Registered as | Result | |
+|---|---|---|---|
+| F1 holds at *Established fact* | adopt condition; moving off it is the revert signal | **3/3 *Established fact*, exact 1.000** | **met** |
+| R2 unchanged | adopt condition | 4/5 *Likely false*, 1 *Contested*, exact 0.800 — identical to `main` | **met** |
+| R1 gains at most one Major | adopt condition | Majors 1 → 3 total; runs with ≥1 Major 1/5 → **2/5** | **at the edge** |
+| R1 does not reach a Major recommendation | revert signal | modal is **Minor**; one run of five recommends Major | **ambiguous — see below** |
+| R1 mean finding rate ≥ `main`'s 0.375 | added before the run, weighted highest | **0.350** — below `main`, equal to baseline | **not met** |
+
+## The gate does not visibly fire
+
+The measure that matters most for a change whose entire purpose is to force
+reverse-causation reasoning:
+
+| | runs naming "reverse causation" |
+|---|---|
+| `main` | 3 / 5 |
+| `main` + causal gate | **2 / 5** |
+
+Adding an explicit reverse-causation requirement produced *fewer* runs discussing
+reverse causation. One run at n=5 is noise on its own, but it is not the direction
+a working gate produces, and nothing else in the measurement offsets it.
+
+Detection moved the same way. Mean finding rate 0.375 → 0.350, driven by
+`small-denominator` disappearing entirely (1/5 found and 2/5 mentioned on `main`,
+**0/5 and 0/5** here) and `sampling-frame` slipping 3/5 → 2/5, partly offset by
+`release-timeline` returning at 1/5. Consistent with the four added requirements
+occupying attention that other checks had been using — which is the crowding risk
+the branch note named — though at this n it is equally consistent with noise.
+
+## What went right
+
+The risk the note actually feared did **not** materialise. F1 is untouched at
+3/3 *Established fact*: the gate does not downgrade a claim whose direction is
+settled by design, mechanism and dose–response. R2 is identical to `main`.
+R1's verdict agreement *rose*, 0.600 → 0.800, with the modal moving Accept →
+Minor exactly as predicted.
+
+So the change is safe. It is simply not demonstrably useful.
+
+## Verdict: leave parked, do not merge
+
+Every criterion the change was supposed to *improve* came back neutral or
+slightly negative. Every criterion it risked came back clean. On this repo's own
+standard — adopt on evidence, not on design taste — that is not a merge.
+
+The structural defect it addresses is real and remains: a causal claim still
+faces different requirement sets under `journalistic-article-review` than under
+`peer-review`, and an article routed *down* to `peer-review` still gets the looser
+gate. Unifying that is right in principle. **This implementation does not show it
+helps**, and merging on the strength of the argument alone is the reasoning the
+severity-floor revert exists to warn against.
+
+## A defect in how the criteria were written
+
+"R1 does not reach a Major recommendation" cannot be evaluated as written,
+because it does not say whether it means the *modal* recommendation or *any* run.
+The modal is Minor; one run of five recommends Major. Both readings are available
+after the fact, which is exactly what pre-registration is supposed to prevent.
+
+Registered criteria must name the statistic, not just the direction. The same
+applies to "gains at most one Major", written in totals before the session
+established that runs-with-any is the stabler unit — 1 → 3 in totals is 1/5 → 2/5
+in runs, and those read differently.
+
+## What would change this
+
+- A **shorter** gate. If crowding is the mechanism, the four-requirement table is
+  the cost; the four-state resolution vocabulary alone may carry most of the
+  benefit at a fraction of the length. That is a cheap variant to build and test.
+- **R5**, once populated. On a paper whose causal overreach is unambiguous, a
+  working gate should show a large detection effect rather than a one-run wobble.
+  R1's paper hedges its own causal claim, so it is close to the worst case for
+  detecting whether a causal gate helps.
