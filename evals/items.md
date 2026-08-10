@@ -179,9 +179,60 @@ rather than the contrast this slot needs.
 > not in a summary of the primary — including a summary produced by your own
 > tooling.
 
-**Status:** unpopulated. Per this file's rule on adding items, the band cannot be
-stated without fetching, and the selection is a judgement call that should not be
-made by the pass that scores it.
+**Second candidate evaluated and rejected, 2026-08-10 (physical sciences).** Jones,
+Copi, Starkman & Akrami, "Strong Evidence Against a Statistically Isotropic
+Universe", arXiv:2310.12859 `(traced)` <https://arxiv.org/abs/2310.12859>,
+accessed 2026-08-10. It combines four CMB anomaly statistics and reports a joint
+probability "likely ≤3×10⁻⁸". Guth & Namjoo, "Statistical isotropy of the universe
+and the look-elsewhere effect", arXiv:2602.10178 `(traced)`
+<https://arxiv.org/abs/2602.10178>, accessed 2026-08-10, argue the significance
+collapses to ~3σ if the four tests are cherry-picked from ten independent ones,
+~2σ from twenty-seven, and that two of the four tests are not relevant to
+statistical anisotropy at all. Criteria 1, 3, 4 and 5 satisfied — open, formally
+critiqued, apolitical, specialist.
+
+Rejected on criterion 2, and the reason matters. The Jones abstract *itself* says
+"We examine the balance in the impact of look-elsewhere effects and the existence
+of other anomalies on the significance of this result." The dispute is whether
+that examination was adequate — a live disagreement between competent
+cosmologists, not an unflagged error. Two competent reviewers can land differently
+and both be defensible, which is the property this slot exists to avoid. The paper
+is also at v3, last revised 2026-03-13 and prepared for PRD resubmission, so it is
+a moving target for a fetched item.
+
+### The criteria are close to jointly unsatisfiable, and that is the finding
+
+Two candidates, two rejections, both on criterion 2. The pattern is structural
+rather than bad luck: **a fault unambiguous enough that every reviewer grades it
+alike usually stops being available.** It gets retracted, which makes the paper
+notorious and fails criterion 5; or corrected, which makes the fault vanish from
+the text and fails criterion 2; or it stays contested, which fails criterion 2 the
+other way. What survives in the open literature, uncorrected and undisputed, is
+mostly *arguable*.
+
+**Proposed redesign — measure answers, not grades.** Drop the requirement that the
+paper be faulted at all. Pick any open paper and attach N **binary, checkable
+questions** whose answers are verifiable by anyone from the text:
+
+- Does the paper report a sample-size or power calculation? (yes/no)
+- Are the data deposited in an openly accessible repository, or a gated one?
+- Does the abstract's causal verb match the design?
+- Is every effect reported with an absolute figure as well as a relative one?
+- Does the paper state ethics approval and consent status?
+
+Ground truth is then objective and re-checkable, no severity judgement enters, and
+the item still discriminates: a thorough review answers all N, a shallow one
+misses some. Expected accuracy sits near 1.0 rather than R1's ~0.35, which is
+where a change becomes visible at n=5 — the property this slot was created to get.
+
+This also matches what the 2026-08-10 detection work established: measure what a
+review *found*, not how it *graded*. The severity scale can then be left to items
+where a genuinely uncontested fault turns up, rather than blocking on one.
+
+**Status:** unpopulated. The original design is blocked on a candidate that may
+not exist in usable form; the redesign above needs a paper choice and a fetched
+answer key, and remains a judgement call that should not be made by the pass that
+scores it.
 
 ## S2 — mirrored-case pair *(slot — needs a source-selection pass)*
 
