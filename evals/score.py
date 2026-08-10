@@ -669,11 +669,16 @@ def score_catalogue(path: Path, name: str) -> dict:
 # once missing the "**1. Title**" entry format. It belongs in the scorer.
 SEVERITIES = ("Fatal", "Major", "Minor")
 
-# The three entry shapes runs actually use under a severity heading.
+# The entry shapes runs actually use under a severity heading. The first pattern
+# takes an optional word before the ordinal: runs write "**1. Title**" and
+# "**Finding 1 - Title.**" interchangeably, and a counter that knows only the
+# first reads a 3186-character section as empty. That is not hypothetical -- it
+# under-counted the 2026-08-10 baseline by two Majors on exactly this format,
+# which is why the shapes are enumerated from real runs rather than guessed.
 ENTRY_PATTERNS = (
-    r"^\*\*\d+\.",        # **1. Ethics approval status is unstated.**
-    r"^###\s+",           # ### Ethics approval status is unstated
-    r"^\s*[-*]\s+\*\*",   # - **Ethics approval status is unstated**
+    r"^\*\*(?:[A-Za-z]+\s+)?\d+\s*[.—:)-]",  # **1. X** / **Finding 1 - X**
+    r"^###\s+",                                    # ### X
+    r"^\s*[-*]\s+\*\*",                            # - **X**
 )
 # A section that explicitly reports nothing. Counted as 0, not as unparseable,
 # so an empty section and an absent one stay distinguishable.
@@ -704,19 +709,34 @@ def severity_counts(output: str) -> dict:
 def score_severity(paths: list[Path]) -> dict:
     per_run = {}
     totals = {s: 0 for s in SEVERITIES}
+    with_any = {s: 0 for s in SEVERITIES}
     for p in paths:
         c = severity_counts(read_text(p))
         per_run[p.name] = c
         for s in SEVERITIES:
             if c[s]:
                 totals[s] += c[s]
+                with_any[s] += 1
+    n = len(paths)
     return {
-        "runs": len(paths),
+        "runs": n,
         "per_run": per_run,
         "totals": totals,
+        "runs_with_any": with_any,
+        "share_of_runs": {
+            s: round(with_any[s] / n, 3) if n else 0.0 for s in SEVERITIES
+        },
         "note": (
             "null means the report has no section with that heading; 0 means the "
             "section exists and reports none"
+        ),
+        "reading": (
+            "share_of_runs is the stabler comparison. A total is dominated by "
+            "whichever single run decides to grade at all -- across the four R1 "
+            "builds measured 2026-08-10, Majors were concentrated in one or two "
+            "runs each time, so a 3-vs-1 difference in totals was one run "
+            "changing its mind. The share moves only when the number of runs "
+            "finding anything changes."
         ),
     }
 
@@ -939,6 +959,17 @@ def selftest() -> int:
     )
     if hdr_only != {"Fatal": 0, "Major": 0, "Minor": 1}:
         failures.append(f"severity_counts mis-read empty sections: {hdr_only}")
+
+    # The "**Finding 1 -" opener, which the 2026-08-10 baseline runs use and an
+    # earlier version of this counter read as an empty section.
+    named = severity_counts(
+        "## Major Findings\n"
+        '**Finding 1 — Uncited claim in the Discussion.**\n> quoted\n\n'
+        '**Finding 2 — Sampling frame selected on the exposure.**\n> quoted\n\n'
+        "## Minor Findings\n**Issue 1: a nit**\n"
+    )
+    if named != {"Fatal": None, "Major": 2, "Minor": 1}:
+        failures.append(f"severity_counts missed a named-ordinal entry: {named}")
 
     # Catalogue extraction. The counts are the denominator of the reach metric,
     # so a table edit that silently breaks parsing would move the number without
