@@ -15,7 +15,7 @@ The toolbox helps an AI work as a research assistant instead of a memory machine
 | Turn a gut feeling or "something feels off" reaction into testable hypotheses | [`intuitive-thinking`](./.claude/skills/intuitive-thinking) |
 | Check whether a claim is fact, assumption, opinion, or overreach | [`scientific-fact-classification`](./.claude/skills/scientific-fact-classification) |
 | Review whether an article is fair, sourced, accurate, and well-framed | [`journalistic-article-review`](./.claude/skills/journalistic-article-review) |
-| Find fallacies, bias, propaganda, manipulation, or rhetorical tricks | [`fallacy-bias-manipulation-analysis-framework`](./.claude/skills/fallacy-bias-manipulation-analysis-framework) |
+| Find fallacies, bias, propaganda, manipulation, or rhetorical tricks | [`fallacy-bias-and-manipulation-analysis`](./.claude/skills/fallacy-bias-and-manipulation-analysis) |
 | Investigate a contested event or competing explanation | [`investigative-reasoning`](./.claude/skills/investigative-reasoning) |
 | Background a person, account, image, domain, organisation, or event | [`osint-research`](./.claude/skills/osint-research) |
 | Audit whether a scientific paper actually supports its conclusions | [`peer-review`](./.claude/skills/peer-review) |
