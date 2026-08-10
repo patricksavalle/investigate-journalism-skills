@@ -112,6 +112,23 @@ in the repo's two flagship symmetric-adversarial artifacts, and it makes the ≥
 source-overlap criterion in `symmetric-adversarial-test.md` uncomputable for the pair it
 was designed for.
 
+## Parked branches
+
+Changes that alter behaviour wait on a branch until a number says they should
+land. Each carries a note registering its prediction *before* the run, plus
+adopt/revert criteria, so the decision cannot be made by reading the result and
+deciding afterwards what would have counted as success.
+
+| Branch | Change | Note | Controls that read on it |
+|---|---|---|---|
+| `stage-1-verdict-bridge` | Evidence-state floors on the verdict, keyed on observations rather than the reviewer's own gradings | [`stage-1-verdict-bridge.md`](stage-1-verdict-bridge.md) | R1 — adopt only if agreement rises **and** Majors hold |
+| `stage-2b-causal-gate` | One causal-direction gate instead of four differing requirement sets | [`stage-2b-causal-gate.md`](stage-2b-causal-gate.md) | F1 — revert if it moves off *Established fact* |
+| `stage-6-rules-8a-8c` | Rules 8a and 8c reach the four skills that implemented neither | [`stage-6-rules-8a-8c.md`](stage-6-rules-8a-8c.md) | F1 and F2 |
+
+The pattern comes from `rerun-2026-08-10.md`: a change that looked reasonable
+went in, was measured, and came straight back out the same day. Branching first
+makes that the normal case rather than an embarrassment.
+
 ## What this harness does not do
 
 - **It does not judge whether an analysis is correct.** It measures shape, warrant
