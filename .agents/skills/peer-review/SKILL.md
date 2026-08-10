@@ -319,6 +319,20 @@ Distinguish two failures that look identical in the text:
 A text-only review usually cannot tell which. Default to the reporting defect, and state
 the escalation condition explicitly: what evidence would move it to Fatal.
 
+**This default is about the ethics statement, and does not generalise.** It holds because
+approval and consent are things a study either obtained or did not, independently of
+whether the article mentions them — the text is silent about a fact that already exists, so
+silence is weak evidence. Other transparency gaps are not like that. Unavailable data,
+deposition to a registration-gated repository, an uncited comparator, a missing negative
+control: in each case the gap *is* the defect, not a report of one, and there is no
+already-existing fact for the silence to be weak evidence about. Grade those on what they
+do to the paper's claim — reproducibility, verifiability, or the inference itself — at
+whatever severity that warrants, including Major.
+
+Measured 2026-08-10: reviews adopted the reporting-defect framing as a general principle
+and applied it to exactly those gaps, and R1's Major findings fell from 6 to 3 on the
+ethics row alone. The rule was right and its scope was unstated.
+
 Separate two checks:
 - **Reproduction:** can the reported analyses/results be recovered from the same data, code, materials, and protocol?
 - **Replication:** has an independent team, sample, lab, population, instrument, or dataset tested the same claim?
