@@ -37,6 +37,8 @@ a pointer to the SKILL.md text behind it.
 | `conformance` | Required sections from the skill's own template; warrant labels present; `(traced)` backed by a URL and access date and a Sources & Warrants section; Rule 10 requester references; whether the Self-Audit names specific phases rather than asserting symmetry flatly |
 | `reproducibility` | Verdict-label agreement across N runs of one item — exact and adjacent |
 | `symmetry` | Cited-source overlap and verdict distance across a prior-inverted pair, against `symmetric-adversarial-test.md`'s own ≥90% criterion |
+| `severity` | Findings per severity, with `share_of_runs` — the stabler comparison, since a total is dominated by whichever single run decides to grade at all |
+| `detection` | Which known faults each run actually found, against a per-item catalogue in [`faults.json`](faults.json). Prefer this to `severity` for peer-review items: it re-scores runs already on disk, and it measures a fact rather than a judgement |
 | `catalogue` | How much of a skill's lookup table a run actually reached — the number that has to be taken *before* a table moves into `references/` |
 
 ```bash

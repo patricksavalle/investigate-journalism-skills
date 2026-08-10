@@ -741,6 +741,65 @@ def score_severity(paths: list[Path]) -> dict:
     }
 
 
+# --------------------------------------------------------------------------
+# Fault detection
+# --------------------------------------------------------------------------
+
+FAULTS_PATH = Path(__file__).resolve().parent / "faults.json"
+
+
+def findings_text(output: str) -> str:
+    """Only the Fatal/Major/Minor Findings sections."""
+    parts = []
+    for sev in SEVERITIES:
+        m = re.search(rf"^##\s+{sev} Findings\s*$", output, re.M)
+        if not m:
+            continue
+        nxt = re.search(r"^##\s+", output[m.end():], re.M)
+        parts.append(output[m.end(): m.end() + nxt.start()] if nxt else output[m.end():])
+    return "\n".join(parts)
+
+
+def score_detection(paths: list[Path], item: str) -> dict:
+    """Which known faults each run found — the measure severity counts hide.
+
+    Severity grading is a judgement a single run can swing; whether a review
+    *noticed* a fault is closer to a fact. Measured 2026-08-10, the ethics row
+    moved detection 2/5 -> 5/5 (large, visible at n=5) while every severity
+    comparison over the same runs separated nothing.
+    """
+    catalogue = json.loads(read_text(FAULTS_PATH))
+    if item not in catalogue:
+        known = [k for k in catalogue if not k.startswith("_")]
+        raise SystemExit(f"error: no fault catalogue for {item!r} (have: {known})")
+    faults = catalogue[item]["faults"]
+
+    per_fault = {}
+    for name, spec in faults.items():
+        rx = re.compile(spec["pattern"])
+        mentioned = [p.name for p in paths if rx.search(read_text(p))]
+        as_finding = [p.name for p in paths if rx.search(findings_text(read_text(p)))]
+        per_fault[name] = {
+            "description": spec["description"],
+            "mentioned": len(mentioned),
+            "as_finding": len(as_finding),
+            "mention_rate": round(len(mentioned) / len(paths), 3) if paths else 0.0,
+            "finding_rate": round(len(as_finding) / len(paths), 3) if paths else 0.0,
+        }
+    return {
+        "item": item,
+        "runs": len(paths),
+        "paper": catalogue[item].get("paper"),
+        "per_fault": per_fault,
+        "mean_mention_rate": round(
+            sum(f["mention_rate"] for f in per_fault.values()) / len(per_fault), 3
+        ),
+        "mean_finding_rate": round(
+            sum(f["finding_rate"] for f in per_fault.values()) / len(per_fault), 3
+        ),
+    }
+
+
 def verdict_distance(skill: str, a: str, b: str) -> int | None:
     spine, _ = VERDICT_SPINE.get(skill, ([], []))
     if a in spine and b in spine:
@@ -1076,6 +1135,10 @@ def main(argv: Iterable[str] | None = None) -> int:
     v = sub.add_parser("severity", help="findings per severity across runs")
     v.add_argument("run", type=Path, help="a run .md, or a directory of them")
 
+    dt = sub.add_parser("detection", help="which known faults each run found")
+    dt.add_argument("run", type=Path, help="a directory of runs")
+    dt.add_argument("--item", required=True, help="fault catalogue key, e.g. R1")
+
     c = sub.add_parser(
         "catalogue", help="how much of a skill's lookup table a run reached"
     )
@@ -1110,6 +1173,11 @@ def main(argv: Iterable[str] | None = None) -> int:
     if args.cmd == "severity":
         runs = sorted(args.run.glob("*.md")) if args.run.is_dir() else [args.run]
         emit(score_severity(runs))
+        return 0
+
+    if args.cmd == "detection":
+        runs = sorted(args.run.glob("*.md")) if args.run.is_dir() else [args.run]
+        emit(score_detection(runs, args.item))
         return 0
 
     if args.cmd == "catalogue":

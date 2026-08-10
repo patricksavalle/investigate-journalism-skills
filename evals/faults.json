@@ -1,0 +1,45 @@
+{
+  "_meta": {
+    "purpose": "Per-fault detection ground truth, so an item can be scored on what a review FOUND rather than on how it GRADED. Severity is a judgement one run can swing; detection is closer to a fact. The one clean effect measured on 2026-08-10 was a detection effect: the Phase 6 ethics row moved ethics-statement detection from 2/5 runs to 5/5. Severity comparisons over the same runs separated nothing.",
+    "provenance": "Faults were enumerated from the R1 BASELINE runs only (evals/runs/R1/, build a7c86e6, which predates every change under test), then applied unchanged to later builds. Deriving them from the builds being compared would let the catalogue be fitted to the answer.",
+    "matching": "Two levels per fault. `mentioned` = the pattern appears anywhere in the report; `as_finding` = it appears inside a Fatal/Major/Minor Findings section. Report both: a review that discusses a gap in its Methodology Audit but never raises it as a finding has half-noticed it, and that distinction is exactly what a severity count hides.",
+    "authored": "2026-08-10"
+  },
+  "R1": {
+    "paper": "Zhu N, et al. NEJM 2020;382(8):727-733, doi 10.1056/NEJMoa2001017",
+    "faults": {
+      "ethics-consent": {
+        "description": "No ethics approval / informed consent statement in the article",
+        "pattern": "(?i)(?:(?:no|not|absent|unstated|missing|lack\\w*)[^.\\n]{0,60}(?:ethic|consent|IRB|institutional review)|(?:ethic\\w*|consent|IRB)[^.\\n]{0,60}(?:not (?:stated|reported|identifiable|located|present)|is absent|unstated|missing))"
+      },
+      "sampling-frame": {
+        "description": "Sampling frame selected on market exposure, later read as establishing the market link",
+        "pattern": "(?i)(?:(?:market|Huanan)[^.\\n]{0,80}(?:exposure|sampling|selection|frame|circular)|sampling frame[^.\\n]{0,60}(?:select|circular|exposure))"
+      },
+      "additional-evidence-uncited": {
+        "description": "Discussion asserts immunohistochemistry, serology and animal data that appear nowhere in the paper",
+        "pattern": "(?i)\"?additional evidence\"?"
+      },
+      "gisaid-deposition": {
+        "description": "Genomes deposited only to registration-gated GISAID, not an open INSDC repository",
+        "pattern": "(?i)GISAID"
+      },
+      "patient-genome-mapping": {
+        "description": "Which patients the three sequenced genomes came from is not resolvable from the text",
+        "pattern": "(?i)(?:patient[- ]to[- ](?:sample[- ]to[- ])?genome|which patients?[^.\\n]{0,40}sequenc|mapping[^.\\n]{0,40}genome|genome[^.\\n]{0,40}(?:traceab|mapping|attribut))"
+      },
+      "release-timeline": {
+        "description": "Institutional data-release timeline not disclosed in the paper",
+        "pattern": "(?i)(?:(?:release|disclosure|publication) timeline|delay\\w*[^.\\n]{0,40}(?:release|disclos|deposit))"
+      },
+      "self-citation-independence": {
+        "description": "Reference 15 shares authors and is not independent corroboration",
+        "pattern": "(?i)(?:self[- ]citation|reference 15|ref\\.? ?15|same author (?:group|network)|China CDC Weekly)"
+      },
+      "small-denominator": {
+        "description": "Clinical detail rests on very few patients relative to how the paper is used",
+        "pattern": "(?i)(?:only (?:three|3) patients|small (?:case )?(?:count|sample|series)|thin[^.\\n]{0,30}denominator|three patients[^.\\n]{0,40}(?:detail|described))"
+      }
+    }
+  }
+}
