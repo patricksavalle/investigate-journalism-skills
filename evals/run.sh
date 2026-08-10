@@ -18,7 +18,7 @@
 # baseline recorded only "default model", which is not auditable.
 
 set -e
-ITEM="${1:?usage: run.sh R1|R2|R3|R4|F1|F2|F3|S1}"
+ITEM="${1:?usage: run.sh R1|R2|R3|R4|R5|F1|F2|F3|S1}"
 REPO=$(cd "$(dirname "$0")/.." && pwd)
 
 # Git Bash hands out POSIX paths (/c/Users/...) that native Windows Python
@@ -87,7 +87,7 @@ PY
 # own, from items.md -- reproducibility items need 5, controls 3.
 runs_for() {
     case "$1" in
-        R1|R2|R3) echo 5 ;;
+        R1|R2|R3|R5) echo 5 ;;
         R4)       echo 3 ;;
         F1|F2|F3) echo 3 ;;
         *)        echo 0 ;;
@@ -95,7 +95,7 @@ runs_for() {
 }
 
 case "$ITEM" in
-  R1|R2|R3|R4|F1|F2|F3)
+  R1|R2|R3|R4|R5|F1|F2|F3)
     base=$(item_prompt "$ITEM")
     n_runs=$(runs_for "$ITEM")
     for n in $(seq 1 "$n_runs"); do

@@ -229,10 +229,37 @@ This also matches what the 2026-08-10 detection work established: measure what a
 review *found*, not how it *graded*. The severity scale can then be left to items
 where a genuinely uncontested fault turns up, rather than blocking on one.
 
-**Status:** unpopulated. The original design is blocked on a candidate that may
-not exist in usable form; the redesign above needs a paper choice and a fetched
-answer key, and remains a judgement call that should not be made by the pass that
-scores it.
+### R5 as built
+
+- **skill:** `peer-review`
+- **runs:** 5
+- **paper:** Jones, Copi, Starkman & Akrami, "Strong Evidence Against a
+  Statistically Isotropic Universe", **arXiv:2310.12859v3** — version-pinned,
+  because v3 was current when the key was derived and later versions may answer
+  differently.
+- **input:** the R5 block in [`runbook.md`](runbook.md)
+- **scoring:** `answers --item R5`, against the seven-question key in
+  [`answers.json`](answers.json), derived 2026-08-10 by fetching the full text.
+- **why this paper survives the redesign:** it failed the *faulted-paper* design
+  on criterion 2, since its look-elsewhere treatment is disputed rather than
+  plainly wrong. Under the answer-key design that disqualification disappears —
+  none of the seven questions requires a view on the dispute. It keeps everything
+  the original criteria wanted: open, apolitical, specialist, physical-sciences
+  (which also broadens genre coverage beyond R1's biomedical paper, exercising
+  `peer-review`'s field calibration).
+- **the key, in brief:** no Data Availability statement; no release of the
+  authors' own code; no blinding or pre-registration; no stated count of candidate
+  statistics considered; Planck 2018 with the common mask; systematics not
+  separated from statistical; funding disclosed with named funders. Five noes, one
+  yes, one content answer — a mix, so the item discriminates rather than rewarding
+  a run that answers "no" to everything.
+- **the trials-count question is the interesting one.** Whether the paper's
+  look-elsewhere handling is *adequate* is contested and unscoreable. Whether it
+  states *how many* candidate statistics were considered is a fact, and the answer
+  is no. The item captures what matters about the dispute without adjudicating it.
+- **fails if:** mean accuracy falls materially below the first measured baseline,
+  or `unaddressed` rises — a review that never raises a question is failing
+  differently from one that answers it wrongly, which is why both are reported.
 
 ## S2 — mirrored-case pair *(slot — needs a source-selection pass)*
 

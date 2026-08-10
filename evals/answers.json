@@ -1,0 +1,57 @@
+{
+  "_meta": {
+    "purpose": "Objective answer keys for review items. Each question is binary or single-fact and verifiable by anyone from the paper's own text, so the ground truth needs no severity judgement and no adjudication of a scientific dispute. A thorough review answers all of them; a shallow one misses some. That is the discrimination R1 cannot provide, because R1's paper is well-calibrated and its expected detection rate sits near 0.35 -- the worst place to see a change at n=5.",
+    "why_not_a_faulted_paper": "R5 was first designed around a paper with an unambiguous fault. Two candidates were fetched and rejected on the same criterion, and the pattern is structural: a fault unambiguous enough that every reviewer grades it alike usually gets retracted (notorious), corrected (gone from the text), or stays contested. See items.md R5.",
+    "scoring": "Per question: `correct` if the run asserts the key's answer, `incorrect` if it asserts the opposite, `unaddressed` if neither fires. Report all three -- a review that never raises a question is failing differently from one that gets it wrong.",
+    "authored": "2026-08-10"
+  },
+  "R5": {
+    "paper": "Jones J, Copi CJ, Starkman GD, Akrami Y, 'Strong Evidence Against a Statistically Isotropic Universe', arXiv:2310.12859v3",
+    "url": "https://arxiv.org/abs/2310.12859v3",
+    "key_derived": "2026-08-10, by fetching https://arxiv.org/html/2310.12859v3 and reading the full text. Version-pinned: v3 was current at authoring and later versions may answer differently.",
+    "questions": {
+      "data-availability-statement": {
+        "question": "Does the paper carry an explicit Data Availability statement?",
+        "answer": "No. It names its source in the text -- 'the data maps, masks, and best-fit theoretical LCDM power spectrum provided by the Planck 2018 data release found on the Planck Legacy Archive' -- but there is no formal statement.",
+        "correct": "(?i)(?:no|not|lacks?|without|absent|missing|does not (?:have|include|carry|contain))[^.\\n]{0,60}data[- ]availability",
+        "incorrect": "(?i)data[- ]availability statement[^.\\n]{0,40}(?:is )?(?:provided|present|included|given)"
+      },
+      "analysis-code-released": {
+        "question": "Are the authors' own analysis codes released?",
+        "answer": "No. Third-party tools are named (healpy, HEALPix, NaMaster) but no custom code is released.",
+        "correct": "(?i)(?:code|software)[^.\\n]{0,70}(?:not (?:released|available|provided|shared|public)|unavailable)|(?:no|without)[^.\\n]{0,40}code[^.\\n]{0,30}(?:release|availab)",
+        "incorrect": "(?i)(?:analysis )?code (?:is |was )?(?:released|publicly available|provided|open)"
+      },
+      "blinding-or-preregistration": {
+        "question": "Does the paper state that the analysis was blinded or pre-registered?",
+        "answer": "No. Neither is mentioned anywhere.",
+        "correct": "(?i)(?:no|not|absent|without|neither)[^.\\n]{0,70}(?:blind\\w*|pre[- ]?regist\\w*)",
+        "incorrect": "(?i)(?:analysis|study)[^.\\n]{0,30}(?:was|is)[^.\\n]{0,20}(?:blinded|pre[- ]?registered)"
+      },
+      "trials-count-quantified": {
+        "question": "Does the paper state how many candidate statistics were considered before the four were selected?",
+        "answer": "No. It says 'Many statistics have been studied and many have been found to be anomalous' and acknowledges omitting others, but gives no count. This is the load-bearing gap for any trials-factor correction, and it is checkable without adjudicating whether the paper's look-elsewhere treatment is adequate.",
+        "correct": "(?i)(?:how many|number of|count of)[^.\\n]{0,60}(?:statistic|test|anomal)[^.\\n]{0,80}(?:not|never|unstated|unspecified|unquantified|is unclear)|(?:unquantified|unspecified|not quantified|no (?:stated |explicit )?(?:number|count))[^.\\n]{0,60}(?:trials|look[- ]elsewhere|candidate|statistic)",
+        "incorrect": "(?i)the paper (?:states|reports|specifies)[^.\\n]{0,40}(?:that )?\\d+ (?:candidate )?(?:statistics|tests|anomalies) were (?:considered|examined)"
+      },
+      "dataset-identified": {
+        "question": "Which CMB data release and mask does the analysis use?",
+        "answer": "Planck 2018, component-separated Commander/NILC/SEVEM/SMICA maps, common mask.",
+        "correct": "(?i)Planck[^.\\n]{0,20}2018",
+        "incorrect": null
+      },
+      "systematics-separated": {
+        "question": "Are systematic uncertainties reported separately from statistical ones?",
+        "answer": "No. The analysis reports p-values from simulations; systematics are not broken out.",
+        "correct": "(?i)systematic\\w*[^.\\n]{0,80}(?:not (?:reported|separated|quantified|given|broken)|absent|no separate)|no[^.\\n]{0,40}systematic (?:uncertaint|error) budget",
+        "incorrect": "(?i)systematic (?:uncertainties|errors) (?:are|were) (?:reported|separated|quantified) separately"
+      },
+      "funding-disclosed": {
+        "question": "Is funding disclosed with named funders?",
+        "answer": "Yes. Jump Trading Graduate Fellowship, NASA ATP grant RES240737, DOE grant DESC0009946, Spanish Research Agency / Severo Ochoa.",
+        "correct": "(?i)NASA|DOE grant|Severo Ochoa|Jump Trading|funding (?:is |was )?(?:disclosed|stated|acknowledged)",
+        "incorrect": "(?i)(?:no|not|absent|missing|undisclosed)[^.\\n]{0,50}funding"
+      }
+    }
+  }
+}

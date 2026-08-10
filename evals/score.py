@@ -800,6 +800,59 @@ def score_detection(paths: list[Path], item: str) -> dict:
     }
 
 
+ANSWERS_PATH = Path(__file__).resolve().parent / "answers.json"
+
+
+def score_answers(paths: list[Path], item: str) -> dict:
+    """Objective answer key: did the run state the right answer, the wrong one, or none?
+
+    Unlike severity, the ground truth here needs no judgement — each question is
+    verifiable from the paper's own text. Unlike detection on R1, expected
+    accuracy sits near 1.0 rather than ~0.35, which is where a regression becomes
+    visible at n=5 instead of drowning in one run's discretion.
+    """
+    catalogue = json.loads(read_text(ANSWERS_PATH))
+    if item not in catalogue:
+        known = [k for k in catalogue if not k.startswith("_")]
+        raise SystemExit(f"error: no answer key for {item!r} (have: {known})")
+    questions = catalogue[item]["questions"]
+
+    per_q = {}
+    for name, spec in questions.items():
+        ok = re.compile(spec["correct"])
+        bad = re.compile(spec["incorrect"]) if spec.get("incorrect") else None
+        correct = wrong = 0
+        for p in paths:
+            text = read_text(p)
+            hit_ok = bool(ok.search(text))
+            hit_bad = bool(bad.search(text)) if bad else False
+            # A run asserting both is counted correct: reviews often quote the
+            # paper's own framing before contradicting it, and the key's answer
+            # appearing at all is the thing being measured.
+            if hit_ok:
+                correct += 1
+            elif hit_bad:
+                wrong += 1
+        per_q[name] = {
+            "question": spec["question"],
+            "correct": correct,
+            "incorrect": wrong,
+            "unaddressed": len(paths) - correct - wrong,
+            "accuracy": round(correct / len(paths), 3) if paths else 0.0,
+        }
+    n = len(per_q)
+    return {
+        "item": item,
+        "runs": len(paths),
+        "paper": catalogue[item].get("paper"),
+        "per_question": per_q,
+        "mean_accuracy": round(sum(q["accuracy"] for q in per_q.values()) / n, 3),
+        "mean_addressed": round(
+            sum((q["correct"] + q["incorrect"]) / len(paths) for q in per_q.values()) / n, 3
+        ) if paths else 0.0,
+    }
+
+
 def verdict_distance(skill: str, a: str, b: str) -> int | None:
     spine, _ = VERDICT_SPINE.get(skill, ([], []))
     if a in spine and b in spine:
@@ -1135,6 +1188,10 @@ def main(argv: Iterable[str] | None = None) -> int:
     v = sub.add_parser("severity", help="findings per severity across runs")
     v.add_argument("run", type=Path, help="a run .md, or a directory of them")
 
+    an = sub.add_parser("answers", help="score runs against an objective answer key")
+    an.add_argument("run", type=Path, help="a directory of runs")
+    an.add_argument("--item", required=True, help="answer-key key, e.g. R5")
+
     dt = sub.add_parser("detection", help="which known faults each run found")
     dt.add_argument("run", type=Path, help="a directory of runs")
     dt.add_argument("--item", required=True, help="fault catalogue key, e.g. R1")
@@ -1173,6 +1230,11 @@ def main(argv: Iterable[str] | None = None) -> int:
     if args.cmd == "severity":
         runs = sorted(args.run.glob("*.md")) if args.run.is_dir() else [args.run]
         emit(score_severity(runs))
+        return 0
+
+    if args.cmd == "answers":
+        runs = sorted(args.run.glob("*.md")) if args.run.is_dir() else [args.run]
+        emit(score_answers(runs, args.item))
         return 0
 
     if args.cmd == "detection":

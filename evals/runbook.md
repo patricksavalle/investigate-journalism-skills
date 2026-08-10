@@ -125,6 +125,20 @@ Audit the reasoning in this passage:
 Write the audit to runs/R4/1.md
 ```
 
+### R5 — peer-review, objective answer key (5 runs)
+
+```text
+Review this paper: Jones J, Copi CJ, Starkman GD, Akrami Y, "Strong Evidence Against a Statistically Isotropic Universe", arXiv:2310.12859v3. Fetch the paper this session.
+
+Write the review to runs/R5/1.md
+```
+
+Scored with `answers --item R5`, not `reproducibility`. The seven questions in
+[`answers.json`](answers.json) are verifiable from the paper's own text, so the
+ground truth needs no severity judgement and no view on the live dispute about the
+paper's look-elsewhere treatment. **Pinned to v3**: later versions may answer
+differently.
+
 ## Scoring
 
 Run from the working repo so the scorer reads the current skill templates:
