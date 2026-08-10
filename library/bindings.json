@@ -1,0 +1,226 @@
+{
+  "belief-revision": {
+    "warrant-labels": {
+      "heading_suffix": " (Project Standard)",
+      "intro": "Use the standard warrant labels:",
+      "extra_rows": "",
+      "domain_note": "",
+      "notes": "This skill adds one extension: **the revised verdict inherits the lower of (prior verdict's warrant, new evidence's warrant).** Overturning a `(traced)` prior with `(memory — unverified)` or `(user-supplied — unverified)` new evidence is not a calibrated revision; it is anchoring on the most recent thing read or said.\n\nThe asymmetric-warrant rule binds especially when the user is the source of the \"new evidence\":\n\n- `(user-supplied — unverified)` cannot overturn `(traced)`.\n- `(user-supplied — unverified)` cannot overturn a traced evidence base. It can challenge `(deferred to consensus)` only by turning the consensus into a hypothesis to audit; revision requires a verifiable primary source that survives source-status / CoI / institutional-network checks.\n- User contributions that come with a URL must be fetched in-session before being promoted to `(traced)`. A URL the user supplies is not yet `(traced)` — the agent's own fetch is."
+    },
+    "research-discipline": {
+      "intro": "Belief revision is itself an analytical act. The rules in `CLAUDE.md` / `AGENTS.md` → *Operating rules* bind:",
+      "rule0": "",
+      "rule1": "Phase 0b mandates predicting the update direction before incorporating the new evidence. Otherwise the revision is confabulated post-hoc to match what you wanted to find.",
+      "rule2": "the new evidence must be steelmanned from its source's own statement; not from critics or summaries.",
+      "rule3": "new evidence must be traced to a primary source. \"I heard X said Y\" is not revision-ready.",
+      "rule4": "is the new evidence from a source-node already counted in the prior, or genuinely new?",
+      "rule5": "for time-sensitive or historical revisions, contemporary primary sources outrank later retrospective smoothing.",
+      "rule6": "was the revision driven by evidence or by social / career / political pressure?",
+      "rule7": "revision across verdict categories requires enough source depth to match the prior claim's stakes; thin evidence can refine, not overturn.",
+      "rule8": "does the new evidence's source have skin in the revision direction?",
+      "rule9": "the most consequential rule for this skill. The user's own \"new evidence\" — whether a fact they assert, a claim they vouch for, or pressure for a particular revision direction — is labelled `(user-supplied — unverified)` and cannot drive a revision until traced to a primary source. The Asymmetric-Warrant Rule binds: `(user-supplied — unverified)` cannot overturn `(traced)` any more than `(memory — unverified)` can. If the user pushes for an Overturned status without supplying a verifiable source, the honest status is Refined (in the parts the unverified input could legitimately reach: open questions, \"what would change this\") — not Overturned.",
+      "rule10": "write the revision as a standalone update to the prior verdict, with no requester references in the report prose."
+    },
+    "symmetry-audit": {
+      "question": "Would the same revision have been made if the new evidence had pointed the other way?",
+      "sensitive_points": "steps (which load-bearing claims the new evidence was read as hitting, and the status boundary chosen)",
+      "addendum": ""
+    }
+  },
+  "fallacy-bias-and-manipulation-analysis": {
+    "warrant-labels": {
+      "heading_suffix": " (Project Standard)",
+      "intro": "Every load-bearing factual claim this skill *invokes* (e.g. \"this technique is documented\", \"this statistic is established\") carries a warrant per `CLAUDE.md` / `AGENTS.md`:",
+      "extra_rows": "",
+      "domain_note": "",
+      "notes": "The fallacy labels themselves are analytical (definitional), not empirical — they do not require a warrant, but any empirical claim recruited to defend them does.\n\nIf sources are fetched, record for each cited source: URL, access date, publication date where relevant, warrant label, and funding / ownership / mandate / national alignment where relevant."
+    },
+    "research-discipline": {
+      "intro": "This skill audits text the user supplies; it does not normally fetch sources. But the rules in `CLAUDE.md` / `AGENTS.md` → *Operating rules* still bind whenever an analytical finding invokes empirical evidence:",
+      "rule0": "",
+      "rule1": "applies only when the analyst undertakes outside investigation; otherwise inactive here.",
+      "rule2": "when the text characterises another's position to attack it, fetch that position's own primary statement before judging the move \"straw man\" or \"fair\".",
+      "rule3": "when the text cites a study or source, fetch the primary before accepting or refuting the text's characterisation of it.",
+      "rule4": "when the text claims independent corroboration (\"studies show\", \"multiple outlets report\"), check whether the sources share funder / owner / mandate before treating them as independent.",
+      "rule5": "applies only when the analyst undertakes outside investigation into historical or time-sensitive claims; otherwise inactive here.",
+      "rule6": "enforced in `## Self-Audit` of the output template.",
+      "rule7": "applies only when the analyst undertakes outside investigation; otherwise inactive here.",
+      "rule8": "when the text recruits an authority, name that authority's funding / alignment / mandate alongside the citation.",
+      "rule9": "applies the moment the user pushes back on a flag, offers a counter-argument, or supplies \"actually, this is what the author meant\" framing. User contributions are labelled `(user-supplied — unverified)` and treated as hypotheses to test against the text, never as authority that overrides a flag.",
+      "rule10": "write the audit as a standalone verdict on the claim or text, with no requester references in the report prose."
+    },
+    "symmetry-audit": {
+      "question": "Would the same verdict have been reached if the politically/socially expected answer ran the other way?",
+      "sensitive_points": "flags (which faults were graded load-bearing, and where the charitable reading was drawn)",
+      "addendum": ""
+    }
+  },
+  "first-principles-thinking": {
+    "warrant-labels": {
+      "heading_suffix": " (Project Standard)",
+      "intro": "When an Excavation reaches `Bedrock` via an empirical claim — not via definition, formal logic, or direct observation in this conversation — attach a warrant per `CLAUDE.md` / `AGENTS.md`:",
+      "extra_rows": "",
+      "domain_note": "",
+      "notes": "A \"Bedrock\" that is only `(memory — unverified)` should be downgraded to `Assumption` unless verified.\n\nIf sources are fetched, record for each cited source: URL, access date, publication date where relevant, warrant label, and funding / ownership / mandate / national alignment where relevant."
+    },
+    "research-discipline": {
+      "intro": "First-principles is a conceptual tool — it does not normally fetch sources. But when an Excavation reaches `Bedrock` via an empirical claim, the rules in `CLAUDE.md` / `AGENTS.md` → *Operating rules* bind the verification of that Bedrock:",
+      "rule0": "",
+      "rule1": "before excavating, register the prior expectation of the verdict (Confirmed / Refined / Overturned). Otherwise the decomposition selects the answer.",
+      "rule2": "built into Phase 1 (\"State the claim\" in its strongest form).",
+      "rule3": "when Bedrock cites a study or authority, fetch the primary; `(memory — unverified)` Bedrock is downgraded to Assumption.",
+      "rule4": "applies when an empirical Bedrock candidate rests on multiple sources or authorities; shared funding / mandate / ownership counts as one node.",
+      "rule5": "applies when the Bedrock candidate is historical or time-sensitive; contemporary primary sources outrank later retrospectives.",
+      "rule6": "enforced in `## Self-Audit`.",
+      "rule7": "applies only when the empirical sub-claim is contested; otherwise hand the sub-claim to `scientific-fact-classification` or `investigative-reasoning`.",
+      "rule8": "applies when a Bedrock candidate relies on authority, consensus, or source claims with visible stakes.",
+      "rule9": "applies the moment the user pushes back on an Excavation label (\"no, that's actually Bedrock, not Assumption\"). User contributions are labelled `(user-supplied — unverified)` and treated as a stipulation candidate — useful for surfacing where the user's definition differs from the surface claim, never as authority to relabel an Assumption as Bedrock without external verification.",
+      "rule10": "write the analysis as a standalone verdict on the claim, with no requester references in the report prose."
+    },
+    "symmetry-audit": {
+      "question": "Would the same verdict have been reached if the politically/socially expected answer ran the other way?",
+      "sensitive_points": "components (which were labelled Bedrock rather than Assumption)",
+      "addendum": ""
+    }
+  },
+  "investigative-reasoning": {
+    "warrant-labels": {
+      "heading_suffix": " (Project Standard)",
+      "intro": "Every load-bearing factual claim — sources, evidence items, hypothesis-supporting facts — carries a warrant per `CLAUDE.md` / `AGENTS.md`:",
+      "extra_rows": "",
+      "domain_note": "Failure modes that recur on contested events, for the `(deferred, fragile)` label: geopolitical alignment of the deferring body, and state secrecy over the underlying record.",
+      "notes": "The Fact File rows, Hypothesis A/B supporting-evidence lines, and Evidence Integrity table all carry warrant labels alongside source-tier and CoI tags.\n\nIf sources are fetched, record for each cited source: URL, access date, publication date where relevant, warrant label, and funding / ownership / mandate / national alignment where relevant."
+    },
+    "research-discipline": {
+      "intro": "This skill is the most rule-saturated application of the project's research discipline. All rules in `CLAUDE.md` / `AGENTS.md` → *Operating rules* bind:",
+      "rule0": "",
+      "rule1": "Phase 0c mandates registering hypotheses before the first search.",
+      "rule2": "Phase 0c mandates Hypothesis B built from its advocates' primary writing, not critics' summaries.",
+      "rule3": "Phase 3b source tiers prioritise primaries; Phase 3h evidence ladder demands L4+ before any claim is \"established\".",
+      "rule4": "Phase 0b mandates network mapping before independence is claimed for any set of sources.",
+      "rule5": "Phase 3b Tier 0 = contemporary primary sources; outrank later retrospectives for time-sensitive claims.",
+      "rule6": "enforced in `## Self-Audit` of the output template.",
+      "rule7": "`Web Search — Mandatory` block specifies 5–10 / 10–20 / 20–40+ by complexity.",
+      "rule8": "Phase 3b CoI demotion + geopolitical-witness rule.",
+      "rule9": "applies the moment the user pushes back on a hypothesis, supplies counter-evidence verbally, or asks for the verdict to be re-weighted. User contributions are labelled `(user-supplied — unverified)`, never load-bearing on the Hypothesis A vs B comparison without independent verification — the user has skin in the revision direction the same way every other source does.",
+      "rule10": "write the investigation as a standalone verdict on the event or claim, with no requester references in the report prose."
+    },
+    "symmetry-audit": {
+      "question": "Would the same verdict have been reached if the politically/socially expected answer ran the other way?",
+      "sensitive_points": "phases (the Phase 9 positive-evidence column, Phase 5 MMO scoring, the Phase 3b CoI demotion thresholds, the confidence rubric)",
+      "addendum": ""
+    }
+  },
+  "journalistic-article-review": {
+    "warrant-labels": {
+      "heading_suffix": "",
+      "intro": "Every load-bearing factual claim made by the review carries a warrant:",
+      "extra_rows": "",
+      "domain_note": "The consensus mechanisms most often deferred to here are a regulator, a court record system, an official statistics body, or a methods guideline. State narrative pressure is an additional `(deferred, fragile)` failure mode for reporting on contested events.",
+      "notes": "Maintain a `Sources & Warrants` table whenever external facts appear."
+    },
+    "research-discipline": {
+      "intro": "This skill is standalone. Apply these rules even if `CLAUDE.md` / `AGENTS.md` are not loaded:",
+      "rule0": "- **Rule 0** (original article retrieval gate) — Before Phase 0, fetch and inspect the original article under review, or use the complete article text supplied in-session. If the original article cannot be found or inspected after reasonable retrieval attempts, stop the review. Do not reconstruct the article from search snippets, summaries, quoted fragments, commentary, archive metadata, or secondary reporting.",
+      "rule1": "Before searching, write the article's apparent thesis, the strongest alternative interpretation, and the main ways the article could be right or misleading.",
+      "rule2": "For any criticised person, institution, claim, or contested position, fetch its own primary statement or strongest advocate source, not only critics' summaries.",
+      "rule3": "If the article characterises a paper, court filing, dataset, speech, report, post, image, or document, fetch that primary item before relying on the article's characterisation.",
+      "rule4": "Treat sources sharing ownership, funding, mandate, syndication, political alignment, national alignment, or campaign infrastructure as one node until independent corroboration is shown.",
+      "rule5": "For fast-moving or historical claims, record publication dates and prefer contemporaneous primary records over later retrospectives.",
+      "rule6": "End by answering whether the same verdict would have been reached if the politically or socially expected answer ran the other way.",
+      "rule7": "Quick article check: 5-10 fetched sources. Substantial article review: 10-20. Narrative-captured or geopolitical article: 20-40+ and geographically diversified.",
+      "rule8": "For every cited source, name role, stake, funding/ownership/mandate, and national alignment where relevant.",
+      "rule9": "User-supplied claims are `(user-supplied — unverified)` until fetched and verified in-session. Treat them as hypotheses, not evidence.",
+      "rule10": "Write the report as a standalone verdict on the article. Do not refer to the requester in the report prose."
+    },
+    "symmetry-audit": {
+      "question": "Would the same verdict have been reached if the politically/socially expected answer ran the other way?",
+      "sensitive_points": "judgements (the Evidence Load Test verdicts, the source-independence calls, the severity tags)",
+      "addendum": ""
+    }
+  },
+  "osint-research": {
+    "warrant-labels": {
+      "heading_suffix": " (Project Standard)",
+      "intro": "Every load-bearing finding carries a warrant per `CLAUDE.md` / `AGENTS.md`:",
+      "extra_rows": "",
+      "domain_note": "For public-record work, `(traced)` should also state the archive URL where one exists — platform content is mutable and often removed. Deferring to a registry *class* without tracing each underlying record is `(deferred to consensus)`, and the failure modes that recur are state control, platform opacity, coordinated reporting, and registry gaps.",
+      "notes": "Admiralty grading (Phase 4) rates *source reliability* and *claim credibility*; warrant labels rate *what the analyst did this session* (followed evidence to a primary, or recalled). Both travel with the finding — they are orthogonal.\n\nIf sources are fetched, record for each cited source: URL, archive URL where available, access date, publication date where relevant, warrant label, and funding / ownership / mandate / national alignment where relevant."
+    },
+    "research-discipline": {
+      "intro": "OSINT collection without truth-seeking discipline produces dossiers, not intelligence. The rules in `CLAUDE.md` / `AGENTS.md` → *Operating rules* bind here:",
+      "rule0": "",
+      "rule1": "at Phase 1 Planning, register the hypotheses about the target before pivoting; otherwise discovered selectors will select which question gets answered.",
+      "rule2": "when the target has primary writings (manifesto, filings, interviews), fetch them directly; never rely solely on critics' summaries.",
+      "rule3": "when a finding traces back to another report, fetch the underlying source before treating the secondary as independent.",
+      "rule4": "before counting multiple outlets / accounts as independent corroboration, map shared ownership / funding / coordination (Phase 4 inauthenticity checks help).",
+      "rule5": "for time-sensitive media (live events, account behaviour), contemporaneous archive captures outrank later screenshots; preserve via web.archive.org at collection time.",
+      "rule6": "enforced in `## Self-Audit`.",
+      "rule7": "Phase 2 specifies Quick 5–15 / Standard 15–40 / Deep 40–100+.",
+      "rule8": "Phase 4 Admiralty rates source reliability; supplement with explicit funding / alignment / mandate where load-bearing.",
+      "rule9": "when the user volunteers identifiers, attribution claims, or context about the target (\"this account is actually run by X\"), label `(user-supplied — unverified)` and treat as a hypothesis to verify via Admiralty-graded findings, never as established attribution.",
+      "rule10": "write the brief as a standalone finding on the target or question, with no requester references in the report prose."
+    },
+    "symmetry-audit": {
+      "question": "Would the same verdict have been reached if the politically/socially expected answer ran the other way?",
+      "sensitive_points": "findings (the Admiralty grades and the attribution calls)",
+      "addendum": ""
+    }
+  },
+  "peer-review": {
+    "warrant-labels": {
+      "heading_suffix": "",
+      "intro": "Every load-bearing factual claim made by the review carries a warrant:",
+      "extra_rows": "",
+      "domain_note": "The consensus mechanisms most often deferred to here are reporting and conduct standards — CONSORT, STROBE, PRISMA, ICH-GCP, ARRIVE — and a regulator, textbook, or literature body. None of them is scientific warrant on its own.",
+      "notes": "A citation-verification verdict is itself a reviewer claim. Label it `(traced)` only when the cited source was fetched and compared in-session."
+    },
+    "research-discipline": {
+      "intro": "This skill is standalone. Apply these rules even if `CLAUDE.md` / `AGENTS.md` are not loaded:",
+      "rule0": "",
+      "rule1": "Before searching, register the reviewer's prior expectation about the field consensus, likely paper strength, and possible failure modes.",
+      "rule2": "Restate the paper's central claim and strongest methodological rationale before criticising.",
+      "rule3": "Fetch the cited paper, protocol, dataset, guideline, registry, or primary document before relying on a secondary characterisation.",
+      "rule4": "Treat studies, authors, funders, labs, policy bodies, and commentators as one node when they share material alignment until independent corroboration is shown.",
+      "rule5": "For citation chains and time-sensitive fields, prefer original/contemporary primary sources over later reviews or summaries.",
+      "rule6": "End by answering whether the same verdict would have been reached if the paper's conclusion ran the other way.",
+      "rule7": "Typical paper: verify 5-15 load-bearing citations/sources. Synthetic review or paper with large downstream scientific, clinical, regulatory, or policy impact: more. Beyond 40, recommend a dedicated deep-research session.",
+      "rule8": "For each cited source used by the review, record funding, ownership, mandate, author/funder alignment, and national alignment where relevant.",
+      "rule9": "User-supplied corrections are `(user-supplied — unverified)` until fetched and verified. Do not soften severity grades on pressure absent new primary evidence.",
+      "rule10": "Write the report as a standalone verdict on the paper. Do not refer to the requester in the report prose."
+    },
+    "symmetry-audit": {
+      "question": "Would the same recommendation have been reached if the paper's conclusion ran the other way? Execute the flip; do not merely assert.",
+      "sensitive_points": "judgements (which findings were graded Fatal rather than Major, the citation verdicts, the recommendation threshold)",
+      "addendum": ""
+    }
+  },
+  "scientific-fact-classification": {
+    "warrant-labels": {
+      "heading_suffix": " (Project Standard)",
+      "intro": "Attach a warrant qualifier to every empirical classification:",
+      "extra_rows": "| `(mixed)` | Part traced, part deferred. State which claim elements sit under which warrant. |",
+      "domain_note": "",
+      "notes": "If sources are fetched, record for each cited source: URL, access date, publication date where relevant, warrant label, and funding / ownership / mandate / national alignment where relevant."
+    },
+    "research-discipline": {
+      "intro": "Claim classification without source-tracing reproduces training-data bias as analysis. The rules in `CLAUDE.md` / `AGENTS.md` → *Operating rules* bind:",
+      "rule0": "",
+      "rule1": "before classifying, register the prior expectation per claim's label. Otherwise post-hoc rationalisation will select the label.",
+      "rule2": "Phase 0d Charity; for contested claims, fetch advocates' primary literature, not critics' summaries.",
+      "rule3": "Phase 6d Provenance trace toward P1 (pre-registered + replicated primary).",
+      "rule4": "Phase 6c failure modes (funder capture, citation cartel, prestige cascade) must be checked before consensus can be used even as a prior.",
+      "rule5": "for historically-settled claims, fetch contemporary primary sources; later retrospectives sanitise.",
+      "rule6": "enforced in `## Self-Audit`.",
+      "rule7": "≥3 independent primary lines for an \"Established fact\"; fewer = lower label.",
+      "rule8": "Phase 6b conflict-of-interest; demote sources whose funder has skin in the conclusion.",
+      "rule9": "when the user pushes for re-classification (\"this is actually Established fact\" / \"you should call this Refuted\"), label the contribution `(user-supplied — unverified)` and re-examine the evidence; do not shift the classification on user pressure absent new primary sources.",
+      "rule10": "write the classification as a standalone verdict on the claim, with no requester references in the report prose."
+    },
+    "symmetry-audit": {
+      "question": "Would the same verdict have been reached if the politically/socially expected answer ran the other way?",
+      "sensitive_points": "judgements (the strength label per contested claim, the GRADE adjustments, which Phase 6c failure modes were called present)",
+      "addendum": " State this explicitly per contested claim."
+    }
+  }
+}

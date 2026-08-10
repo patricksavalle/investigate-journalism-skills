@@ -46,6 +46,17 @@ Mirrors:
 - Claude-style skills: [`.claude/skills/`](./.claude/skills)
 - Agent-runtime skills for Codex, Gemini, and other compatible agents: [`.agents/skills/`](./.agents/skills)
 
+Both mirrors are **generated**. The shared discipline — warrant labels, the
+routing block, Rules 1–10, the symmetry self-audit — is written once in
+[`library/`](./library) and composed into each `SKILL.md` at build time, so the
+shipped files stay self-contained while the source stops being duplicated eight
+ways. To change a skill, edit `library/skills/<name>.md` (or the relevant
+`library/modules/<name>.md`) and run:
+
+```bash
+python scripts/build-skills.py
+```
+
 Hooks are runtime-specific, not skill-specific:
 
 - Claude Code uses [`.claude/settings.json`](./.claude/settings.json) and [`.claude/hooks/`](./.claude/hooks).

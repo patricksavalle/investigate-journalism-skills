@@ -1,0 +1,1 @@
+- **Symmetry test:** {{question}} Name the specific {{sensitive_points}} where the verdict is most sensitive to the prior — asserting symmetry flatly, without identifying where it could break, claims the property rather than showing it. If no — explain. If you can't tell — say so.{{addendum}}

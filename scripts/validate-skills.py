@@ -10,6 +10,7 @@ Checks are derived from the library's own invariants:
   4. README.md indexes every skill
   5. every report-shaped skill carries all six warrant labels
   6. the shared routing block is identical wherever it appears
+  7. the shipped SKILL.md files match what library/ generates
 
 No third-party dependencies. Python 3.9+.
 
@@ -200,6 +201,52 @@ def check_warrant_labels(skills: dict) -> None:
             )
 
 
+def check_generated(skills: dict) -> None:
+    """SKILL.md is generated from library/. Hand-edits get silently rebuilt away.
+
+    Without this check the single-sourcing is advisory: someone edits a shipped
+    SKILL.md, it works, and the next build reverts it. Failing here turns a
+    silent loss into a message that says where to edit instead.
+    """
+    build_script = Path(__file__).resolve().parent / "build-skills.py"
+    if not (REPO / "library" / "skills").exists():
+        notes.append("library/ not present — generated-source check skipped")
+        return
+
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("build_skills", build_script)
+    if spec is None or spec.loader is None:
+        fail("could not load scripts/build-skills.py for the generated check")
+        return
+    bs = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(bs)
+
+    import json as _json
+
+    bindings = (
+        _json.loads(read(bs.BINDINGS)) if bs.BINDINGS.exists() else {}
+    )
+    for src in sorted(bs.SKILL_SRC.glob("*.md")):
+        try:
+            skill, rendered = bs.build_skill(src, bindings)
+        except bs.BuildError as e:
+            fail(f"library build: {e}")
+            continue
+        for target in bs.targets(skill):
+            current = read(target) if target.exists() else None
+            if current != rendered:
+                fail(
+                    f"{target.relative_to(REPO)} does not match "
+                    f"library/skills/{skill}.md — SKILL.md is generated; edit the "
+                    f"source and run `python scripts/build-skills.py`"
+                )
+
+    orphans = set(skills) - {p.stem for p in bs.SKILL_SRC.glob("*.md")}
+    for o in sorted(orphans):
+        fail(f"{o}/SKILL.md has no source at library/skills/{o}.md")
+
+
 def check_routing_block(skills: dict) -> None:
     """The shared routing paragraph must be byte-identical wherever it appears."""
     copies: dict[str, list[str]] = {}
@@ -264,6 +311,7 @@ def main() -> int:
     check_readme_index(skills)
     check_warrant_labels(skills)
     check_routing_block(skills)
+    check_generated(skills)
 
     try:
         sys.stdout.reconfigure(encoding="utf-8")
