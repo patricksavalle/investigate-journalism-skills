@@ -23,3 +23,8 @@ jobs:
 
       - name: Stop-hook preflight regression
         run: python evals/test_hook_preflight.py
+
+      # Catches a routing set that names a skill the library no longer has --
+      # the eval set is data about the inventory, so it drifts with a rename.
+      - name: Trigger routing set
+        run: python evals/trigger.py check
