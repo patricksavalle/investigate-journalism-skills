@@ -245,6 +245,35 @@ Grade the article, not the underlying world:
 
 Severity tags: **Fatal**, **Major**, **Minor**, **Optional**, **Praise**.
 
+### Evidence-State Floors
+
+The verdict is a synthesis, and synthesis is where two reviewers looking at the same
+evidence drift apart. These rows tie it to observations the review already recorded, so
+the drift has somewhere to be caught.
+
+Each keys on a verdict written in an earlier phase, against the load-bearing claim list
+from Phase 1 — decided before the evidence came in, so it cannot be quietly narrowed once
+the findings are uncomfortable.
+
+| Observation, and the phase that recorded it | Verdict floor |
+|---|---|
+| Phase 3: a load-bearing claim is **Contradicted** | Contradicted |
+| Phase 3: a load-bearing claim is **Unsupported** | Unsupported |
+| Phase 4: the headline implies a claim the body only attributes, hedges, or does not reach | Misleading |
+| Phase 3: a load-bearing claim is **Overstated** and the article offers no caveat | Misleading |
+| Causal Claim Gate: a central causal claim fails on direction | Mixed / requires further reporting |
+| Phase 2: a serious allegation carries neither a right of reply nor documentary support | Mixed / requires further reporting |
+| Phase 2: every source for a load-bearing claim reduces to one institutional node | Mostly reliable with caveats |
+| Phase 3: a load-bearing claim is **Under-contextualised** | Mostly reliable with caveats |
+
+The verdict is the most severe floor any row triggers; if none does, it is
+**Reliable as reported** unless something outside these rows argues otherwise, in which
+case name it.
+
+A floor binds the verdict, not the findings. Downgrading a claim's Evidence Load Test
+verdict to escape a floor is a revision of Phase 3 and has to be argued there, on the
+evidence, not inferred backwards from the verdict that feels right.
+
 ## Output
 
 If Phase -1 fails, use only this stop output:

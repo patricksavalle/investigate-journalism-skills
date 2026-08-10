@@ -301,6 +301,29 @@ Each claim gets a label on **two axes**: evidence strength + warrant type (Phase
 | **Likely false** | Weight of high-quality evidence runs against |
 | **Refuted** | Decisively disconfirmed; mechanism shown wrong or predictions decisively failed |
 
+**7a-1. Evidence-state ceilings.** The labels above describe evidence states, but nothing
+maps a state onto a label — which leaves the strongest claim in the report resting on the
+least specified step. These rows close that gap from the restrictive side: they cap how
+strong a label the evidence can carry, and they key on what the earlier phases recorded,
+not on how convincing the claim felt.
+
+| Observation, and the phase that recorded it | Label ceiling |
+|---|---|
+| Phase 6d: fewer than three independent primary lines traced (Rule 7) | **Well-supported finding** |
+| Phase 3d: single study, no reproduction and no replication | **Provisionally accepted** |
+| Phase 3c-1: the absolute effect cannot be recovered from the source | **Provisionally accepted** |
+| Phase 4a-1: reverse causation **Unresolved** for a causal claim | **Provisionally accepted**, and the claim is restated as association |
+| Phase 6c: a named failure mode applies to the consensus the claim rests on | **Contested** |
+| Warrant is `(deferred to consensus)` with no primary traced this session | no evidence-strength label at all — use the Phase 7c **Consensus-prior** labels |
+| High-quality evidence on both sides, field has not converged | **Contested** is the label, not a leaning toward either side |
+
+Ceilings bind downward only. They cannot raise a claim, and a claim can always sit below
+one for reasons the evidence gives. The floor direction is deliberately left open: what
+makes a claim *weaker* is always specific to the claim, while what makes it too weak to
+carry a strong label is general, and only the general half can be written as a rule.
+
+If a ceiling is binding, say which row and why in the claim's "What would change this".
+
 **7b. Warrant qualifier** (attach to every empirical label — canonical project labels per `CLAUDE.md` / `AGENTS.md`):
 - **(traced)** — followed evidence chain to a primary source fetched this session (URL + access date stated)
 - **(deferred to consensus)** — relying on a named social/institutional consensus mechanism; name the body and state that it is not scientific warrant unless traced to reproduced or replicated evidence

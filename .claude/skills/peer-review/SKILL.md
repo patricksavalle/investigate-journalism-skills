@@ -349,6 +349,41 @@ finding downward. If the recommendation feels too severe for the paper, that is 
 to re-examine the recommendation, not to soften a fault that survived the evidence. State
 the mismatch rather than dissolving it.
 
+### Evidence-State Floors
+
+Severity tags are the reviewer's judgement. The conditions below are **observations the
+review has already recorded** by the time it reaches Phase 7 — a citation verdict, a
+reverse-causation status, whether a file exists. Read the floor off those observations.
+
+This matters because of how the previous attempt failed. A floor keyed to severity counts
+("two Majors imply at least a Major recommendation") can always be satisfied by moving the
+counts, and that is what happened: measured 2026-08-10, Major findings went from 6 to 0
+across five runs while the recommendation stayed put, and the same substantive fault was
+regraded from Major to Minor between runs. A floor keyed to observations has no such
+escape, because the observation was recorded before Phase 7 existed to be embarrassed by it.
+
+Centrality is settled the same way. These rows key on the **load-bearing citation list
+written in Phase 1**, before Phase 4 knew what it would find. Re-deciding in Phase 7 that
+a citation was never central is a revision of Phase 1 and has to be stated as one.
+
+| Observation, and the phase that recorded it | Recommendation floor |
+|---|---|
+| Phase 4: a citation on the Phase 1 load-bearing list returned **Contradicts** or is retracted | Reject-resubmit |
+| Phase 4: a citation on the Phase 1 load-bearing list returned **Unverifiable** | Major |
+| Phase 3: a central causal claim's reverse-causation status is **Unresolved** | Major |
+| Phase 2: a criterion of a framework the title or abstract names is unreported, or citation-borrowed and unverified | Major |
+| Phase 3: the denominator sentence cannot be written from the paper for a claim the abstract makes | Major |
+| Phase 6: data and code are both unavailable *and* the reported analyses cannot be reproduced | Major |
+| Phase 6: no ethics/consent statement located after a recorded full-text search | Minor |
+
+The recommendation is the most severe floor any row triggers. A floor is a lower bound on
+the *recommendation* and never a licence to regrade a *finding* — if the floor looks too
+severe for the paper as a whole, record that in "What Would Change This" and leave both the
+finding and the floor standing. A review that displays the tension tells the reader
+something; one that dissolves it tells them nothing.
+
+If no row triggers, the floor is Accept and the recommendation is the reviewer's own call.
+
 State explicitly what would change the recommendation upward or downward.
 
 ## Output
