@@ -11,6 +11,13 @@ Item types:
 | **S** — symmetry | Convergence across prior-inverted runs | Prior leaking into the audit chain |
 | **F** — false-positive control | That the discipline does *not* over-fire | Reflexive scepticism scored as rigour |
 
+Two R items (R3, R4) measure **catalogue reach** rather than verdict agreement.
+They exist because progressive disclosure — moving long lookup tables into
+`references/` — is the one restructuring step that could quietly cost detection,
+and the only evidence available runs the other way: adding a single row to the
+Phase 6 checklist moved ethics-statement detection from 2/5 runs to 5/5. Presence
+in context changed behaviour, so absence might too. Measure before moving.
+
 Ground truth comes from artifacts already in this repo or from a skill's own worked
 example. No item invents a fact.
 
@@ -75,6 +82,46 @@ example. No item invents a fact.
 - **known baseline defect:** both seed artifacts use `(traced)` 65 and 56 times with
   **zero URLs in the document**, so their source overlap is currently uncomputable.
   Re-running this item is what produces the first measurable number.
+
+## R3 — investigative-reasoning, influence-operation catalogue reach
+
+- **skill:** `investigative-reasoning`
+- **runs:** 5
+- **input:** the R3 block in [`runbook.md`](runbook.md)
+- **scoring:** `catalogue --catalogue io-patterns`. Report mean reach, min, max,
+  and the union across runs.
+- **pre-move reference:** the two legacy artifacts both reach 7 of 18
+  (`nordstream-A.md`, `nordstream-B.md`, measured 2026-08-10);
+  `contrail-persistence-investigation.md` reaches 0, which is the expected
+  reading for an investigation where no influence-operation pattern applies.
+- **why Nord Stream:** it is the case the repo has the most prior work on, so a
+  low reach cannot be explained away as unfamiliarity with the subject.
+- **what it is not:** this item does not score the verdict. S1 does that, on the
+  same event. Keep the two separate — a run can name every pattern in the table
+  and still reach a badly-reasoned verdict, and the point of a reach metric is
+  that it measures one thing.
+- **fails if:** mean reach falls after the Phase 2e table moves to `references/`.
+  A fall means the catalogue stopped being consulted once it stopped being in
+  context, and the move should be reverted for that table.
+
+## R4 — fallacy audit, deep-taxonomy reach
+
+- **skill:** `fallacy-bias-and-manipulation-analysis`
+- **runs:** 3
+- **input:** the R4 block in [`runbook.md`](runbook.md)
+- **ground truth:** the passage is **constructed**, and the planted moves are
+  therefore known exactly: motte-and-bailey, isolated demand for rigour, appeal
+  to ignorance, and a predicted-absence argument. None appears in the skill's
+  Quick Reference table, so naming one is evidence that the run reached into
+  Phases 3–8 rather than working from the summary.
+- **on constructing the input:** `items.md`'s own rule is that no item invents a
+  *fact*. This item invents no fact — a rhetorical passage's ground truth is its
+  construction, and a fallacy audit needs no external verification to be scored.
+  Using real text here would import a factual dispute the item is not measuring.
+- **scoring:** `catalogue --catalogue fallacies` for reach, plus a check that the
+  four planted moves are named.
+- **fails if:** reach falls after the taxonomy moves to `references/`, or if
+  fewer than three of the four planted moves are named in a majority of runs.
 
 ## S2 — mirrored-case pair *(slot — needs a source-selection pass)*
 

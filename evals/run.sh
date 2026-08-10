@@ -2,7 +2,12 @@
 # Execute eval items in isolated clean rooms.
 #
 #   sh evals/run.sh R1        five peer-review runs of the R1 prompt
+#   sh evals/run.sh F2        three runs of the cheapest regression canary
 #   sh evals/run.sh S1        the two prior-inverted Nord Stream runs
+#
+# Every item except S1 takes its prompt from its fenced block in runbook.md and
+# differs between runs only in the output filename. S1's two runs use different
+# prompts by design -- opposite disclosed priors are the whole point of it.
 #
 # One fresh clone per run, from the CURRENT HEAD — so a re-run exercises whatever
 # skill edits are committed. Prompts for R1 are extracted from runbook.md rather
@@ -13,7 +18,7 @@
 # baseline recorded only "default model", which is not auditable.
 
 set -e
-ITEM="${1:?usage: run.sh R1|S1}"
+ITEM="${1:?usage: run.sh R1|R2|R3|R4|F1|F2|F3|S1}"
 REPO=$(cd "$(dirname "$0")/.." && pwd)
 
 # Git Bash hands out POSIX paths (/c/Users/...) that native Windows Python
@@ -31,14 +36,19 @@ META="$OUT/meta.tsv"
 
 FLAGS='--permission-mode acceptEdits --allowedTools WebFetch,WebSearch,Read,Write,Edit,Glob,Grep,Skill,TodoWrite --output-format json'
 
-# Extract the R1 prompt verbatim from the runbook's fenced block.
-r1_prompt() {
+# Extract an item's prompt verbatim from its fenced block in runbook.md. Taking
+# it from the runbook rather than retyping it is what keeps a re-run comparable
+# with the baseline: the prompt cannot drift without the runbook drifting too.
+item_prompt() {
     python -c "
 import re,sys
+item=sys.argv[1]
 t=open(r'$(winpath "$REPO")/evals/runbook.md',encoding='utf-8').read()
-m=re.search(r'### R1 .*?\`\`\`text\n(.*?)\`\`\`', t, re.S)
+m=re.search(r'^### '+re.escape(item)+r' .*?^\`\`\`text\n(.*?)^\`\`\`', t, re.S|re.M)
+if not m:
+    sys.stderr.write(f'no fenced prompt for {item} in evals/runbook.md\n'); sys.exit(1)
 sys.stdout.write(m.group(1).rstrip())
-"
+" "$1"
 }
 
 run_one() {
@@ -73,11 +83,23 @@ else:
 PY
 }
 
+# Items whose runs differ only in the output filename. The count is the item's
+# own, from items.md -- reproducibility items need 5, controls 3.
+runs_for() {
+    case "$1" in
+        R1|R2|R3) echo 5 ;;
+        R4)       echo 3 ;;
+        F1|F2|F3) echo 3 ;;
+        *)        echo 0 ;;
+    esac
+}
+
 case "$ITEM" in
-  R1)
-    base=$(r1_prompt)
-    for n in 1 2 3 4 5; do
-        p=$(printf '%s' "$base" | sed "s#runs/R1/1\.md#runs/R1/$n.md#")
+  R1|R2|R3|R4|F1|F2|F3)
+    base=$(item_prompt "$ITEM")
+    n_runs=$(runs_for "$ITEM")
+    for n in $(seq 1 "$n_runs"); do
+        p=$(printf '%s' "$base" | sed "s#runs/$ITEM/1\.md#runs/$ITEM/$n.md#")
         run_one "$n" "$p" "$OUT/$n.md" &
     done
     wait

@@ -63,6 +63,22 @@ Expected band: *Established fact* or *Well-supported finding*. Landing on *Conte
 *Weak / preliminary*, or attaching `(deferred, fragile)` without naming a Phase 6c
 failure mode that actually applies, is an over-firing failure.
 
+### F2 — control: a skill reproducing its own worked example (3 runs)
+
+```text
+We should ship our new feature behind a paywall because that's how premium SaaS products monetize. Is that reasoning sound?
+
+Write the analysis to runs/F2/1.md
+```
+
+`first-principles-thinking` prints the answer inside its own file: **Overturned**,
+with C1–C4 as Assumption / Unknown / Assumption / Assumption. A run that diverges,
+or that promotes any of them to Bedrock, means the skill can no longer reproduce
+what it documents. Cheapest canary in the set — run it on every skill change.
+
+The prompt deliberately does not name the skill or the phrase "first principles":
+whether the skill triggers at all is part of what this measures.
+
 ### F3 — control: the retrieval gate must stop (3 runs)
 
 ```text
@@ -74,6 +90,35 @@ Write the review to runs/F3/1.md
 The only correct output is the `# Review Stopped: Original Article Not Found` block.
 Any Article Map, Sourcing Audit, Evidence Load Test, or Journalistic Verdict is a
 Rule 0a failure.
+
+### R3 — catalogue reach: influence-operation patterns (5 runs)
+
+```text
+Investigate the September 2022 Nord Stream pipeline explosions. Fetch primary sources this session.
+
+Write the investigation to runs/R3/1.md
+```
+
+Scored with `catalogue`, not `reproducibility`. The question is not what verdict
+the run reaches — S1 already measures that — but **how much of the Phase 2e
+influence-operation table the run actually reaches**, which is what moving that
+table into `references/` could break. Establish the number before the move.
+
+### R4 — catalogue reach: the deep fallacy taxonomy (3 runs)
+
+The passage below is constructed, not quoted, and deliberately so: its ground
+truth is its own construction, which is what makes the measurement exact. The
+planted moves are motte-and-bailey, isolated demand for rigour, appeal to
+ignorance, and a predicted-absence argument. None sits in the skill's Quick
+Reference table, so naming one means the run reached into Phases 3–8.
+
+```text
+Audit the reasoning in this passage:
+
+"Everyone agrees the programme has had *some* effect on outcomes — that much is not seriously disputed. So the critics who deny its transformative impact are simply ignoring the evidence. And note what the sceptics have produced: after four years of looking, not one internal document showing the programme failed. If it were failing, surely something would have leaked by now. Their own preferred study, meanwhile, has a response rate of 62% and clusters at the district level, which is nowhere near the standard we would need before overturning a national policy. Until they meet that bar, the reasonable position is the one we already hold."
+
+Write the audit to runs/R4/1.md
+```
 
 ## Scoring
 
