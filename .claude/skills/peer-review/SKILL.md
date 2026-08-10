@@ -339,30 +339,13 @@ Severity:
 
 Recommendation: **Accept / Minor / Major / Reject-resubmit / Reject**.
 
-### Severity binds the recommendation
-
-The recommendation is a function of the findings, not a separate judgement made alongside
-them:
-
-| Highest severity present | Minimum recommendation |
-|---|---|
-| Fatal | Reject-resubmit or Reject |
-| Major | Major |
-| Minor only | Minor |
-| Optional / Praise only | Accept |
-
-A review may recommend **more** severely than the table requires, with a stated reason. It
-may not recommend less.
-
-A report carrying Major findings and recommending Accept is internally inconsistent: either
-those findings are not Major, or the recommendation is wrong. Resolve it before delivering
-and state which way it was resolved. Genre and publication status do not relax this —
-"Accept as a Brief Report within its narrow scope" while holding two Major findings is
-exactly the pattern this rule exists to stop.
-
 If the paper is already published, the recommendation vocabulary is retrospective: read
-*Major* as "would have required major revision", not as a live editorial decision. The
-binding is unchanged.
+*Major* as "would have required major revision", not as a live editorial decision.
+
+Do not resolve a mismatch between the findings and the recommendation by regrading a
+finding downward. If the recommendation feels too severe for the paper, that is a reason
+to re-examine the recommendation, not to soften a fault that survived the evidence. State
+the mismatch rather than dissolving it.
 
 State explicitly what would change the recommendation upward or downward.
 

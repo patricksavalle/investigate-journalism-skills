@@ -364,9 +364,23 @@ def score_conformance(output: str, skill: str) -> dict:
     return result
 
 
-# Phase 7 "Severity binds the recommendation": the recommendation is a function
-# of the findings. Measured 2026-08-10, three of five R1 runs carried two Major
-# findings each and recommended Minor revision, Accept, and Accept.
+# Severity-vs-recommendation coherence.
+#
+# This was briefly a hard rule in peer-review Phase 7 and is now REVERTED, so it
+# is reported as a diagnostic and never fails a run — the scorer must not enforce
+# a rule the library does not state.
+#
+# History, both measured 2026-08-10: with no binding, three of five R1 runs
+# carried two Major findings each and recommended Minor revision, Accept, and
+# Accept. With the binding, Major findings across five runs went 6 -> 0 and the
+# same fault was regraded down ("Ambiguity in patient-to-genome mapping" Major ->
+# "Incomplete patient-to-sample-to-genome traceability" Minor). The floor was
+# satisfied by suppressing findings rather than by raising recommendations, which
+# is worse: the mismatch was at least visible, the suppression is not.
+#
+# Keep measuring it. A rise in this number is the signal that the reverted rule,
+# or any replacement, is needed; a fall accompanied by falling Major counts is
+# the signal that a replacement is backfiring the same way.
 SEVERITY_FLOOR = {"Fatal": "Reject-resubmit", "Major": "Major", "Minor": "Minor"}
 
 
@@ -393,15 +407,16 @@ def _check_severity_binding(output: str, result: dict) -> None:
         return
     floor = SEVERITY_FLOOR[highest]
     result["checks"]["recommendation_floor"] = floor
+    # Diagnostic only — see the SEVERITY_FLOOR note. Never appended to failures.
     if rec is None:
-        result["failures"].append(
-            f"{counts[highest]} {highest} finding(s) present but no recommendation extracted"
-        )
+        result["checks"]["severity_coherence"] = "unknown (no recommendation extracted)"
     elif spine.index(rec) < spine.index(floor):
-        result["failures"].append(
-            f"recommendation '{rec}' is below the floor '{floor}' set by "
-            f"{counts[highest]} {highest} finding(s) — Phase 7 severity binding"
+        result["checks"]["severity_coherence"] = (
+            f"below floor: '{rec}' with {counts[highest]} {highest} finding(s) "
+            f"implying '{floor}'"
         )
+    else:
+        result["checks"]["severity_coherence"] = "coherent"
 
 
 # --------------------------------------------------------------------------
