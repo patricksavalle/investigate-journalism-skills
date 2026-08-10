@@ -13,3 +13,12 @@
 
 # Self-test outputs directory.
 self-test-results/
+
+# Raw eval runs. The harness and its scored summaries are tracked; the
+# per-run agent outputs are not.
+evals/runs/
+__pycache__/
+
+# Working files pulled during investigations — never tracked.
+/tmp_*
+/nomis_*.json
