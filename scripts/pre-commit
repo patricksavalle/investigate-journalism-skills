@@ -35,6 +35,9 @@ echo "pre-commit: scorer self-test..."
 echo "pre-commit: hook preflight regression..."
 "$PY" evals/test_hook_preflight.py || fail=1
 
+echo "pre-commit: trigger routing set..."
+"$PY" evals/trigger.py check || fail=1
+
 if [ "$fail" -ne 0 ]; then
     echo "" >&2
     echo "pre-commit: checks failed — commit aborted." >&2
