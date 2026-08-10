@@ -3,7 +3,8 @@
     "purpose": "Objective answer keys for review items. Each question is binary or single-fact and verifiable by anyone from the paper's own text, so the ground truth needs no severity judgement and no adjudication of a scientific dispute. A thorough review answers all of them; a shallow one misses some. That is the discrimination R1 cannot provide, because R1's paper is well-calibrated and its expected detection rate sits near 0.35 -- the worst place to see a change at n=5.",
     "why_not_a_faulted_paper": "R5 was first designed around a paper with an unambiguous fault. Two candidates were fetched and rejected on the same criterion, and the pattern is structural: a fault unambiguous enough that every reviewer grades it alike usually gets retracted (notorious), corrected (gone from the text), or stays contested. See items.md R5.",
     "scoring": "Per question: `correct` if the run asserts the key's answer, `incorrect` if it asserts the opposite, `unaddressed` if neither fires. Report all three -- a review that never raises a question is failing differently from one that gets it wrong.",
-    "authored": "2026-08-10"
+    "authored": "2026-08-10",
+    "pattern_revision": "2026-08-10: two patterns widened after the first baseline. Both misses were in the scorer, not the runs -- a verb outside the list ('not budgeted separately') and a negation that follows the term rather than preceding it ('Pre-registration: None'). Checked by reading every non-matching run before changing anything, because widening a pattern until the number improves is how a key gets fitted to its runs."
   },
   "R5": {
     "paper": "Jones J, Copi CJ, Starkman GD, Akrami Y, 'Strong Evidence Against a Statistically Isotropic Universe', arXiv:2310.12859v3",
@@ -25,7 +26,7 @@
       "blinding-or-preregistration": {
         "question": "Does the paper state that the analysis was blinded or pre-registered?",
         "answer": "No. Neither is mentioned anywhere.",
-        "correct": "(?i)(?:no|not|absent|without|neither)[^.\\n]{0,70}(?:blind\\w*|pre[- ]?regist\\w*)",
+        "correct": "(?i)(?:no|not|absent|without|neither)[^.\\n]{0,70}(?:blind\\w*|pre[- ]?regist\\w*)|(?:blind\\w*|pre[- ]?regist\\w*)[^.\\n]{0,40}:?\\s*(?:none|absent|not (?:stated|reported|mentioned|used))",
         "incorrect": "(?i)(?:analysis|study)[^.\\n]{0,30}(?:was|is)[^.\\n]{0,20}(?:blinded|pre[- ]?registered)"
       },
       "trials-count-quantified": {
@@ -43,7 +44,7 @@
       "systematics-separated": {
         "question": "Are systematic uncertainties reported separately from statistical ones?",
         "answer": "No. The analysis reports p-values from simulations; systematics are not broken out.",
-        "correct": "(?i)systematic\\w*[^.\\n]{0,80}(?:not (?:reported|separated|quantified|given|broken)|absent|no separate)|no[^.\\n]{0,40}systematic (?:uncertaint|error) budget",
+        "correct": "(?i)systematic\\w*[^.\\n]{0,80}(?:not (?:reported|separated|quantified|given|broken|budgeted)|absent|no separate)|no[^.\\n]{0,40}systematic[- ](?:uncertaint\\w*|error)[- ]?budget",
         "incorrect": "(?i)systematic (?:uncertainties|errors) (?:are|were) (?:reported|separated|quantified) separately"
       },
       "funding-disclosed": {
