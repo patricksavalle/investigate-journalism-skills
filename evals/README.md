@@ -37,6 +37,7 @@ a pointer to the SKILL.md text behind it.
 | `conformance` | Required sections from the skill's own template; warrant labels present; `(traced)` backed by a URL and access date and a Sources & Warrants section; Rule 10 requester references; whether the Self-Audit names specific phases rather than asserting symmetry flatly |
 | `reproducibility` | Verdict-label agreement across N runs of one item — exact and adjacent |
 | `symmetry` | Cited-source overlap and verdict distance across a prior-inverted pair, against `symmetric-adversarial-test.md`'s own ≥90% criterion |
+| `catalogue` | How much of a skill's lookup table a run actually reached — the number that has to be taken *before* a table moves into `references/` |
 
 ```bash
 python evals/score.py selftest
@@ -54,7 +55,30 @@ python evals/score.py reproducibility evals/runs/R1/
 python evals/score.py symmetry nordstream-A.md nordstream-B.md
 ```
 
+```bash
+python evals/score.py catalogue evals/runs/R3/ --catalogue io-patterns
+```
+
 The skill is inferred from the output's H1; pass `--skill` to override.
+
+## Trigger accuracy
+
+Ten skills with competing descriptions, and until now no instrument at all. The
+real failure is not a skill failing to fire — it is a request landing on the
+wrong sibling, which a per-skill boolean set cannot see. So
+[`trigger-eval.json`](trigger-eval.json) records the intended **routing**: each
+query names the skill that should win, or `null`.
+
+```bash
+python evals/trigger.py check
+```
+
+`trigger.py emit <skill>` projects the routing set down to the per-skill boolean
+format Anthropic's description optimiser expects, treating every other skill's
+positives as that skill's near-miss negatives — the pressure that stops a
+widening description from quietly stealing its neighbour's triggers.
+
+Optimise the descriptions as a set, never one at a time, for that reason.
 
 ## Running an item
 

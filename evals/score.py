@@ -549,6 +549,115 @@ def extract_verdict(output: str, skill: str) -> str | None:
     return None
 
 
+# --------------------------------------------------------------------------
+# Catalogue reach
+# --------------------------------------------------------------------------
+
+# Long lookup tables are the obvious candidates to move into references/ under
+# progressive disclosure, and moving them is the one restructuring step that
+# could quietly cost detection: the 2026-08-10 ethics-row result showed a single
+# checklist row moving detection from 2/5 runs to 5/5 purely by being present.
+#
+# So measure reach before moving. Entries are derived from the SKILL.md section
+# at runtime, per this file's design rule -- if the table is later moved to a
+# reference file, point the locator there and the same numbers stay comparable.
+CATALOGUES = {
+    # investigative-reasoning Phase 2e: 18 rows, "| 1 | **False Flag** | ..."
+    "io-patterns": (
+        "investigative-reasoning",
+        r"###\s+2e\s+.*Influence-Operation",
+        r"^---\s*$",
+    ),
+    # fallacy-...: the taxonomy proper, Phase 2 (formal) through Phase 8
+    # (discourse-structural). Phase 9 grades what those phases found, so it is
+    # the boundary.
+    "fallacies": (
+        "fallacy-bias-and-manipulation-analysis",
+        r"##\s+Phase 2\s+.*Formal Fallacies",
+        r"^##\s+Phase 9\b",
+    ),
+}
+
+BOLD_CELL_RE = re.compile(r"\*\*(.+?)\*\*")
+# "**4a. Belief-formation.** Confirmation - disconfirmation - ..." : the label is
+# not an entry, so it comes off before the list is split.
+LIST_LABEL_RE = re.compile(r"^\*\*[^*]+\*\*\s*")
+COLUMN_HEADERS = {
+    "fallacy", "signal", "pattern", "technique", "description", "schema",
+    "quick test", "concern", "effect", "bias", "mechanism", "mitigation",
+    "category", "key questions", "source", "trust", "tier", "evidence type",
+}
+
+
+def catalogue_entries(name: str) -> tuple[str, list[str]]:
+    """Entry names in a skill's lookup table, read from the SKILL.md.
+
+    Derived at runtime rather than hardcoded, per this file's design rule. If a
+    table moves to a reference file, repoint the locator and the numbers stay
+    comparable across the move -- which is the whole purpose of the measurement.
+    """
+    if name not in CATALOGUES:
+        raise SystemExit(
+            f"error: unknown catalogue {name!r} (have: {', '.join(CATALOGUES)})"
+        )
+    skill, start_re, stop_re = CATALOGUES[name]
+    text = read_text(SKILLS_DIR / skill / "SKILL.md")
+    m = re.search(start_re, text)
+    if not m:
+        raise SystemExit(f"error: catalogue section for {name!r} not found in {skill}")
+    rest = text[m.end():]
+    stop = re.search(stop_re, rest, re.M)
+    body = rest[: stop.start()] if stop else rest
+
+    entries: set[str] = set()
+    for raw in body.splitlines():
+        line = raw.strip()
+        if line.startswith("|") and set(line) - set("|-: "):
+            cells = [c.strip() for c in line.strip("|").split("|")]
+            # In every one of these tables the entry name is the first column,
+            # except where that column is a row number. Reading further right
+            # picks up the "Signal" or "Description" column as if it were an
+            # entry ("Attack person, not argument"), which inflates the count
+            # and makes the reach denominator meaningless.
+            cell = cells[0] if cells and not cells[0].isdigit() else (
+                cells[1] if len(cells) > 1 else ""
+            )
+            bold = BOLD_CELL_RE.findall(cell)
+            if bold:
+                entries.update(b.strip() for b in bold)
+            else:
+                cell = re.sub(r"\(.*?\)", "", cell).strip()
+                if cell and 1 <= len(cell.split()) <= 6:
+                    entries.add(cell)
+        elif "·" in line:
+            for part in LIST_LABEL_RE.sub("", line).split("·"):
+                part = re.sub(r"\(.*?\)", "", part).strip(" *.·")
+                if part and 1 <= len(part.split()) <= 6:
+                    entries.add(part)
+
+    cleaned = {
+        e for e in entries
+        if len(e) > 3 and e.lower() not in COLUMN_HEADERS and not e.startswith("#")
+    }
+    return skill, sorted(cleaned)
+
+
+def score_catalogue(path: Path, name: str) -> dict:
+    output = read_text(path)
+    low = output.lower()
+    skill, entries = catalogue_entries(name)
+    named = [e for e in entries if e.lower() in low]
+    return {
+        "run": str(path),
+        "catalogue": name,
+        "source_skill": skill,
+        "entries_in_catalogue": len(entries),
+        "entries_named": len(named),
+        "reach": round(len(named) / len(entries), 3) if entries else 0.0,
+        "named": named,
+    }
+
+
 def verdict_distance(skill: str, a: str, b: str) -> int | None:
     spine, _ = VERDICT_SPINE.get(skill, ([], []))
     if a in spine and b in spine:
@@ -747,6 +856,23 @@ def selftest() -> int:
                 f"got {got!r} from {line[:60]!r}"
             )
 
+    # Catalogue extraction. The counts are the denominator of the reach metric,
+    # so a table edit that silently breaks parsing would move the number without
+    # anything having changed in a run. Phase 2e has exactly 18 numbered rows.
+    _, io = catalogue_entries("io-patterns")
+    if len(io) != 18:
+        failures.append(f"io-patterns catalogue: expected 18 entries, got {len(io)}")
+    if "False Flag" not in io or "Limited Hangout" not in io:
+        failures.append("io-patterns catalogue is missing a known row")
+    # A range, not a count: Phases 2-8 name roughly 200 items and the taxonomy is
+    # meant to grow. The bound catches a parsing break, not an editorial change.
+    _, fal = catalogue_entries("fallacies")
+    if not 150 <= len(fal) <= 300:
+        failures.append(f"fallacies catalogue: {len(fal)} entries, outside 150-300")
+    for expect in ("Motte-and-Bailey", "Isolated Demand for Rigour", "Gish Gallop"):
+        if expect not in fal:
+            failures.append(f"fallacies catalogue is missing {expect!r}")
+
     # Rule 10 must not fire on the legitimate warrant label.
     ok = score_conformance(
         "# Peer Review: X\n\nFinding (user-supplied — unverified) stands.\n",
@@ -832,6 +958,14 @@ def main(argv: Iterable[str] | None = None) -> int:
     s.add_argument("run_b", type=Path)
     s.add_argument("--skill")
 
+    c = sub.add_parser(
+        "catalogue", help="how much of a skill's lookup table a run reached"
+    )
+    c.add_argument("run", type=Path, help="a run .md, or a directory of them")
+    c.add_argument(
+        "--catalogue", required=True, choices=sorted(CATALOGUES), metavar="NAME"
+    )
+
     sub.add_parser("selftest", help="check the scorer against the live skill files")
 
     args = p.parse_args(list(argv) if argv is not None else None)
@@ -854,6 +988,34 @@ def main(argv: Iterable[str] | None = None) -> int:
         res = score_symmetry(args.run_a, args.run_b, args.skill)
         emit(res)
         return 0 if res["meets_90pct_overlap"] else 1
+
+    if args.cmd == "catalogue":
+        runs = (
+            sorted(args.run.glob("*.md")) if args.run.is_dir() else [args.run]
+        )
+        results = [score_catalogue(r, args.catalogue) for r in runs]
+        if len(results) == 1:
+            emit(results[0])
+        else:
+            reaches = [r["reach"] for r in results]
+            union: set[str] = set()
+            for r in results:
+                union |= set(r["named"])
+            emit(
+                {
+                    "catalogue": args.catalogue,
+                    "runs": len(results),
+                    "entries_in_catalogue": results[0]["entries_in_catalogue"],
+                    "mean_reach": round(sum(reaches) / len(reaches), 3),
+                    "min_reach": min(reaches),
+                    "max_reach": max(reaches),
+                    "union_named": sorted(union),
+                    "per_run": {r["run"]: r["entries_named"] for r in results},
+                }
+            )
+        # Reporting only. There is no pass threshold: the number is meaningful
+        # against the same number before a restructuring, not on its own.
+        return 0
 
     return 0
 

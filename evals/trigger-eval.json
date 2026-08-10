@@ -1,0 +1,112 @@
+[
+  {
+    "query": "can you take a look at this paper and tell me if the stats hold up? it's a cohort study on ultra-processed food and depression, n=about 30k, they're reporting a hazard ratio of 1.4 and the abstract says 'increases risk'. doi is 10.1001/jamanetworkopen.2023.34770",
+    "should_trigger": "peer-review",
+    "why": "methods and causal-language audit of the paper itself"
+  },
+  {
+    "query": "the Guardian wrote this up as 'junk food causes depression, study finds' and linked the JAMA paper. is the article fair to what the study actually showed?",
+    "should_trigger": "journalistic-article-review",
+    "why": "near-miss for peer-review: the object is the article, not the paper"
+  },
+  {
+    "query": "is it true that ultra-processed food causes depression? just the claim, i don't have a specific study in mind",
+    "should_trigger": "scientific-fact-classification",
+    "why": "near-miss for peer-review: a claim detached from any paper"
+  },
+  {
+    "query": "my editor wants me to run this before we publish. 2200 words, three anonymous sources at the ministry, one named whistleblower, no response from the department. does it stand up?",
+    "should_trigger": "journalistic-article-review",
+    "why": "sourcing architecture and right of reply, no explicit 'review' verb for a paper"
+  },
+  {
+    "query": "who actually funds the Institute for Fiscal Transparency? they keep getting quoted in the coverage and i can't find a donor list anywhere. domain was registered 2019 i think",
+    "should_trigger": "osint-research",
+    "why": "identifier and funding trace on an organisation"
+  },
+  {
+    "query": "there's something off about how fast the attribution came out on this one. three days from incident to named suspect, and the suspect had no prior capability anyone can point to. what am i looking at here",
+    "should_trigger": "investigative-reasoning",
+    "why": "contested event, competing explanations; also a legitimate intuitive-thinking Phase 0"
+  },
+  {
+    "query": "ok i have a gut feeling this dataset is being cherry-picked but i genuinely can't articulate why yet. how do i turn that into something i can actually check",
+    "should_trigger": "intuitive-thinking",
+    "why": "explicit hunch with no checkable claim yet"
+  },
+  {
+    "query": "we concluded last month that the outage was a config error. someone just sent me the vendor's post-incident report which says a firmware regression. does that change our finding?",
+    "should_trigger": "belief-revision",
+    "why": "prior verdict plus new evidence"
+  },
+  {
+    "query": "read this transcript of the minister's press conference and tell me what rhetorical moves he's using to avoid the question about the contract",
+    "should_trigger": "fallacy-bias-and-manipulation-analysis",
+    "why": "rhetoric audit of supplied text"
+  },
+  {
+    "query": "our whole roadmap assumes enterprise customers need SSO before they'll sign. i'm not sure anyone ever checked that. can you pull the argument apart",
+    "should_trigger": "first-principles-thinking",
+    "why": "inherited assumption, no empirical claim to classify"
+  },
+  {
+    "query": "i want to write this up in Dutch for publication. the analysis is done and warrant-labelled, i just need the piece",
+    "should_trigger": "publisher-nl",
+    "why": "writing a finished analysis, explicitly not research"
+  },
+  {
+    "query": "can you verify where and when this photo of the convoy was taken? shadows suggest late afternoon, there's a road sign partly visible",
+    "should_trigger": "osint-research",
+    "why": "geolocation and chronolocation"
+  },
+  {
+    "query": "the preprint says its results 'confirm' the mechanism but as far as i can tell they only measured a surrogate marker. is that a fair reading of what they did?",
+    "should_trigger": "peer-review",
+    "why": "inference gap between measurement and claim"
+  },
+  {
+    "query": "both the government and the opposition are citing the same OECD figure to opposite ends. which of them is reading it right?",
+    "should_trigger": "scientific-fact-classification",
+    "why": "near-miss for fallacy analysis: the question is the figure's status, not the rhetoric"
+  },
+  {
+    "query": "here's a 40-page PDF of the tender documents. summarise what's in it",
+    "should_trigger": null,
+    "why": "negative: plain summarisation, no audit requested"
+  },
+  {
+    "query": "what's the current consensus on intermittent fasting? just curious, not writing anything",
+    "should_trigger": null,
+    "why": "negative: casual lookup; the classification machinery would be theatre here"
+  },
+  {
+    "query": "find me three recent papers on microplastics in drinking water",
+    "should_trigger": null,
+    "why": "negative: literature search, not review — near-miss for peer-review"
+  },
+  {
+    "query": "fix the citation formatting in this manuscript, they're a mix of APA and Vancouver",
+    "should_trigger": null,
+    "why": "negative: near-miss for peer-review on 'manuscript' and 'citation'"
+  },
+  {
+    "query": "what's the email address for the press office at the environment ministry?",
+    "should_trigger": null,
+    "why": "negative: near-miss for osint-research — a lookup, not an investigation"
+  },
+  {
+    "query": "proofread this article for typos and tighten the intro",
+    "should_trigger": null,
+    "why": "negative: near-miss for journalistic-article-review on 'article'"
+  },
+  {
+    "query": "our sprint retro concluded velocity dropped because of the on-call rotation. write that up for the team wiki",
+    "should_trigger": null,
+    "why": "negative: near-miss for first-principles/belief-revision — a causal claim, but the ask is documentation"
+  },
+  {
+    "query": "translate this Dutch press release into English",
+    "should_trigger": null,
+    "why": "negative: near-miss for publisher-nl on the language cue"
+  }
+]
