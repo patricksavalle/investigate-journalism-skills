@@ -113,6 +113,62 @@ VERDICT_SPINE = {
     "osint-research": ([], []),
 }
 
+# Surface forms a run may use for a spine label, as (pattern, canonical).
+#
+# The spine is quoted from each skill's own verdict vocabulary, but a run writes
+# prose, not vocabulary. investigative-reasoning is where the gap bites: the
+# template offers "Hypothesis A stronger", and both S1 runs instead opened the
+# verdict with the hypothesis and then named it — "Hypothesis A (a
+# Ukrainian-organized operative team ...)". Both scored None and had to be read
+# by hand, which is what blocked S1 from being scored mechanically.
+#
+# Aliases are anchored deliberately. Every investigation report names both
+# hypotheses many times, including on the verdict line, so a bare
+# "Hypothesis B" mention must not be able to claim the verdict away from
+# "Hypothesis A". An alias fires only at the head of the verdict value, or on
+# an explicit comparative ("Hypothesis B is better supported").
+# A hypothesis, however the run abbreviates it: "Hypothesis A", "H-A", "H_A".
+_HYP = r"(?:Hypothesis\s+|H[-_‑])%s\b"
+
+# Comparative verdict vocabulary. "better" is deliberately required to carry an
+# evidential complement — a bare "better" appears in ordinary prose ("Hypothesis
+# B explains the timing anomaly better") and must not read as a verdict.
+_COMP = (
+    r"(?:strong(?:er|est)"
+    r"|better[- ](?:evidenced|supported|attested|corroborated|documented|sourced)"
+    r"|more strongly (?:supported|evidenced)"
+    r"|carries the evidence)"
+)
+
+# Phrasings that decline to choose. Checked on the same earliest-position rule,
+# so a verdict that opens by refusing the choice beats a hypothesis named later.
+_UNDECIDABLE = (
+    r"(?:insufficient to favou?r either"
+    r"|(?:does not support|insufficient to) (?:reach(?:ing)?|render(?:ing)?) a confident verdict"
+    r"|no confident verdict"
+    r"|neither hypothesis is"
+    r"|evidence is insufficient"
+    r"|cannot be resolved on"
+    r"|contested between"
+    r"|undecidable)"
+)
+
+VERDICT_ALIASES: dict[str, list[tuple[str, str]]] = {
+    "investigative-reasoning": [
+        # Head of the verdict value: "Hypothesis A (a Ukrainian team) is ..."
+        (r"^\W*" + _HYP % "A", "Hypothesis A stronger"),
+        (r"^\W*" + _HYP % "B", "Hypothesis B stronger"),
+        # Comparative anywhere: the run names a hypothesis, then rates it. The
+        # window is wide because runs park a long parenthetical gloss between
+        # the two ("Hypothesis A (a Ukrainian-organized operative team, run
+        # through a military chain of command) is substantially better
+        # evidenced than Hypothesis B"). It stops at a sentence boundary.
+        (_HYP % "A" + r"[^.\n]{0,200}?\b" + _COMP + r"\b", "Hypothesis A stronger"),
+        (_HYP % "B" + r"[^.\n]{0,200}?\b" + _COMP + r"\b", "Hypothesis B stronger"),
+        (r"\b" + _UNDECIDABLE + r"\b", "undecidable"),
+    ],
+}
+
 # The six project warrant labels (CLAUDE.md "Core rule").
 WARRANT_LABELS = [
     "(traced)",
@@ -424,7 +480,11 @@ def _check_severity_binding(output: str, result: dict) -> None:
 # --------------------------------------------------------------------------
 
 
-def first_label(text: str, vocab: list[str]) -> str | None:
+def first_label(
+    text: str,
+    vocab: list[str],
+    aliases: Iterable[tuple[str, str]] = (),
+) -> str | None:
     """The label a passage asserts: earliest by position, longest on a tie.
 
     Verdict lines routinely name more than one label — a peer review that lands
@@ -434,13 +494,31 @@ def first_label(text: str, vocab: list[str]) -> str | None:
     length instead makes the longer label win regardless of which is being
     claimed. The length tie-break still matters for prefixes, so that
     "Reject-resubmit" is not read as "Reject".
+
+    `aliases` are (pattern, canonical) surface forms per VERDICT_ALIASES. They
+    compete on the same earliest-position rule, and the length tie-break is on
+    the matched span, so a literal spine label beats an alias that starts at the
+    same offset — "Hypothesis A stronger" resolves as itself, not via the
+    shorter "Hypothesis A" alias.
     """
     hits = []
     for label in vocab:
         m = re.search(re.escape(label), text, re.I)
         if m:
-            hits.append((m.start(), -len(label), label))
+            hits.append((m.start(), -(m.end() - m.start()), label))
+    for pattern, canonical in aliases:
+        m = re.search(pattern, text, re.I)
+        if m:
+            hits.append((m.start(), -(m.end() - m.start()), canonical))
     return min(hits)[2] if hits else None
+
+
+# Strips the "**Verdict:**" / "- **Recommendation:**" prefix so an anchored
+# alias sees the head of the *value*, not the head of the line.
+VERDICT_MARKER_RE = re.compile(
+    r"^\s*[-*]?\s*\*\*(?:Verdict|Recommendation|Status|Classification)[^:]*:?\*\*\s*:?\s*",
+    re.I,
+)
 
 
 def extract_verdict(output: str, skill: str) -> str | None:
@@ -448,6 +526,7 @@ def extract_verdict(output: str, skill: str) -> str | None:
     vocab = spine + off_spine
     if not vocab:
         return None
+    aliases = VERDICT_ALIASES.get(skill, [])
 
     # Prefer an explicit "Verdict:" / "Recommendation:" / "Status:" line.
     lines = [
@@ -456,13 +535,17 @@ def extract_verdict(output: str, skill: str) -> str | None:
         if re.search(r"^\s*[-*]?\s*\*\*(?:Verdict|Recommendation|Status|Classification)", ln, re.I)
     ]
     for line in lines:
-        label = first_label(line, vocab)
+        label = first_label(VERDICT_MARKER_RE.sub("", line), vocab, aliases)
         if label:
             return label
-    # Fall back to the Summary block.
+    # Fall back to the Summary block. Head-anchored aliases are dropped here:
+    # the anchor means "head of the verdict value", and a Summary block has no
+    # such position — applying them to an arbitrary line would let any sentence
+    # opening with "Hypothesis A" claim the verdict.
     summary = "\n".join(ln for ln, _, _ in section_lines(output, "Summary"))
     if summary:
-        return first_label(summary, vocab)
+        unanchored = [(p, c) for p, c in aliases if not p.startswith("^")]
+        return first_label(summary, vocab, unanchored)
     return None
 
 
@@ -610,6 +693,59 @@ def selftest() -> int:
     )
     if extract_verdict(sample, "peer-review") != "Major":
         failures.append("verdict extraction failed on peer-review sample")
+
+    # investigative-reasoning verdict aliases. The first case is the S1 form
+    # that scored None and had to be read by hand; the rest guard the anchor.
+    ir_cases = [
+        (
+            "- **Verdict:** Hypothesis A (a Ukrainian-organized operative team) "
+            "is the better-supported account.",
+            "Hypothesis A stronger",
+        ),
+        ("- **Verdict:** Hypothesis B stronger", "Hypothesis B stronger"),
+        (
+            "- **Verdict:** Hypothesis A stronger; Hypothesis B is not supported.",
+            "Hypothesis A stronger",
+        ),
+        (
+            "- **Verdict:** On the fetched evidence the case is undecidable.",
+            "undecidable",
+        ),
+        (
+            "- **Verdict:** evidence is insufficient to favour either hypothesis",
+            "undecidable",
+        ),
+        # The S1/A form: a long parenthetical between the hypothesis and its rating.
+        (
+            "- **Verdict:** On current public evidence, Hypothesis A (a Ukrainian "
+            "team, run through a military chain of command) is substantially "
+            "better evidenced than Hypothesis B (a US Navy operation, per Hersh).",
+            "Hypothesis A stronger",
+        ),
+        # The nordstream-A form: H-A/H-B shorthand, and a refusal to choose that
+        # opens the verdict and must beat the hypotheses named after it.
+        (
+            "- **Verdict:** **The audit chain does not support reaching a "
+            "confident verdict between H-A and H-B on currently public "
+            "evidence.** H-A is the position toward which prosecution points.",
+            "undecidable",
+        ),
+        ("- **Verdict:** H-B is better supported on the fetched record.", "Hypothesis B stronger"),
+        # The rival named mid-sentence must not claim the verdict.
+        (
+            "- **Verdict:** Hypothesis A stronger, though Hypothesis B explains "
+            "the timing anomaly better.",
+            "Hypothesis A stronger",
+        ),
+    ]
+    for line, expected in ir_cases:
+        doc = f"# Event Investigation: X\n\n## Summary\n{line}\n"
+        got = extract_verdict(doc, "investigative-reasoning")
+        if got != expected:
+            failures.append(
+                f"investigative-reasoning verdict alias: expected {expected!r}, "
+                f"got {got!r} from {line[:60]!r}"
+            )
 
     # Rule 10 must not fire on the legitimate warrant label.
     ok = score_conformance(
