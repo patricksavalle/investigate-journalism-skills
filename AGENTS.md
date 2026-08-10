@@ -2,7 +2,7 @@
 
 This repo contains analytical skills for journalism, investigation, and claim-auditing. The risk these skills exist to mitigate — reasoning from memory, deferring to inherited narrative, laundering training-data bias as analysis — is **easy for an AI to reproduce silently**.
 
-This file sets the discipline. A `Stop` hook in `.Codex/settings.json` provides automated enforcement (see "Enforcement" below).
+This file sets the discipline. A `Stop` hook registered in `.codex/hooks.json` provides automated enforcement (see "Enforcement" below).
 
 ## Core rule: warrant on every load-bearing claim
 
@@ -145,11 +145,11 @@ Analytical output is written as a **standalone, context-free document**. The rea
 
 ## Enforcement
 
-A `Stop` hook at `.Codex/hooks/check-research-warrant.ps1` inspects the assistant's just-completed turn. If the output contains multiple analytical-framing markers (the language of investigative-reasoning, journalistic-article-review, peer-review, scientific-fact-classification, etc.) **and** the turn made no source-fetch calls, the hook blocks the stop and feeds back a request to either fetch sources or label claims `(memory — unverified)`.
+A `Stop` hook at `.codex/hooks/check-research-warrant.ps1` inspects the assistant's just-completed turn. If the output contains multiple analytical-framing markers (the language of investigative-reasoning, journalistic-article-review, peer-review, scientific-fact-classification, etc.) **and** the turn made no source-fetch calls, the hook blocks the stop and feeds back a request to either fetch sources or label claims `(memory — unverified)`.
 
 The hook is intentionally conservative: it only fires when output looks like *produced* analysis, not when the conversation is *discussing* the methodology. False positives can be cleared by either adding a fetch, adding explicit warrant labels, or — for genuinely memory-only output the user has asked for — adding `(memory — unverified)` somewhere visible.
 
-To inspect or disable: open `/hooks` in the Codex UI, or edit `.Codex/settings.json`.
+To inspect or disable: edit `.codex/hooks.json`.
 
 ## The deeper point
 

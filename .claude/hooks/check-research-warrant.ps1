@@ -138,6 +138,43 @@ Hook at .claude/hooks/check-research-warrant.ps1. Inspect via /hooks; disable in
         exit 0
     }
 
+    # (traced) is a per-session claim, and CLAUDE.md requires the URL and access
+    # date to be stated with it. A report that asserts traced findings and
+    # records no URL anywhere cannot be re-checked by anyone; its source overlap
+    # with a second run is also uncomputable, which is what blocked the S1
+    # symmetry measurement. evals/score.py hard-fails this after the fact. Here
+    # it fires at generation time, while the report can still be fixed.
+    #
+    # Deliberately above the $sourceFetchSeen exit. The failure is not "no
+    # fetching happened" but "the fetches were not written down" -- the S1 run
+    # that produced 49 KB with zero URLs did search the web.
+    #
+    # Gated to produced reports rather than conversations about the discipline:
+    # a report-shaped anchor plus at least three (traced) uses. A methodology
+    # discussion names the label once or twice and emits no report anchor.
+    $tracedUses = ([regex]::Matches($text, '\(traced')).Count
+    $anyUrl = $text -match 'https?://'
+    $reportAnchor = $text -match '(?m)^#\s+(?:Event Investigation|Peer Review|Claim Classification|Journalistic Article Review|OSINT|Belief Revision|First Principles Analysis|Fallacy)' -or
+                    $text -match '(?m)^##\s+Sources\s*&\s*Warrants\b' -or
+                    $text -match '(?im)^\s*[-*]?\s*\*\*(?:Verdict|Recommendation):\*\*'
+
+    if ($tracedUses -ge 3 -and -not $anyUrl -and $reportAnchor) {
+        $reason = @"
+Research-discipline check blocked this stop.
+
+The just-completed turn uses (traced) $tracedUses times, but the output contains no URL at all. (traced) is a per-session claim: CLAUDE.md requires the URL and access date to be stated, so that a reader can re-check the chain and so that two runs of the same item can be compared on their sources.
+
+Before stopping, do one of:
+  1. State the URL and access date with each traced claim, and record them in a `## Sources & Warrants` table (URL, access date, publication date, warrant, funding / ownership / mandate / alignment).
+  2. Where the chain was not actually followed to a primary this session, relabel the claim `(memory - unverified)`, or `(deferred to consensus)` naming the consensus mechanism.
+
+Hook at .claude/hooks/check-research-warrant.ps1. Inspect via /hooks; disable in .claude/settings.json.
+"@
+
+        @{ decision = 'block'; reason = $reason } | ConvertTo-Json -Compress | Write-Output
+        exit 0
+    }
+
     if ($sourceFetchSeen) { exit 0 }
     if ($text -match '\(memory\s*[-—]\s*unverified\)') { exit 0 }
 

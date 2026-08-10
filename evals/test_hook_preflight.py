@@ -1,10 +1,17 @@
 #!/usr/bin/env python3
-"""Regression test for the Stop hook's article-review preflight.
+"""Regression test for the Stop hook's two preflight branches.
 
-The preflight (CLAUDE.md Rule 0a) must block a journalistic article review that
-does not record original-article access, and must not fire on anything else --
-including ordinary reports that happen to use a "## Findings" heading, and
-conversations that merely discuss the review method.
+**Article-review preflight** (CLAUDE.md Rule 0a) must block a journalistic
+article review that does not record original-article access, and must not fire
+on anything else -- including ordinary reports that happen to use a "## Findings"
+heading, and conversations that merely discuss the review method.
+
+**Traced-without-URL preflight** (CLAUDE.md "Strictness on (traced)") must block
+a report that asserts traced findings while recording no URL anywhere, and must
+not fire on a report that records its URLs or on a discussion of the label. This
+branch sits above the source-fetch exit, so cases that exercise it declare a
+fetch -- the failure it catches is not "no fetching happened" but "the fetches
+were not written down", which is what the S1 run did.
 
 Feeds synthetic Stop payloads to the hook and asserts block / no-block.
 
@@ -27,8 +34,13 @@ HOOKS = [
     REPO_ROOT / ".codex" / "hooks" / "check-research-warrant.ps1",
 ]
 
-# (name, assistant turn text, must_block)
-CASES: list[tuple[str, str, bool]] = [
+# (name, assistant turn text, must_block[, tool_names_used_this_turn])
+#
+# The optional fourth element simulates tool_use blocks in the turn. Supplying a
+# fetch tool makes the source-fetch exit fire, which isolates the branches that
+# sit above it -- without it, a case could "pass" on the generic no-fetch block
+# and prove nothing about the branch it was written for.
+CASES: list[tuple] = [
     (
         "review with a strong template heading, no access line",
         """
@@ -144,21 +156,69 @@ reaches a Journalistic Verdict. Right of reply is checked in phase 2.
 """,
         False,
     ),
+    # --- traced-without-URL branch -----------------------------------------
+    (
+        "investigation asserting (traced) with no URL anywhere",
+        """
+# Event Investigation: Pipeline Rupture
+
+## Summary
+- **Verdict:** Hypothesis A stronger
+
+## Red Flags
+The salvage vessel was in the area with its transponder off `(traced)`.
+Naval experts called the platform implausible `(traced)`.
+The prosecutor's filing names a chartered yacht `(traced)`.
+""",
+        True,
+        ("WebSearch",),
+    ),
+    (
+        "same report, URLs recorded in a Sources & Warrants table",
+        """
+# Event Investigation: Pipeline Rupture
+
+## Summary
+- **Verdict:** Hypothesis A stronger
+
+## Red Flags
+The salvage vessel was in the area `(traced)`. Experts dissented `(traced)`.
+The prosecutor's filing names a chartered yacht `(traced)`.
+
+## Sources & Warrants
+| Finding | Source | URL | Access date | Warrant |
+|---|---|---|---|---|
+| Yacht charter | GBA | https://generalbundesanwalt.de/x | 2026-08-10 | (traced) |
+""",
+        False,
+        ("WebSearch",),
+    ),
+    (
+        "discussion of the (traced) label with no report anchor",
+        """
+The rule is that `(traced)` is per-session. A turn that writes `(traced)` and
+records no URL cannot be re-checked, so `(traced)` without a URL is the defect
+the scorer hard-fails.
+""",
+        False,
+        ("WebSearch",),
+    ),
 ]
 
 
-def invoke(hook: Path, text: str, workdir: Path) -> bool:
+def invoke(hook: Path, text: str, workdir: Path, tools: tuple[str, ...] = ()) -> bool:
     """Run the hook on a one-turn transcript; True if it blocked the stop."""
     transcript = workdir / "t.jsonl"
+    blocks: list[dict] = [
+        {"type": "tool_use", "name": name, "input": {}} for name in tools
+    ]
+    blocks.append({"type": "text", "text": text})
     transcript.write_text(
         "\n".join(
             json.dumps(x)
             for x in (
                 {"type": "user", "message": {"content": "do the thing"}},
-                {
-                    "type": "assistant",
-                    "message": {"content": [{"type": "text", "text": text}]},
-                },
+                {"type": "assistant", "message": {"content": blocks}},
             )
         ),
         encoding="utf-8",
@@ -187,16 +247,18 @@ def main(argv: list[str]) -> int:
                 print(f"error: no hook at {hook}")
                 return 2
             print(f"hook: {hook.relative_to(REPO_ROOT)}")
-            for name, text, must_block in CASES:
-                blocked = invoke(hook, text, workdir)
+            for case in CASES:
+                name, text, must_block = case[:3]
+                tools = case[3] if len(case) > 3 else ()
+                blocked = invoke(hook, text, workdir, tools)
                 ok = blocked == must_block
                 failures += not ok
                 mark = "ok  " if ok else "FAIL"
                 print(f"  {mark} blocked={blocked!s:5} want={must_block!s:5}  {name}")
     print(
-        "article-review preflight: pass"
+        "hook preflight: pass"
         if not failures
-        else f"article-review preflight: {failures} failure(s)"
+        else f"hook preflight: {failures} failure(s)"
     )
     return 0 if not failures else 1
 
