@@ -123,6 +123,66 @@ example. No item invents a fact.
 - **fails if:** reach falls after the taxonomy moves to `references/`, or if
   fewer than three of the four planted moves are named in a majority of runs.
 
+## R5 — peer-review on an unambiguously faulted paper *(slot — needs a source-selection pass)*
+
+- **skill:** `peer-review`
+- **runs:** 5
+- **scoring:** `reproducibility` for the recommendation, `severity` for
+  `share_of_runs` on Major.
+
+**Why the slot exists.** R1 is the only peer-review item, and Zhu 2020 is a
+*well-calibrated* paper: it hedges its own causal claim, carries an explicit
+Koch's-postulates disclaimer, and its faults are reporting gaps. So "is this a
+Major?" is genuinely close, and R1's severity numbers conflate two different
+things — *the skill grades inconsistently* and *this paper sits on the boundary*.
+Across four builds measured 2026-08-10, runs producing at least one Major ranged
+0.0–0.6 with no build clearly separable from its neighbour. A second item whose
+correct grading is not in doubt is what separates those.
+
+**Selection criteria.** The paper must have:
+
+1. Open full text a run can fetch (PMC or a fully open journal).
+2. A fault **visible in the paper's own text** — a design/claim mismatch, a
+   conclusion the fully-adjusted result does not support, a named standard
+   invoked but not met. Not fraud or fabricated data: those are not findable by a
+   text-only review, which is what this skill does.
+3. Independent documentation of the fault — a published comment, correction, or
+   expression of concern — so the item's ground truth is external rather than
+   produced by this toolbox.
+4. Low political charge, so the item measures severity calibration rather than
+   the analyst's priors. S2 is where political symmetry gets tested.
+5. Not notorious. A famous retraction tests recall, not review.
+
+**Candidate evaluated and rejected, 2026-08-10.** Xu et al., "Association between
+serum estradiol levels and cognitive function in older women: a cross-sectional
+analysis", *Front Aging Neurosci* 2024, `10.3389/fnagi.2024.1356791` `(traced)`
+<https://www.frontiersin.org/journals/aging-neuroscience/articles/10.3389/fnagi.2024.1356791/full>,
+accessed 2026-08-10. It has an independent published commentary raising sample-size,
+representativeness, covariate-definition and multicollinearity concerns `(traced)`
+<https://pmc.ncbi.nlm.nih.gov/articles/PMC12129912/>, accessed 2026-08-10 —
+criterion 3 satisfied.
+
+Rejected on criterion 2. The paper uses association language throughout and states
+outright that it "could not establish a cause-and-effect relationship", and its
+fully-adjusted continuous term is significant (β 0.40, 95% CI 0.11–0.70). Its
+weaknesses — no sample-size calculation, 78.95% non-Hispanic White, a
+fully-adjusted tertile comparison that crosses zero while the abstract reports the
+effect unqualified — are all *arguable*, which makes it a second borderline case
+rather than the contrast this slot needs.
+
+> **Fetch-fidelity note, worth generalising.** A first pass reported that
+> coefficient as "0.61 (0.87, 6.34)" — a point estimate outside its own interval,
+> which would have been an unambiguous internal inconsistency and a tempting
+> basis for this item. The real interval is (−0.87, 6.34); a lossy fetch had
+> dropped the minus sign. The item would have been built on a fabricated fault.
+> Rule 3 exists for this: when a number is load-bearing, read it in the primary,
+> not in a summary of the primary — including a summary produced by your own
+> tooling.
+
+**Status:** unpopulated. Per this file's rule on adding items, the band cannot be
+stated without fetching, and the selection is a judgement call that should not be
+made by the pass that scores it.
+
 ## S2 — mirrored-case pair *(slot — needs a source-selection pass)*
 
 - **skill:** `journalistic-article-review`
