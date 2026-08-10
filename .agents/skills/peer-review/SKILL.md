@@ -297,8 +297,25 @@ Check:
 | Methods | Protocol detail sufficient for reproduction and independent replication |
 | Materials | Reagents, suppliers, catalogue numbers, corpus/data versions, survey instrument |
 | Pre-registration | Present, followed, deviations declared |
+| Ethics and consent | For human- or animal-subjects work: named approving body, approval or waiver basis, and consent status, stated in the article |
 | COI | Financial, institutional, ideological, author contribution, funder role |
 | Openness limits | Paywalls, inaccessible supplements, unavailable data, undisclosed materials |
+
+**Ethics and consent are a named-standard check, not an optional courtesy.** ICMJE requires
+that authors "seek approval to conduct research from an independent local, regional or
+national review body… and be prepared to provide documentation when requested by editors",
+and that where informed consent was obtained "it should be indicated in the published
+article" `(deferred to consensus — ICMJE, an editor-body coordination mechanism, not
+scientific warrant)`. Search the full text explicitly for approval, waiver, consent, IRB,
+and ethics-committee language before concluding it is absent, and record the search.
+
+Distinguish two failures that look identical in the text:
+
+- **Unstated but obtained** — a reporting defect. The remedy is one sentence. Grade Minor.
+- **Absent in fact** — the work should not have proceeded. Grade Fatal.
+
+A text-only review usually cannot tell which. Default to the reporting defect, and state
+the escalation condition explicitly: what evidence would move it to Fatal.
 
 Separate two checks:
 - **Reproduction:** can the reported analyses/results be recovered from the same data, code, materials, and protocol?
@@ -321,6 +338,31 @@ Severity:
 | **Praise** | Genuine strength worth naming | Fairness and calibration |
 
 Recommendation: **Accept / Minor / Major / Reject-resubmit / Reject**.
+
+### Severity binds the recommendation
+
+The recommendation is a function of the findings, not a separate judgement made alongside
+them:
+
+| Highest severity present | Minimum recommendation |
+|---|---|
+| Fatal | Reject-resubmit or Reject |
+| Major | Major |
+| Minor only | Minor |
+| Optional / Praise only | Accept |
+
+A review may recommend **more** severely than the table requires, with a stated reason. It
+may not recommend less.
+
+A report carrying Major findings and recommending Accept is internally inconsistent: either
+those findings are not Major, or the recommendation is wrong. Resolve it before delivering
+and state which way it was resolved. Genre and publication status do not relax this —
+"Accept as a Brief Report within its narrow scope" while holding two Major findings is
+exactly the pattern this rule exists to stop.
+
+If the paper is already published, the recommendation vocabulary is retrospective: read
+*Major* as "would have required major revision", not as a live editorial decision. The
+binding is unchanged.
 
 State explicitly what would change the recommendation upward or downward.
 

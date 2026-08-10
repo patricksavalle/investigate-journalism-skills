@@ -357,8 +357,51 @@ def score_conformance(output: str, skill: str) -> dict:
     elif skill not in NON_REPORT_SKILLS:
         result["checks"]["self_audit_specific"] = False
 
+    if skill == "peer-review":
+        _check_severity_binding(output, result)
+
     result["pass"] = not result["failures"]
     return result
+
+
+# Phase 7 "Severity binds the recommendation": the recommendation is a function
+# of the findings. Measured 2026-08-10, three of five R1 runs carried two Major
+# findings each and recommended Minor revision, Accept, and Accept.
+SEVERITY_FLOOR = {"Fatal": "Reject-resubmit", "Major": "Major", "Minor": "Minor"}
+
+
+def _populated_findings(output: str, severity: str) -> int:
+    """Count findings under a severity heading, treating 'None' as empty."""
+    lines = section_lines(output, f"{severity} Findings")
+    if not lines:
+        return 0
+    body = "\n".join(ln for ln, _, _ in lines).strip()
+    if not body or re.match(r"^(none|n/?a|—|-)\b", body, re.I):
+        return 0
+    items = re.findall(r"^\s*(?:\*\*(?:Finding\s+)?\d+|\d+\.|[-*]\s+\*\*)", body, re.M)
+    return len(items) or 1
+
+
+def _check_severity_binding(output: str, result: dict) -> None:
+    spine, _ = VERDICT_SPINE["peer-review"]
+    rec = extract_verdict(output, "peer-review")
+    counts = {s: _populated_findings(output, s) for s in SEVERITY_FLOOR}
+    result["checks"]["findings_by_severity"] = counts
+
+    highest = next((s for s in ("Fatal", "Major", "Minor") if counts[s]), None)
+    if not highest:
+        return
+    floor = SEVERITY_FLOOR[highest]
+    result["checks"]["recommendation_floor"] = floor
+    if rec is None:
+        result["failures"].append(
+            f"{counts[highest]} {highest} finding(s) present but no recommendation extracted"
+        )
+    elif spine.index(rec) < spine.index(floor):
+        result["failures"].append(
+            f"recommendation '{rec}' is below the floor '{floor}' set by "
+            f"{counts[highest]} {highest} finding(s) — Phase 7 severity binding"
+        )
 
 
 # --------------------------------------------------------------------------
