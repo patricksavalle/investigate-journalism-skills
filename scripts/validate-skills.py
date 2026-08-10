@@ -48,6 +48,7 @@ WARRANT_LABELS = [
 ]
 
 ROUTING_SENTINEL = "check whether another project skill owns the missing layer"
+ROUTING_END = "it may not manufacture premises."
 
 failures: list[str] = []
 notes: list[str] = []
@@ -97,6 +98,43 @@ def check_name_match(skills: dict) -> None:
                 f"{dirname}/SKILL.md: frontmatter name '{s['name']}' "
                 f"does not match folder name '{dirname}'"
             )
+
+
+def check_frontmatter_parseable(skills: dict) -> None:
+    """Descriptions must survive a YAML parse.
+
+    A plain (unquoted) YAML scalar cannot contain ": " — the parser reads it as
+    a nested mapping and the description is lost, so the loader falls back to
+    the file's H1. publisher-nl hit exactly this ("...warrant chain: no new
+    load-bearing facts...") and silently lost its trigger text.
+    """
+    for dirname, s in skills.items():
+        m = re.match(r"^---\s*\n(.*?)\n---\s*\n", s["text"], re.S)
+        if not m:
+            fail(f"{dirname}/SKILL.md: no frontmatter block")
+            continue
+        d = re.search(r"^description:\s*(.*)$", m.group(1), re.M)
+        if not d:
+            fail(f"{dirname}/SKILL.md: no `description:` in frontmatter")
+            continue
+        val = d.group(1).strip()
+        if not val:
+            fail(f"{dirname}/SKILL.md: empty description")
+        elif not val.startswith(("'", '"')) and ": " in val:
+            fail(
+                f"{dirname}/SKILL.md: unquoted description contains ': ' — "
+                "YAML will truncate it; wrap the value in quotes"
+            )
+
+
+def check_line_endings(skills: dict) -> None:
+    """Mixed line endings across the library churn diffs and mirror hashes."""
+    crlf = [d for d, s in skills.items() if b"\r\n" in s["path"].read_bytes()]
+    if crlf and len(crlf) != len(skills):
+        fail(
+            f"mixed line endings: {len(crlf)} of {len(skills)} skill files use CRLF "
+            f"({', '.join(sorted(crlf)[:3])}{'...' if len(crlf) > 3 else ''})"
+        )
 
 
 def check_references(skills: dict) -> None:
@@ -172,13 +210,18 @@ def check_routing_block(skills: dict) -> None:
             sources[doc] = read(p)
 
     for where, text in sources.items():
-        for line in text.splitlines():
-            if ROUTING_SENTINEL in line:
-                # Normalise leading prose ("First check" vs "first check") and
-                # whitespace; the routing targets are what must agree.
-                body = line[line.index(ROUTING_SENTINEL):]
-                key = hashlib.sha256(" ".join(body.split()).encode()).hexdigest()[:12]
-                copies.setdefault(key, []).append(where)
+        i = text.find(ROUTING_SENTINEL)
+        if i < 0:
+            continue
+        # Compare the whole routing *block*, not one line. CLAUDE.md keeps the
+        # routing sentence and its "If no skill clearly owns the gap ..."
+        # continuation on a single line; the skills split them into two
+        # paragraphs. That is a layout difference, not a content one, so
+        # normalise whitespace across the block before hashing.
+        end = text.find(ROUTING_END, i)
+        body = text[i : end + len(ROUTING_END)] if end > 0 else text[i:].split("\n\n")[0]
+        key = hashlib.sha256(" ".join(body.split()).encode()).hexdigest()[:12]
+        copies.setdefault(key, []).append(where)
 
     if len(copies) > 1:
         groups = sorted(copies.items(), key=lambda kv: -len(kv[1]))
@@ -214,6 +257,8 @@ def main() -> int:
         return 0
 
     check_name_match(skills)
+    check_frontmatter_parseable(skills)
+    check_line_endings(skills)
     check_references(skills)
     check_mirrors(skills)
     check_readme_index(skills)

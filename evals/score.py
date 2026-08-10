@@ -59,7 +59,7 @@ OPTIONAL_SECTIONS = {
     },
     # fallacy-...: "Sources & Warrants [Include only when empirical evidence or
     # outside sources were invoked.]"
-    "fallacy-bias-manipulation-analysis-framework": {"Sources & Warrants"},
+    "fallacy-bias-and-manipulation-analysis": {"Sources & Warrants"},
 }
 
 # Verdict vocabularies, quoted from each skill's own verdict table. The list
@@ -103,7 +103,7 @@ VERDICT_SPINE = {
         ["Hypothesis A stronger", "undecidable", "Hypothesis B stronger"],
         [],
     ),
-    "fallacy-bias-manipulation-analysis-framework": (
+    "fallacy-bias-and-manipulation-analysis": (
         ["argument stands", "partly stands", "collapses"],
         [],
     ),
@@ -511,7 +511,7 @@ def infer_skill(output: str) -> str:
         ("event investigation", "investigative-reasoning"),
         ("belief revision", "belief-revision"),
         ("first principles analysis", "first-principles-thinking"),
-        ("fallacy & bias audit", "fallacy-bias-manipulation-analysis-framework"),
+        ("fallacy & bias audit", "fallacy-bias-and-manipulation-analysis"),
         ("osint brief", "osint-research"),
     ]:
         if needle in head:
