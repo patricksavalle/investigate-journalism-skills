@@ -137,6 +137,12 @@
       "question": "Would the same verdict have been reached if the politically/socially expected answer ran the other way?",
       "sensitive_points": "judgements (the Evidence Load Test verdicts, the source-independence calls, the severity tags)",
       "addendum": ""
+    },
+    "causal-direction-gate": {
+      "heading": "### Causal Claim Gate",
+      "consequence": "marking a causal claim **Supported**",
+      "downgrade": "Downgrade that claim's verdict to **Overstated**, **Under-contextualised**, or **Unsupported**, depending on what the remaining evidence does support.",
+      "severity": "Severity default:\n\n- **Major** — direction is unresolved for a central causal claim, but the article's main verdict also rests on independently supported non-causal claims.\n- **Fatal** — the headline, rating, or central article verdict depends on a causal claim whose direction is not established."
     }
   },
   "osint-research": {
@@ -193,6 +199,12 @@
       "question": "Would the same recommendation have been reached if the paper's conclusion ran the other way? Execute the flip; do not merely assert.",
       "sensitive_points": "judgements (which findings were graded Fatal rather than Major, the citation verdicts, the recommendation threshold)",
       "addendum": ""
+    },
+    "causal-direction-gate": {
+      "heading": "### Causal Direction Gate",
+      "consequence": "grading a causal claim",
+      "downgrade": "Require association, prediction, or correlation language.",
+      "severity": "Grade by centrality: **Fatal** when the title, abstract claim, clinical or policy implication, or media-use hook depends on a direction the design cannot establish; **Major** when the paper's other conclusions stand without it."
     }
   },
   "scientific-fact-classification": {
@@ -221,6 +233,12 @@
       "question": "Would the same verdict have been reached if the politically/socially expected answer ran the other way?",
       "sensitive_points": "judgements (the strength label per contested claim, the GRADE adjustments, which Phase 6c failure modes were called present)",
       "addendum": " State this explicitly per contested claim."
+    },
+    "causal-direction-gate": {
+      "heading": "**4a-1. Causal direction burden.**",
+      "consequence": "accepting causal language",
+      "downgrade": "Downgrade to association, prediction, correlation, or hypothesis.",
+      "severity": "Strong causal wording is not warranted when the reverse direction could explain the result."
     }
   }
 }

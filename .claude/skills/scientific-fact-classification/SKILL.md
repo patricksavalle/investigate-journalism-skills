@@ -238,13 +238,34 @@ Correlation is data; causation is an inference from data + model. State the mode
 | Specificity | Often absent for real causes; prefer negative-control/falsification exposures |
 | Analogy | Similar causes elsewhere → similar effects (weakest) |
 
-**4a-1. Causal direction burden.** If a claim aims to establish causation, explicitly address reverse causation before accepting causal language. State whether reverse causation was:
-- **Ruled out by design** — randomisation, intervention, prospective measurement, temporal ordering, or another design feature makes reverse direction structurally implausible.
-- **Tested directly** — lagged models, negative controls, sensitivity analyses, cross-lagged designs, intervention/removal tests, or equivalent checks evaluate the reverse direction.
-- **Made implausible** — mechanism and timing make reverse direction unlikely enough for the strength of the causal claim.
-- **Unresolved** — reverse direction remains plausible or untested.
+**4a-1. Causal direction burden.**
 
-If reverse causation is unresolved, downgrade to association, prediction, correlation, or hypothesis. Strong causal wording is not warranted when the reverse direction could explain the result.
+A causal claim is not established until its direction is. Before accepting causal language,
+state which of these holds for the reverse direction:
+
+| Resolution | What it takes |
+|---|---|
+| **Ruled out by design** | Randomisation, intervention, prospective measurement, or temporal ordering makes the reverse direction structurally implausible. |
+| **Tested directly** | Lagged or cross-lagged models, negative controls, sensitivity analyses, or removal/intervention tests evaluate the reverse direction. |
+| **Made implausible** | Mechanism and timing make the reverse direction unlikely enough for the strength of the claim being made. |
+| **Unresolved** | The reverse direction remains plausible, or was never tested. |
+
+Direction is necessary and not sufficient. The claim also needs:
+
+| Requirement | Pass condition |
+|---|---|
+| Temporality | Cause precedes effect at the relevant biological, physical, or social timescale |
+| Alternative causes | Major plausible common causes, confounders, selection effects, and passenger-marker explanations addressed |
+| Intervention / challenge / negative-control evidence | Present where ethically and practically possible, or the gap explicitly caveated |
+| Measurement-layer separation | Detection, association, temporal precedence, and causation are not treated as interchangeable |
+
+If direction is **Unresolved**, causation has not been shown. Downgrade to association, prediction, correlation, or hypothesis.
+
+Do not write "causation is supported, but reverse causation is a caveat". That
+sentence records the gate failing and then passes it anyway; the caveat *is* the
+finding.
+
+Strong causal wording is not warranted when the reverse direction could explain the result.
 
 **4b. DAG / counterfactual.** Diagram causal structure; identify confounders, mediators, colliders. Confounder = common cause of A and B. Adjusting for mediator hides effect; for confounder reveals it; for collider creates spurious correlation. Rule out: reverse causation, selection, sampling bias. Use negative controls — exposures or outcomes that should *not* show effect; if they do, suspect bias.
 

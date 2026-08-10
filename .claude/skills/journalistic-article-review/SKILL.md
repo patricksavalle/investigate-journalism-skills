@@ -174,23 +174,34 @@ Route individual empirical claims to `scientific-fact-classification` when class
 
 ### Causal Claim Gate
 
-If an article makes a causal claim ("X causes Y", "X led to Y", "Y is due to X", "X is the cause of disease/outcome Y"), the claim may be marked **Supported** only when the article's evidence, or the primary evidence fetched during review, addresses causal direction.
+A causal claim is not established until its direction is. Before marking a causal claim **Supported**,
+state which of these holds for the reverse direction:
 
-Minimum gate:
+| Resolution | What it takes |
+|---|---|
+| **Ruled out by design** | Randomisation, intervention, prospective measurement, or temporal ordering makes the reverse direction structurally implausible. |
+| **Tested directly** | Lagged or cross-lagged models, negative controls, sensitivity analyses, or removal/intervention tests evaluate the reverse direction. |
+| **Made implausible** | Mechanism and timing make the reverse direction unlikely enough for the strength of the claim being made. |
+| **Unresolved** | The reverse direction remains plausible, or was never tested. |
+
+Direction is necessary and not sufficient. The claim also needs:
 
 | Requirement | Pass condition |
 |---|---|
-| Reverse causation | Ruled out by design, directly tested, or made implausible by mechanism and timing |
-| Temporality | Cause clearly precedes effect at the relevant biological/social timescale |
+| Temporality | Cause precedes effect at the relevant biological, physical, or social timescale |
 | Alternative causes | Major plausible common causes, confounders, selection effects, and passenger-marker explanations addressed |
-| Intervention / challenge / negative-control evidence | Present where ethically and practically possible, or limitation explicitly caveated |
-| Measurement-layer separation | Detection, association, infectivity, and causation are not treated as interchangeable |
+| Intervention / challenge / negative-control evidence | Present where ethically and practically possible, or the gap explicitly caveated |
+| Measurement-layer separation | Detection, association, temporal precedence, and causation are not treated as interchangeable |
 
-If reverse causation is not addressed, the causal claim is **not demonstrated**. Downgrade the verdict for that claim to **Overstated**, **Under-contextualised**, or **Unsupported** depending on the remaining evidence. Do not write "causation is supported but reverse causation is a caveat"; unresolved reverse causation means causation has not been shown by that article.
+If direction is **Unresolved**, causation has not been shown. Downgrade that claim's verdict to **Overstated**, **Under-contextualised**, or **Unsupported**, depending on what the remaining evidence does support.
+
+Do not write "causation is supported, but reverse causation is a caveat". That
+sentence records the gate failing and then passes it anyway; the caveat *is* the
+finding.
 
 Severity default:
 
-- **Major** — reverse causation is unaddressed for a central causal claim, but the article's main verdict also rests on independently supported non-causal claims.
+- **Major** — direction is unresolved for a central causal claim, but the article's main verdict also rests on independently supported non-causal claims.
 - **Fatal** — the headline, rating, or central article verdict depends on a causal claim whose direction is not established.
 
 ## Phase 4 — Headline, Framing, And Omission

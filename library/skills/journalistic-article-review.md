@@ -139,26 +139,7 @@ Verdicts:
 
 Route individual empirical claims to `scientific-fact-classification` when classification matters to the verdict.
 
-### Causal Claim Gate
-
-If an article makes a causal claim ("X causes Y", "X led to Y", "Y is due to X", "X is the cause of disease/outcome Y"), the claim may be marked **Supported** only when the article's evidence, or the primary evidence fetched during review, addresses causal direction.
-
-Minimum gate:
-
-| Requirement | Pass condition |
-|---|---|
-| Reverse causation | Ruled out by design, directly tested, or made implausible by mechanism and timing |
-| Temporality | Cause clearly precedes effect at the relevant biological/social timescale |
-| Alternative causes | Major plausible common causes, confounders, selection effects, and passenger-marker explanations addressed |
-| Intervention / challenge / negative-control evidence | Present where ethically and practically possible, or limitation explicitly caveated |
-| Measurement-layer separation | Detection, association, infectivity, and causation are not treated as interchangeable |
-
-If reverse causation is not addressed, the causal claim is **not demonstrated**. Downgrade the verdict for that claim to **Overstated**, **Under-contextualised**, or **Unsupported** depending on the remaining evidence. Do not write "causation is supported but reverse causation is a caveat"; unresolved reverse causation means causation has not been shown by that article.
-
-Severity default:
-
-- **Major** — reverse causation is unaddressed for a central causal claim, but the article's main verdict also rests on independently supported non-causal claims.
-- **Fatal** — the headline, rating, or central article verdict depends on a causal claim whose direction is not established.
+<!-- include: causal-direction-gate -->
 
 ## Phase 4 — Headline, Framing, And Omission
 

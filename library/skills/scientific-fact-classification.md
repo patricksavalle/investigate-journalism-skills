@@ -207,13 +207,7 @@ Correlation is data; causation is an inference from data + model. State the mode
 | Specificity | Often absent for real causes; prefer negative-control/falsification exposures |
 | Analogy | Similar causes elsewhere → similar effects (weakest) |
 
-**4a-1. Causal direction burden.** If a claim aims to establish causation, explicitly address reverse causation before accepting causal language. State whether reverse causation was:
-- **Ruled out by design** — randomisation, intervention, prospective measurement, temporal ordering, or another design feature makes reverse direction structurally implausible.
-- **Tested directly** — lagged models, negative controls, sensitivity analyses, cross-lagged designs, intervention/removal tests, or equivalent checks evaluate the reverse direction.
-- **Made implausible** — mechanism and timing make reverse direction unlikely enough for the strength of the causal claim.
-- **Unresolved** — reverse direction remains plausible or untested.
-
-If reverse causation is unresolved, downgrade to association, prediction, correlation, or hypothesis. Strong causal wording is not warranted when the reverse direction could explain the result.
+<!-- include: causal-direction-gate -->
 
 **4b. DAG / counterfactual.** Diagram causal structure; identify confounders, mediators, colliders. Confounder = common cause of A and B. Adjusting for mediator hides effect; for confounder reveals it; for collider creates spurious correlation. Rule out: reverse causation, selection, sampling bias. Use negative controls — exposures or outcomes that should *not* show effect; if they do, suspect bias.
 

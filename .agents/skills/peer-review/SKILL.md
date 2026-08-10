@@ -216,7 +216,34 @@ Fallback minimum checks:
 
 Quote the abstract/conclusion language and compare it with the design. "Associated with" in results becoming "causes" in the abstract is a Major or Fatal finding depending on centrality.
 
-For any causal claim, state whether reverse causation was ruled out by design, tested directly, made implausible by mechanism/timing, or left unresolved. If reverse causation remains plausible, require association/prediction language. Grade Major or Fatal when a central conclusion, abstract claim, clinical/policy implication, or media-use hook depends on causal direction that the design cannot establish.
+### Causal Direction Gate
+
+A causal claim is not established until its direction is. Before grading a causal claim,
+state which of these holds for the reverse direction:
+
+| Resolution | What it takes |
+|---|---|
+| **Ruled out by design** | Randomisation, intervention, prospective measurement, or temporal ordering makes the reverse direction structurally implausible. |
+| **Tested directly** | Lagged or cross-lagged models, negative controls, sensitivity analyses, or removal/intervention tests evaluate the reverse direction. |
+| **Made implausible** | Mechanism and timing make the reverse direction unlikely enough for the strength of the claim being made. |
+| **Unresolved** | The reverse direction remains plausible, or was never tested. |
+
+Direction is necessary and not sufficient. The claim also needs:
+
+| Requirement | Pass condition |
+|---|---|
+| Temporality | Cause precedes effect at the relevant biological, physical, or social timescale |
+| Alternative causes | Major plausible common causes, confounders, selection effects, and passenger-marker explanations addressed |
+| Intervention / challenge / negative-control evidence | Present where ethically and practically possible, or the gap explicitly caveated |
+| Measurement-layer separation | Detection, association, temporal precedence, and causation are not treated as interchangeable |
+
+If direction is **Unresolved**, causation has not been shown. Require association, prediction, or correlation language.
+
+Do not write "causation is supported, but reverse causation is a caveat". That
+sentence records the gate failing and then passes it anyway; the caveat *is* the
+finding.
+
+Grade by centrality: **Fatal** when the title, abstract claim, clinical or policy implication, or media-use hook depends on a direction the design cannot establish; **Major** when the paper's other conclusions stand without it.
 
 For animal, primate, clinical, intervention, challenge, toxicity, infection, or behavioural studies, always write the denominator sentence before grading: `n=[total]; groups=[n per group]; affected/responded=[x/y per group]; unaffected/non-responded=[x/y per group]`. If a headline, abstract, or conclusion implies a general effect while a substantial fraction of subjects were unaffected, flag responder-generalisation overreach. Grade Major or Fatal when the central claim depends on treating partial response as general effect.
 

@@ -184,7 +184,7 @@ Fallback minimum checks:
 
 Quote the abstract/conclusion language and compare it with the design. "Associated with" in results becoming "causes" in the abstract is a Major or Fatal finding depending on centrality.
 
-For any causal claim, state whether reverse causation was ruled out by design, tested directly, made implausible by mechanism/timing, or left unresolved. If reverse causation remains plausible, require association/prediction language. Grade Major or Fatal when a central conclusion, abstract claim, clinical/policy implication, or media-use hook depends on causal direction that the design cannot establish.
+<!-- include: causal-direction-gate -->
 
 For animal, primate, clinical, intervention, challenge, toxicity, infection, or behavioural studies, always write the denominator sentence before grading: `n=[total]; groups=[n per group]; affected/responded=[x/y per group]; unaffected/non-responded=[x/y per group]`. If a headline, abstract, or conclusion implies a general effect while a substantial fraction of subjects were unaffected, flag responder-generalisation overreach. Grade Major or Fatal when the central claim depends on treating partial response as general effect.
 
