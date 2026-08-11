@@ -1,7 +1,7 @@
 # Investigative AI Journalism
 
 <p align="center">
-<img width="1149" height="1369" alt="image" src="https://github.com/user-attachments/assets/9179da8f-a32c-4f5e-93e7-761f2164cf1e" />
+<img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/416d0ee6-581a-49ad-b936-20ba3701bf5a" />
 </p>
 
 **Eight standalone analytical skills, plus one hunch micro-skill and one Dutch publishing skill, for checking claims, articles, studies, sources, arguments, revisions, and publishable writeups before you share or trust them.**
