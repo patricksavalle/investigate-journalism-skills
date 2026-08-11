@@ -562,19 +562,23 @@ def extract_verdict(output: str, skill: str) -> str | None:
 # at runtime, per this file's design rule -- if the table is later moved to a
 # reference file, point the locator there and the same numbers stay comparable.
 CATALOGUES = {
-    # investigative-reasoning Phase 2e: 18 rows, "| 1 | **False Flag** | ..."
+    # (skill, start_pattern, stop_pattern, file relative to the skill directory)
+    #
+    # Both catalogues moved into references/ on 2026-08-11 under progressive
+    # disclosure. The locators were repointed rather than the metric redefined,
+    # which is what keeps before/after numbers comparable across the move -- the
+    # reason entries were derived at runtime instead of hardcoded.
     "io-patterns": (
         "investigative-reasoning",
         r"###\s+2e\s+.*Influence-Operation",
         r"^---\s*$",
+        "references/patterns-and-deep-research.md",
     ),
-    # fallacy-...: the taxonomy proper, Phase 2 (formal) through Phase 8
-    # (discourse-structural). Phase 9 grades what those phases found, so it is
-    # the boundary.
     "fallacies": (
         "fallacy-bias-and-manipulation-analysis",
         r"##\s+Phase 2\s+.*Formal Fallacies",
-        r"^##\s+Phase 9\b",
+        r"^##\s+Phase 9",
+        "references/taxonomy.md",
     ),
 }
 
@@ -600,8 +604,8 @@ def catalogue_entries(name: str) -> tuple[str, list[str]]:
         raise SystemExit(
             f"error: unknown catalogue {name!r} (have: {', '.join(CATALOGUES)})"
         )
-    skill, start_re, stop_re = CATALOGUES[name]
-    text = read_text(SKILLS_DIR / skill / "SKILL.md")
+    skill, start_re, stop_re, relpath = CATALOGUES[name]
+    text = read_text(SKILLS_DIR / skill / relpath)
     m = re.search(start_re, text)
     if not m:
         raise SystemExit(f"error: catalogue section for {name!r} not found in {skill}")

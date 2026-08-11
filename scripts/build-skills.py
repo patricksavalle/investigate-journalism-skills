@@ -52,6 +52,7 @@ REPO = Path(__file__).resolve().parent.parent
 LIBRARY = REPO / "library"
 SKILL_SRC = LIBRARY / "skills"
 MODULES = LIBRARY / "modules"
+REFERENCES = LIBRARY / "references"
 BINDINGS = LIBRARY / "bindings.json"
 TREES = [REPO / ".claude" / "skills", REPO / ".agents" / "skills"]
 
@@ -136,6 +137,24 @@ def targets(skill: str) -> list[Path]:
     return [tree / skill / "SKILL.md" for tree in TREES]
 
 
+def reference_pairs() -> list[tuple[Path, Path]]:
+    """(source, destination) for every bundled reference file.
+
+    References are the progressive-disclosure half: material a skill consults on
+    a trigger rather than executing in order. They ship beside SKILL.md so a
+    skill directory stays self-contained, and they are generated from library/
+    for the same reason SKILL.md is -- one source, two trees.
+    """
+    pairs = []
+    if not REFERENCES.exists():
+        return pairs
+    for src in sorted(REFERENCES.rglob("*.md")):
+        rel = src.relative_to(REFERENCES)  # <skill>/<file>.md
+        for tree in TREES:
+            pairs.append((src, tree / rel.parts[0] / "references" / Path(*rel.parts[1:])))
+    return pairs
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument(
@@ -193,6 +212,19 @@ def main() -> int:
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_text(rendered, encoding="utf-8", newline="\n")
                 written += 1
+
+    for src, dst in reference_pairs():
+        content = src.read_text(encoding="utf-8")
+        current = dst.read_text(encoding="utf-8") if dst.exists() else None
+        if current == content:
+            continue
+        if args.check:
+            stale.append(str(dst.relative_to(REPO)))
+            print(f"  reference out of date: {dst.relative_to(REPO)}")
+        else:
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            dst.write_text(content, encoding="utf-8", newline=chr(10))
+            written += 1
 
     if args.check:
         if stale:

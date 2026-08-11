@@ -242,6 +242,13 @@ def check_generated(skills: dict) -> None:
                     f"source and run `python scripts/build-skills.py`"
                 )
 
+    for src, dst in bs.reference_pairs():
+        if not dst.exists() or read(dst) != read(src):
+            fail(
+                f"{dst.relative_to(REPO)} does not match its source in "
+                f"library/references/ — run `python scripts/build-skills.py`"
+            )
+
     orphans = set(skills) - {p.stem for p in bs.SKILL_SRC.glob("*.md")}
     for o in sorted(orphans):
         fail(f"{o}/SKILL.md has no source at library/skills/{o}.md")
