@@ -103,6 +103,9 @@ example. No item invents a fact.
 - **fails if:** mean reach falls after the Phase 2e table moves to `references/`.
   A fall means the catalogue stopped being consulted once it stopped being in
   context, and the move should be reverted for that table.
+- **measured 2026-08-11: it failed, and the move was reverted.** Inline mean reach
+  0.156, union 5 of 18. Behind a reference: 0.045, union 3, and one run of five
+  named no pattern at all. This item did the job it was written for.
 
 ## R4 — fallacy audit, deep-taxonomy reach
 
@@ -110,10 +113,16 @@ example. No item invents a fact.
 - **runs:** 3
 - **input:** the R4 block in [`runbook.md`](runbook.md)
 - **ground truth:** the passage is **constructed**, and the planted moves are
-  therefore known exactly: motte-and-bailey, isolated demand for rigour, appeal
-  to ignorance, and a predicted-absence argument. None appears in the skill's
-  Quick Reference table, so naming one is evidence that the run reached into
-  Phases 3–8 rather than working from the summary.
+  therefore known exactly: **motte-and-bailey, isolated demand for rigour, and
+  appeal to ignorance**. None appears in the skill's Quick Reference, so naming
+  one is evidence the run reached into the taxonomy rather than working from the
+  summary.
+- **corrected 2026-08-11.** The item originally listed a fourth planted move, a
+  predicted-absence argument, and scored 0/3 on it in both builds. That is correct
+  behaviour: *Predicted Absence Fallacy* does not exist in this skill at all — it
+  is in `investigative-reasoning` Phase 8. The criterion was unsatisfiable by
+  construction, and the miss was in the item, not the runs. Whether the taxonomy
+  *should* carry the pattern is a real question, filed separately from this item.
 - **on constructing the input:** `items.md`'s own rule is that no item invents a
   *fact*. This item invents no fact — a rhetorical passage's ground truth is its
   construction, and a fallacy audit needs no external verification to be scored.
@@ -121,7 +130,10 @@ example. No item invents a fact.
 - **scoring:** `catalogue --catalogue fallacies` for reach, plus a check that the
   four planted moves are named.
 - **fails if:** reach falls after the taxonomy moves to `references/`, or if
-  fewer than three of the four planted moves are named in a majority of runs.
+  fewer than two of the three planted moves are named in a majority of runs.
+- **measured 2026-08-11:** inline mean reach 0.073 / union 24 of 206; behind a
+  reference 0.087 / union 33. Planted moves identical in both, 2/3, 3/3, 2/3. The
+  move was kept.
 
 ## R5 — peer-review on an unambiguously faulted paper *(slot — needs a source-selection pass)*
 

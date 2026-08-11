@@ -568,11 +568,13 @@ CATALOGUES = {
     # disclosure. The locators were repointed rather than the metric redefined,
     # which is what keeps before/after numbers comparable across the move -- the
     # reason entries were derived at runtime instead of hardcoded.
+    # Reverted to SKILL.md on 2026-08-11: moving this table into references/
+    # cut reach from 0.156 to 0.045 and left one run naming no pattern at all.
     "io-patterns": (
         "investigative-reasoning",
         r"###\s+2e\s+.*Influence-Operation",
         r"^---\s*$",
-        "references/patterns-and-deep-research.md",
+        "SKILL.md",
     ),
     "fallacies": (
         "fallacy-bias-and-manipulation-analysis",
