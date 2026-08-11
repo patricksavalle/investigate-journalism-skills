@@ -121,15 +121,26 @@ land. Each carries a note registering its prediction *before* the run, plus
 adopt/revert criteria, so the decision cannot be made by reading the result and
 deciding afterwards what would have counted as success.
 
-| Branch | Change | Note | Controls that read on it |
+| Branch | Change | Note | Status |
 |---|---|---|---|
-| `stage-1-verdict-bridge` | Evidence-state floors on the verdict, keyed on observations rather than the reviewer's own gradings | [`stage-1-verdict-bridge.md`](stage-1-verdict-bridge.md) | R1 — adopt only if agreement rises **and** Majors hold |
-| `stage-2b-causal-gate` | One causal-direction gate instead of four differing requirement sets | [`stage-2b-causal-gate.md`](stage-2b-causal-gate.md) | F1 — revert if it moves off *Established fact* |
-| `stage-6-rules-8a-8c` | Rules 8a and 8c reach the four skills that implemented neither | [`stage-6-rules-8a-8c.md`](stage-6-rules-8a-8c.md) | F1 and F2 |
+| `stage-2b-causal-gate` | One causal-direction gate instead of four differing requirement sets | [`stage-2b-causal-gate.md`](stage-2b-causal-gate.md) | **Measured, not merged.** Safe — F1 3/3, R2 unchanged, R1 agreement rose 0.600→0.800 — but nothing it should improve improved: finding rate 0.375→0.350, and runs naming reverse causation went 3/5→2/5. Retry with a shorter gate |
+| `stage-1-verdict-bridge` | Evidence-state floors on the verdict, keyed on observations rather than the reviewer's own gradings | [`stage-1-verdict-bridge.md`](stage-1-verdict-bridge.md) | Unmeasured. R1 + R5 |
+| `stage-6-rules-8a-8c` | Rules 8a and 8c reach the four skills that implemented neither | [`stage-6-rules-8a-8c.md`](stage-6-rules-8a-8c.md) | Unmeasured. F1, F2, R5 |
+| `stage-7-scope-ethics-row` | Scope Phase 6's reporting-defect default to the ethics statement | [`stage-7-scope-ethics-row.md`](stage-7-scope-ethics-row.md) | Unmeasured. Its original justification was retracted; re-justify on its own terms first |
+
+All four are rebased on current `main` and each is one commit ahead, so any of
+them can be measured or merged without the squash-duplication problem that made
+PR #5 conflict.
 
 The pattern comes from `rerun-2026-08-10.md`: a change that looked reasonable
 went in, was measured, and came straight back out the same day. Branching first
-makes that the normal case rather than an embarrassment.
+makes that the normal case rather than an embarrassment. `stage-2b` is the first
+branch to complete the loop without merging, which is the mechanism working.
+
+**Measure against R5, not R1**, for anything touching `peer-review`. R1's paper is
+well-calibrated, its expected detection rate is ~0.35, and three separate paid
+comparisons against it this session returned "within noise". R5 sits at 0.743 with
+four of seven questions unanimous.
 
 ## What this harness does not do
 
